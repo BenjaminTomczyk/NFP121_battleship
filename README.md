@@ -1,2 +1,2 @@
 # NFP121_battleship
-Projet nfp121 Tomczyk Brand
+Projet NFP121 : Tomczyk Brand 
