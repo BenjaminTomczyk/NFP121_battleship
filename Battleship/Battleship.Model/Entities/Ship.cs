@@ -6,14 +6,21 @@ namespace Battleship.Model.Entities
 {
     public class Ship
     {
-        public Position Start { get; set; }
-        public Position End { get; set; }
+        public Position? Start { get; set; }
+        public Position? End { get; set; }
         public bool IsSet => Start != null && End != null;
+
+        public bool IsPosition()
+        {
+            if (Math.Abs(Start.Row - End.Row) == Math.Abs(Start.Column - End.Column)) return true;
+            return false;
+        }
 
         public bool IsInGrid(int gridSize)
         {
             if (!IsSet) return false;
-            return Start.Row < gridSize && Start.Column < gridSize && End.Row < gridSize && End.Column < gridSize; 
+            List<int> positions = new List<int>() { Start.Column, Start.Row, End.Column, End.Row };
+            return positions.TrueForAll(p => (0 <= p && p < gridSize ));     
         }
 
         public bool IsCollision(Ship ship1) 
@@ -21,33 +28,31 @@ namespace Battleship.Model.Entities
             return false;
         }
 
-        public List<Position> GenerationListPositions()
+        public List<Position> GenerationListPositions() //CORRIGER SYSTEME de MIN et MAX car mtn on fait aussi des diagonales
         {
             List<Position> listPosition = new List<Position>();
             if (!IsSet) return listPosition;
             var startCol = Math.Min(Start.Column, End.Column);
-            var EndCol = Math.Max(Start.Column, End.Column);
+            var endCol = Math.Max(Start.Column, End.Column);
             var startRow = Math.Min(Start.Row, End.Row);
-            var EndRow = Math.Max(Start.Row, End.Row);
+            var endRow = Math.Max(Start.Row, End.Row);
 
-            var listCol = Enumerable.Range(startCol, EndCol - startCol + 1);
-            var listRow = Enumerable.Range(startRow, EndRow - startRow + 1);
-
-            foreach (var iListCol in listCol)
+            if (startCol == endCol || startRow == endRow)
             {
-                foreach(var ilistRow in listRow)
+                var listCol = Enumerable.Range(startCol, endCol - startCol + 1);
+                var listRow = Enumerable.Range(startRow, endRow - startRow + 1);
+
+                foreach (var iListCol in listCol)
                 {
-                    listPosition.Add(new Position()
-                    {
-                        Column = iListCol,
-                        Row = ilistRow
-                    }) ;
+                    foreach (var ilistRow in listRow) listPosition.Add(new Position(ilistRow, iListCol));
                 }
             }
-
+            else //Diagonale a gerer
+            {
+                listPosition.Add(new Position(startCol + i, startRow + i));
+            }
+            
             return listPosition;
         }
-
-
     }
 }

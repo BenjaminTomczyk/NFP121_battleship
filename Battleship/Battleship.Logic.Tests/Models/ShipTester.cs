@@ -10,45 +10,41 @@ namespace Battleship.Logic.Tests.Models
 
         private Ship ship1 = new Ship()
         {
-            Start = new Position()
-            {
-                Row = 0,
-                Column = 0
-            },
-            End = new Position()
-            {
-                Row = 2,
-                Column = 0
-            }
+            Start = new Position(0,0),
+            End = new Position(2,0)
         };
 
         private Ship ship2 = new Ship()
         {
-            Start = new Position()
-            {
-                Row = 4,
-                Column = 4
-            },
-            End = new Position()
-            {
-                Row = 4,
-                Column = 3
-            }
+            Start = new Position(4,4),
+            End = new Position(4,3)
         };
 
         private Ship ship3 = new Ship()
         {
-            Start = new Position()
-            {
-                Row = 4,
-                Column = 4
-            },
-            End = new Position()
-            {
-                Row = 4,
-                Column = 0
-            }
+            Start = new Position(4,4),
+            End = new Position(4,0)
         };
+
+        private Ship shipSize5Vertical = new Ship()
+        {
+            Start = new Position(1,2),
+            End = new Position(5,2)
+        };
+
+        private Ship shipSize5Horizontal = new Ship()
+        {
+            Start = new Position(2, 5),
+            End = new Position(2, 1)
+        };
+
+        private Ship shipSize5Diagonale = new Ship()
+        {
+            Start = new Position(0, 0),
+            End = new Position(4, 4)
+        };
+
+        
 
         [TestMethod]
         public void IsInGrid_WithGridSize_ThenFalse()
@@ -63,9 +59,9 @@ namespace Battleship.Logic.Tests.Models
         }
 
         [TestMethod]
-        public void IsInGrid_WithShip1AndGridSize4_ThenTrue() 
+        public void IsInGrid_WithShip2AndGridSize5_ThenTrue() 
         {
-            Assert.IsTrue(ship1.IsInGrid(4));
+            Assert.IsTrue(ship2.IsInGrid(5));
         }
 
         [TestMethod]
@@ -105,12 +101,59 @@ namespace Battleship.Logic.Tests.Models
         }
 
         [TestMethod]
-        public void GenerationListPositions_WithShipeSize5_ThenListHasGoodValue()
+        public void GenerationListPositions_WithShipSize5Vertical_ThenListHasGoodValue()
         {
-            
-            foreach(var iposition in ship1.GenerationListPositions())
+            int i = 0;
+            List<Position> truePosShip5 = new List<Position>() 
+            { 
+                new Position(1,2),
+                new Position(2,2),
+                new Position(3,2),
+                new Position(4,2),
+                new Position(5,2),
+            };
+            foreach(var iposition in shipSize5Vertical.GenerationListPositions())
             {
-                
+                Assert.IsTrue(iposition.Equals(truePosShip5[i]));
+                i++;
+            }
+        }
+
+        [TestMethod]
+        public void GenerationListPositions_WithShipSize5Horizontal_ThenListHasGoodValue()
+        {
+            int i = 0;
+            List<Position> truePosShip5 = new List<Position>()
+            {
+                new Position(2,1),
+                new Position(2,2),
+                new Position(2,3),
+                new Position(2,4),
+                new Position(2,5),
+            };
+            foreach (var iposition in shipSize5Horizontal.GenerationListPositions())
+            {
+                Assert.IsTrue(iposition.Equals(truePosShip5[i]));
+                i++;
+            }
+        }
+
+        [TestMethod]
+        public void GenerationListPositions_WithShipSize5Diagonale_ThenListHasGoodValue()
+        {
+            int i = 0;
+            List<Position> truePosShip5 = new List<Position>()
+            {
+                new Position(0,0),
+                new Position(1,1),
+                new Position(2,2),
+                new Position(3,3),
+                new Position(4,4),
+            };
+            foreach (var iposition in shipSize5Diagonale.GenerationListPositions())
+            {
+                Assert.IsTrue(iposition.Equals(truePosShip5[i]));
+                i++;
             }
         }
 
