@@ -25,6 +25,17 @@ namespace Battleship.Model.Entities
 
         public bool IsCollision(Ship ship1) 
         {
+            if (ship1 is null) return false;
+            List<Position> thisPos = this.GenerationListPositions();
+            List<Position> ship1Pos = ship1.GenerationListPositions();
+            
+            foreach (var ipositionThis in thisPos)
+            {
+                foreach(var ipostionShip1 in ship1Pos)
+                {
+                    if (ipositionThis.Row == ipostionShip1.Row || ipositionThis.Column == ipostionShip1.Row) return true;
+                }
+            }
             return false;
         }
 
@@ -49,9 +60,12 @@ namespace Battleship.Model.Entities
             }
             else //Diagonale a gerer
             {
-                listPosition.Add(new Position(startCol + i, startRow + i));
-            }
-            
+                for(int i =0; i<= endCol - startCol; i++)
+                {
+                    //Console.WriteLine((startCol + i, startRow + i).ToString());
+                    listPosition.Add(new Position(startRow + i, startCol + i));
+                }
+            }      
             return listPosition;
         }
     }

@@ -40,11 +40,17 @@ namespace Battleship.Logic.Tests.Models
 
         private Ship shipSize5Diagonale = new Ship()
         {
-            Start = new Position(0, 0),
-            End = new Position(4, 4)
+            Start = new Position(1, 2),
+            End = new Position(5, 6)
         };
 
-        
+        private Ship shipSize5Diagonale2 = new Ship()
+        {
+            Start = new Position(5, 6),
+            End = new Position(1, 2)
+        };
+
+
 
         [TestMethod]
         public void IsInGrid_WithGridSize_ThenFalse()
@@ -62,24 +68,6 @@ namespace Battleship.Logic.Tests.Models
         public void IsInGrid_WithShip2AndGridSize5_ThenTrue() 
         {
             Assert.IsTrue(ship2.IsInGrid(5));
-        }
-
-        [TestMethod]
-        public void IsNotCollision_WithNull_ThenFalse()
-        {
-            Assert.IsFalse(new Ship().IsCollision(null));
-        }
-
-        [TestMethod]
-        public void IsNotCollision_WithSameShip_ThenTrue()
-        {
-            Assert.IsTrue(ship1.IsCollision(ship1));
-        }
-
-        [TestMethod]
-        public void IsNotCollision_WithTwoShipWithPositionDifferent_ThenFalse()
-        {
-            Assert.IsFalse(ship1.IsCollision(ship2));
         }
 
         [TestMethod]
@@ -144,17 +132,56 @@ namespace Battleship.Logic.Tests.Models
             int i = 0;
             List<Position> truePosShip5 = new List<Position>()
             {
-                new Position(0,0),
-                new Position(1,1),
-                new Position(2,2),
-                new Position(3,3),
-                new Position(4,4),
+                new Position(1,2),
+                new Position(2,3),
+                new Position(3,4),
+                new Position(4,5),
+                new Position(5,6),
             };
             foreach (var iposition in shipSize5Diagonale.GenerationListPositions())
             {
+                
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
             }
+        }
+
+        [TestMethod]
+        public void GenerationListPositions_WithShipSize5Diagonale2_ThenListHasGoodValue()
+        {
+            int i = 0;
+            List<Position> truePosShip5 = new List<Position>()
+            {
+                new Position(5,6),
+                new Position(4,5),
+                new Position(3,4),
+                new Position(2,3),
+                new Position(1,2),
+            };
+            foreach (var iposition in shipSize5Diagonale2.GenerationListPositions())
+            {
+
+                Assert.IsTrue(iposition.Equals(truePosShip5[i]));
+                i++;
+            }
+        }
+
+        [TestMethod]
+        public void IsNotCollision_WithNull_ThenFalse()
+        {
+            Assert.IsFalse(new Ship().IsCollision(null));
+        }
+
+        [TestMethod]
+        public void IsNotCollision_WithSameShip_ThenTrue()
+        {
+            Assert.IsTrue(ship1.IsCollision(ship1));
+        }
+
+        [TestMethod]
+        public void IsNotCollision_WithTwoShipWithPositionDifferent_ThenFalse()
+        {
+            Assert.IsFalse(ship1.IsCollision(ship2));
         }
 
     }
