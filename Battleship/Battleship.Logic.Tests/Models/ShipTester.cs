@@ -1,5 +1,6 @@
 using Battleship.Model.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 
 namespace Battleship.Logic.Tests.Models
@@ -32,24 +33,47 @@ namespace Battleship.Logic.Tests.Models
             End = new Position(5,2)
         };
 
+        private Ship shipSize5VerticalReverse = new Ship()
+        {
+            Start = new Position(5, 2),
+            End = new Position(1, 2)
+        };
+
         private Ship shipSize5Horizontal = new Ship()
         {
             Start = new Position(2, 5),
             End = new Position(2, 1)
         };
 
-        private Ship shipSize5Diagonale = new Ship()
+        private Ship shipSize5HorizontalReverse = new Ship()
+        {
+            Start = new Position(2, 5),
+            End = new Position(2, 1)
+        };
+
+        private Ship shipSize5DiagonaleRigthBot = new Ship()
         {
             Start = new Position(1, 2),
             End = new Position(5, 6)
         };
 
-        private Ship shipSize5Diagonale2 = new Ship()
+        private Ship shipSize5DiagonaleLeftTop = new Ship()
         {
             Start = new Position(5, 6),
             End = new Position(1, 2)
         };
+        
+        private Ship shipSize5DiagonaleRigthTop = new Ship()
+        {
+            Start = new Position(5, 2),
+            End = new Position(1, 6)
+        };
 
+        private Ship shipSize5DiagonaleLeftBot = new Ship()
+        {
+            Start = new Position(1, 6),
+            End = new Position(5, 2)
+        };
 
 
         [TestMethod]
@@ -108,6 +132,25 @@ namespace Battleship.Logic.Tests.Models
         }
 
         [TestMethod]
+        public void GenerationListPositions_WithShipSize5VerticalReverse_ThenListHasGoodValue()
+        {
+            int i = 0;
+            List<Position> truePosShip5 = new List<Position>()
+            {
+                new Position(1,2),
+                new Position(2,2),
+                new Position(3,2),
+                new Position(4,2),
+                new Position(5,2),
+            };
+            foreach (var iposition in shipSize5VerticalReverse.GenerationListPositions())
+            {
+                Assert.IsTrue(iposition.Equals(truePosShip5[i]));
+                i++;
+            }
+        }
+
+        [TestMethod]
         public void GenerationListPositions_WithShipSize5Horizontal_ThenListHasGoodValue()
         {
             int i = 0;
@@ -127,7 +170,26 @@ namespace Battleship.Logic.Tests.Models
         }
 
         [TestMethod]
-        public void GenerationListPositions_WithShipSize5Diagonale_ThenListHasGoodValue()
+        public void GenerationListPositions_WithShipSize5HorizontalReverse_ThenListHasGoodValue()
+        {
+            int i = 0;
+            List<Position> truePosShip5 = new List<Position>()
+            {
+                new Position(2,1),
+                new Position(2,2),
+                new Position(2,3),
+                new Position(2,4),
+                new Position(2,5),
+            };
+            foreach (var iposition in shipSize5HorizontalReverse.GenerationListPositions())
+            {
+                Assert.IsTrue(iposition.Equals(truePosShip5[i]));
+                i++;
+            }
+        }
+
+        [TestMethod]
+        public void GenerationListPositions_WithShipSize5DiagonaleRigthBot_ThenListHasGoodValue()
         {
             int i = 0;
             List<Position> truePosShip5 = new List<Position>()
@@ -138,7 +200,7 @@ namespace Battleship.Logic.Tests.Models
                 new Position(4,5),
                 new Position(5,6),
             };
-            foreach (var iposition in shipSize5Diagonale.GenerationListPositions())
+            foreach (var iposition in shipSize5DiagonaleRigthBot.GenerationListPositions())
             {
                 
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
@@ -147,20 +209,60 @@ namespace Battleship.Logic.Tests.Models
         }
 
         [TestMethod]
-        public void GenerationListPositions_WithShipSize5Diagonale2_ThenListHasGoodValue()
+        public void GenerationListPositions_WithShipSize5DiagonaleLeftTop_ThenListHasGoodValue()
         {
             int i = 0;
             List<Position> truePosShip5 = new List<Position>()
             {
-                new Position(5,6),
-                new Position(4,5),
-                new Position(3,4),
-                new Position(2,3),
                 new Position(1,2),
+                new Position(2,3),
+                new Position(3,4),
+                new Position(4,5),
+                new Position(5,6)
             };
-            foreach (var iposition in shipSize5Diagonale2.GenerationListPositions())
+            foreach (var iposition in shipSize5DiagonaleLeftTop.GenerationListPositions())
             {
 
+                Assert.IsTrue(iposition.Equals(truePosShip5[i]));
+                i++;
+            }
+        }
+
+        [TestMethod]
+        public void GenerationListPositions_WithShipSize5DiagonaleRigthTop_ThenListHasGoodValue()
+        {
+            int i = 0;
+            List<Position> truePosShip5 = new List<Position>()
+            {
+                new Position(5,2),    
+                new Position(4,3),
+                new Position(3,4),
+                new Position(2,5),
+                new Position(1,6),
+            };
+            foreach (var iposition in shipSize5DiagonaleRigthTop.GenerationListPositions())
+            {
+                Console.WriteLine(iposition.Column + "," + iposition.Row);
+                Assert.IsTrue(iposition.Equals(truePosShip5[i]));
+                i++;
+            }
+        }
+
+        [TestMethod]
+        public void GenerationListPositions_WithShipSize5DiagonaleLeftBot_ThenListHasGoodValue()
+        {
+            int i = 0;
+            List<Position> truePosShip5 = new List<Position>()
+            {
+                new Position(5,2),
+                new Position(4,3),
+                new Position(3,4),
+                new Position(2,5),
+                new Position(1,6),
+            };
+            foreach (var iposition in shipSize5DiagonaleLeftBot.GenerationListPositions())
+            {
+                Console.WriteLine(iposition.Row + ";" + iposition.Column);
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
             }

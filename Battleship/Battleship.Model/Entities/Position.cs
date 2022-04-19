@@ -12,6 +12,12 @@
             Column = column;
         }
 
+        public void SetNewValue(int col,int row)
+        {
+            this.Column = col;
+            this.Row = row;
+        }
+
         public override bool Equals(object obj)
         {
             Position ?p = obj as Position;

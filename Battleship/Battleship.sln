@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32014.148
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship", "Battleship\Battleship.csproj", "{D3CEE26C-63AA-4590-972D-F612FFC61917}"
 EndProject
@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship.Logic", "Battles
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship.Logic.Tests", "Battleship.Logic.Tests\Battleship.Logic.Tests.csproj", "{AE393765-273C-4395-8B1B-DB81AB8CF1AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battleship.Model", "Battleship.Model\Battleship.Model.csproj", "{36452A36-1DD3-4412-BFC1-AFAE744E1BE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship.Model", "Battleship.Model\Battleship.Model.csproj", "{36452A36-1DD3-4412-BFC1-AFAE744E1BE9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battleship.Repository", "Battleship.Repository\Battleship.Repository.csproj", "{3A01AB60-61CB-41F5-8E90-7DE83BCE5051}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship.Repository", "Battleship.Repository\Battleship.Repository.csproj", "{3A01AB60-61CB-41F5-8E90-7DE83BCE5051}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleshipAPI", "BattleshipAPI\BattleshipAPI.csproj", "{021EDDD7-57AE-48E8-8DFF-CD7082184000}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{3A01AB60-61CB-41F5-8E90-7DE83BCE5051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A01AB60-61CB-41F5-8E90-7DE83BCE5051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A01AB60-61CB-41F5-8E90-7DE83BCE5051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021EDDD7-57AE-48E8-8DFF-CD7082184000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021EDDD7-57AE-48E8-8DFF-CD7082184000}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021EDDD7-57AE-48E8-8DFF-CD7082184000}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021EDDD7-57AE-48E8-8DFF-CD7082184000}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
