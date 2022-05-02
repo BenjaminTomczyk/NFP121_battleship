@@ -1,4 +1,4 @@
-using Battleship.Model.Entities;
+﻿using Battleship.Model.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -222,7 +222,6 @@ namespace Battleship.Logic.Tests.Models
             };
             foreach (var iposition in shipSize5DiagonaleLeftTop.GenerationListPositions())
             {
-
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
             }
@@ -242,7 +241,6 @@ namespace Battleship.Logic.Tests.Models
             };
             foreach (var iposition in shipSize5DiagonaleRigthTop.GenerationListPositions())
             {
-                Console.WriteLine(iposition.Column + "," + iposition.Row);
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
             }
@@ -262,7 +260,6 @@ namespace Battleship.Logic.Tests.Models
             };
             foreach (var iposition in shipSize5DiagonaleLeftBot.GenerationListPositions())
             {
-                Console.WriteLine(iposition.Row + ";" + iposition.Column);
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
             }
