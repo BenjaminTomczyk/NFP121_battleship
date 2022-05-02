@@ -8,6 +8,8 @@ namespace Battleship.Model.Entities
     {
         public Position? Start { get; set; }
         public Position? End { get; set; }
+
+        public List<Position>? Positions { get; set; }
         public bool IsSet => Start != null && End != null;
 
         public bool IsPosition()
@@ -23,6 +25,10 @@ namespace Battleship.Model.Entities
             return positions.TrueForAll(p => (0 <= p && p < gridSize ));     
         }
 
+        public void AddPositionInvalid()
+        {
+        }
+
         public bool IsDiagonale()
         {
             return (Start.Column != End.Column && Start.Row != End.Row);
@@ -31,10 +37,10 @@ namespace Battleship.Model.Entities
         public bool IsCollision(Ship ship1) 
         {
             if (ship1 is null) return false;
-            List<Position> thisPos = this.GenerationListPositions();
-            List<Position> ship1Pos = ship1.GenerationListPositions();
+            this.GenerationListPositions();
+            ship1.GenerationListPositions();
            
-            return thisPos.Any(ipositionThis => ship1Pos.Any(ipostionShip1 => ipositionThis.Equals(ipostionShip1)));
+            return this.Positions.Any(ipositionThis => ship1.Positions.Any(ipostionShip1 => ipositionThis.Equals(ipostionShip1)));
         }
 
         public void SetNewAttributPosition(int startCol, int startRow,int endCol, int endRow)
@@ -43,20 +49,21 @@ namespace Battleship.Model.Entities
             End.SetNewValue(endCol, endRow);
         }
 
-        public List<Position> GenerationListPositions() //CORRIGER SYSTEME de MIN et MAX car mtn on fait aussi des diagonales
+        public void GenerationListPositions()
         {
             List<Position> listPosition = new List<Position>();
-            if (!IsSet) return listPosition;
-
-            this.OrderPosition();
-
-            if (!IsDiagonale())
+            if (IsSet)
             {
-                ListPositionStandard(listPosition);
+                this.OrderPosition();
+
+                if (!IsDiagonale())
+                {
+                    ListPositionStandard(listPosition);
+                }
+                else ListPositionDiagonale(listPosition);
             }
-            else ListPositionDiagonale(listPosition);
-            
-            return listPosition;
+
+            this.Positions = listPosition;
         }
         public void ListPositionStandard(List<Position> listPosition)
         {

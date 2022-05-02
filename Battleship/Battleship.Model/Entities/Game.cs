@@ -8,5 +8,7 @@ namespace Battleship.Model.Entities
     {
         public int GridSize { get; set; }
 
+        public List<Position> PositionsInvalid = new List<Position>();
+
     }
 }

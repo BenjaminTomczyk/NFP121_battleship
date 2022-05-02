@@ -27,6 +27,18 @@ namespace Battleship.Logic.Tests.Models
             End = new Position(4,0)
         };
 
+        private Ship ship4 = new Ship()
+        {
+            Start = new Position(4, 4),
+            End = new Position(3, 3)
+        };
+
+        private Ship ship5 = new Ship()
+        {
+            Start = new Position(0, 0),
+            End = new Position(2, 2)
+        };
+
         private Ship shipSize5Vertical = new Ship()
         {
             Start = new Position(1,2),
@@ -41,8 +53,8 @@ namespace Battleship.Logic.Tests.Models
 
         private Ship shipSize5Horizontal = new Ship()
         {
-            Start = new Position(2, 5),
-            End = new Position(2, 1)
+            Start = new Position(2, 1),
+            End = new Position(2, 5)
         };
 
         private Ship shipSize5HorizontalReverse = new Ship()
@@ -97,19 +109,23 @@ namespace Battleship.Logic.Tests.Models
         [TestMethod]
         public void GenerationListPositions_WithEmptyShipe_ThenListNull()
         {
-            Assert.AreEqual(0,new Ship().GenerationListPositions().Count);
+            Ship shipNull = new Ship();
+            shipNull.GenerationListPositions();
+            Assert.AreEqual(0,shipNull.Positions.Count);
         }
 
         [TestMethod]
         public void GenerationListPositions_WithShipeSize3_ThenListCount3()
         {
-            Assert.AreEqual(3, ship1.GenerationListPositions().Count);
+            ship1.GenerationListPositions();
+            Assert.AreEqual(3, ship1.Positions.Count);
         }
 
         [TestMethod]
         public void GenerationListPositions_WithShipeSize5_ThenListCount5()
         {
-            Assert.AreEqual(5, ship3.GenerationListPositions().Count);
+            ship3.GenerationListPositions();
+            Assert.AreEqual(5, ship3.Positions.Count);
         }
 
         [TestMethod]
@@ -124,7 +140,8 @@ namespace Battleship.Logic.Tests.Models
                 new Position(4,2),
                 new Position(5,2),
             };
-            foreach(var iposition in shipSize5Vertical.GenerationListPositions())
+            shipSize5Vertical.GenerationListPositions();
+            foreach (var iposition in shipSize5Vertical.Positions)
             {
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
@@ -143,7 +160,8 @@ namespace Battleship.Logic.Tests.Models
                 new Position(4,2),
                 new Position(5,2),
             };
-            foreach (var iposition in shipSize5VerticalReverse.GenerationListPositions())
+            shipSize5VerticalReverse.GenerationListPositions();
+            foreach (var iposition in shipSize5VerticalReverse.Positions)
             {
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
@@ -162,7 +180,8 @@ namespace Battleship.Logic.Tests.Models
                 new Position(2,4),
                 new Position(2,5),
             };
-            foreach (var iposition in shipSize5Horizontal.GenerationListPositions())
+            shipSize5Horizontal.GenerationListPositions();
+            foreach (var iposition in shipSize5Horizontal.Positions)
             {
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
@@ -181,7 +200,8 @@ namespace Battleship.Logic.Tests.Models
                 new Position(2,4),
                 new Position(2,5),
             };
-            foreach (var iposition in shipSize5HorizontalReverse.GenerationListPositions())
+            shipSize5HorizontalReverse.GenerationListPositions();
+            foreach (var iposition in shipSize5HorizontalReverse.Positions)
             {
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
@@ -200,7 +220,8 @@ namespace Battleship.Logic.Tests.Models
                 new Position(4,5),
                 new Position(5,6),
             };
-            foreach (var iposition in shipSize5DiagonaleRigthBot.GenerationListPositions())
+            shipSize5DiagonaleRigthBot.GenerationListPositions();
+            foreach (var iposition in shipSize5DiagonaleRigthBot.Positions)
             {
                 
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
@@ -220,7 +241,8 @@ namespace Battleship.Logic.Tests.Models
                 new Position(4,5),
                 new Position(5,6)
             };
-            foreach (var iposition in shipSize5DiagonaleLeftTop.GenerationListPositions())
+            shipSize5DiagonaleLeftTop.GenerationListPositions();
+            foreach (var iposition in shipSize5DiagonaleLeftTop.Positions)
             {
 
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
@@ -240,7 +262,8 @@ namespace Battleship.Logic.Tests.Models
                 new Position(2,5),
                 new Position(1,6),
             };
-            foreach (var iposition in shipSize5DiagonaleRigthTop.GenerationListPositions())
+            shipSize5DiagonaleRigthTop.GenerationListPositions();
+            foreach (var iposition in shipSize5DiagonaleRigthTop.Positions)
             {
                 Console.WriteLine(iposition.Column + "," + iposition.Row);
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
@@ -260,7 +283,8 @@ namespace Battleship.Logic.Tests.Models
                 new Position(2,5),
                 new Position(1,6),
             };
-            foreach (var iposition in shipSize5DiagonaleLeftBot.GenerationListPositions())
+            shipSize5DiagonaleLeftBot.GenerationListPositions();
+            foreach (var iposition in shipSize5DiagonaleLeftBot.Positions)
             {
                 Console.WriteLine(iposition.Row + ";" + iposition.Column);
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
@@ -275,7 +299,7 @@ namespace Battleship.Logic.Tests.Models
         }
 
         [TestMethod]
-        public void IsNotCollision_WithSameShip_ThenTrue()
+        public void IsCollision_WithSameShip_ThenTrue()
         {
             Assert.IsTrue(ship1.IsCollision(ship1));
         }
@@ -284,6 +308,18 @@ namespace Battleship.Logic.Tests.Models
         public void IsNotCollision_WithTwoShipWithPositionDifferent_ThenFalse()
         {
             Assert.IsFalse(ship1.IsCollision(ship2));
+        }
+
+        [TestMethod]
+        public void IsNotCollision_WithTwoShipDiagonale_ThenFalse()
+        {
+            Assert.IsFalse(ship4.IsCollision(ship5));
+        }
+
+        [TestMethod]
+        public void IsCollision_WithTwoShipDiagonale_ThenTrue()
+        {
+            Assert.IsTrue(ship5.IsCollision(ship1));
         }
 
     }
