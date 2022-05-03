@@ -87,6 +87,12 @@ namespace Battleship.Logic.Tests.Models
             End = new Position(5, 2)
         };
 
+        
+        private Ship shipSize1 = new Ship()
+        {
+            Start = new Position(1, 1),
+            End = new Position(1, 1)
+        };
 
         [TestMethod]
         public void IsInGrid_WithGridSize_ThenFalse()
@@ -317,6 +323,14 @@ namespace Battleship.Logic.Tests.Models
         public void IsCollision_WithTwoShipDiagonale_ThenTrue()
         {
             Assert.IsTrue(ship5.IsCollision(ship1));
+        }
+
+        [TestMethod]
+        public void AddPositionInvalid_WithShip_ThenListCount8()
+        {
+            ship1.AddPositionInvalid();
+            //Console.WriteLine(Game.GetInstance().PositionsInvalid.Count.ToString());
+            Assert.AreEqual(8, Game.GetInstance().PositionsInvalid.Count);
         }
 
     }

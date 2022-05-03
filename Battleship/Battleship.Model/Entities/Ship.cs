@@ -25,8 +25,30 @@ namespace Battleship.Model.Entities
             return positions.TrueForAll(p => (0 <= p && p < gridSize ));     
         }
 
+        public bool IsInjuxtapose() 
+        {
+            foreach(Position posI in Positions)
+            {
+                foreach (Position posY in Game.GetInstance().PositionsInvalid)
+                    if (posI.Equals(posY)) return false;
+            }
+            return false;
+        }
+
         public void AddPositionInvalid()
         {
+            foreach(Position posI in Positions)
+            {
+                Game game = Game.GetInstance();
+                game.PositionsInvalid.Add(new Position(posI.Row, posI.Column +1));
+                game.PositionsInvalid.Add(new Position(posI.Row +1, posI.Column +1));
+                game.PositionsInvalid.Add(new Position(posI.Row +1, posI.Column));
+                game.PositionsInvalid.Add(new Position(posI.Row +1, posI.Column -1));
+                game.PositionsInvalid.Add(new Position(posI.Row, posI.Column -1));
+                game.PositionsInvalid.Add(new Position(posI.Row -1, posI.Column -1));
+                game.PositionsInvalid.Add(new Position(posI.Row -1, posI.Column));
+                game.PositionsInvalid.Add(new Position(posI.Row -1, posI.Column +1));
+            }
         }
 
         public bool IsDiagonale()
