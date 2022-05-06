@@ -1,0 +1,194 @@
+@import url("https://fonts.googleapis.com/css?family=Fascinate+Inline|Baloo+Bhaina");
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background: #6FC3ED;
+}
+
+h1{
+  font-size: 3rem;
+  color: #f4f8ff;
+  font-family: "Fascinate Inline";
+  text-align: center;
+  margin:3rem;
+  padding: 70px 0;
+}
+
+h2{
+  font-size: 20px;
+  color: #f4f8ff;
+  font-family: "Fascinate Inline";
+}
+
+p{
+  font-size: 20px;
+  color: #f4f8ff;
+  font-family: "Fascinate Inline";
+  text-align: center;
+  margin-top: 2rem;
+}
+
+input{
+  display: block;
+  margin: auto;
+  padding: 5px 10px;
+}
+
+button {
+  background-color: #4AB0E7;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  font-family: "Fascinate Inline";
+  font-size: 1rem;
+  display: block;
+  margin: auto;
+}
+
+.float-child {
+  width: 50%;
+  float: left;
+  padding: 5px;
+  border-left: 0.5rem solid #4AB0E7;
+  border-right: 0.5rem solid #4AB0E7;
+} 
+
+.float-child-1 {
+  width: 20%;
+  float: left;
+  padding: 5px;
+} 
+
+.float-child-2 {
+  width: 80%;
+  float: left;
+  padding: 5px;
+} 
+
+#player_board, #enemy_board {
+	position: relative;
+	width: 100%;
+	min-width: 550px;
+}
+
+#messageAreaPlayer, #messageAreaEnemy {
+	width: 100%;
+	text-align: center;
+	margin-top: 5px;
+	color: #f4f8ff;
+	font-family: "Fascinate Inline";
+	font-size: 15px;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 3px;
+	margin: 0 auto;
+}
+
+td {
+	position: relative;
+	width: 70px;
+	height: 70px;
+	border: 2px solid #152C59;
+	border-radius: 15px;
+}
+
+td:hover {
+	background: #538daa;
+}
+
+td div {
+ 	width: 70px;
+	height: 70px;
+ }
+
+.numbers, .letters {
+	text-align: center;
+	font-size: 20px;
+	font-family: "Baloo Bhaina";
+	color: #f4f8ff;
+	height: 40px;
+	width: 40px;
+	border: none;
+}
+
+.hit {
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+  width: 60px;
+  height: 30px;
+  background: #851B15;
+  border-radius: 5px 5px 50px 35px;
+  animation: wave 1s ease-in-out infinite alternate;
+}
+
+ @keyframes wave {
+  0% {transform: rotate(-7deg)}
+  100% {transform: rotate(5deg)}
+}
+
+.hit::after {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 10px;
+  height: 10px;
+  background: #D2995F; 
+  border-radius: 50%;
+  box-shadow: 15px 0 #FCCE9E,
+              30px 0 #D2995F;
+}
+
+.hit::before {
+  content: '';
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+  width: 16px;
+  height: 30px;
+  background: #5A0400;
+  box-shadow: 15px 4px 0 -4px #AC3B35;  
+}
+
+.miss {
+  width: 60px;
+  height: 10px;
+  position: absolute;
+  top: 30px;
+  left: 5px;
+  border-radius: 5px;
+  background: #47002B;
+  transform-origin: center center;
+  transform: rotate(45deg);
+  box-shadow: 3px 3px #C77DAA;
+  animation: blow 0.5s ease-in;
+}
+
+@keyframes blow {
+  0% {transform: scale(0);}
+  1% {transform: rotate(45deg);}
+  80% {transform: scale(1.7);}
+  100% {transform: scale(1);}
+}
+
+.miss::after {
+  content: '';
+  width: 60px;
+  height: 10px;
+  position: absolute;
+  border-radius: 5px;
+  background: #47002B;
+  transform: rotate(90deg);
+  box-shadow: 3px -3px #C77DAA;
+}
+

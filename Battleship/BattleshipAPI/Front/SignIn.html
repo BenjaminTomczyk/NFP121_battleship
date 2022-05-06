@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="Style.css">
+	<title>BATTLESHIP</title>
+</head>
+<body>
+    <div class="float-container">
+        <div class="float-child">
+            <h1>S'IDENTIFIER</h1>
+            <form method="post" action="api/signin" enctype="application/x-www-form-urlencoded">
+                <label for="uname"><p>ADRESSE E-MAIL</p></label><br/>
+                <input type="text" placeholder="ADRESSE E-MAIL" name="uname" required><br/>
+              
+                <label for="psw"><p>MOT DE PASSE</p></label><br/>
+                <input type="password" placeholder="MOT DE PASSE" name="psw" required><br/>
+              
+                <button type="submit">CONNEXION</button>
+            </form>
+        </div>
+        <div class="float-child">
+            <h1>S'INSCRIRE</h1>
+            <form>
+                <label for="uname"><p>ADRESSE E-MAIL</p></label><br/>
+                <input type="text" placeholder="ADRESSE E-MAIL" name="uname" required><br/>
+              
+                <label for="psw"><p>MOT DE PASSE</p></label><br/>
+                <input type="password" placeholder="MOT DE PASSE" name="psw" required><br/>
+              
+                <button type="submit">INSCRIPTION</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="Battleship.js"></script>
+</body>
+</html>

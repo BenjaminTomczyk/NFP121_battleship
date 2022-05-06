@@ -11,40 +11,27 @@ namespace BattleshipAPI.Controllers
     [Route("api/[controller]")]
     public class GameController : Controller
     {
-        // GET: api/values
-        [Produces("text/html")]
+        // GET: api/game
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public int Get()
         {
-            try
-            {
-                var content = "<b><i><u>Hello World</u></i></b>";
-                return new ContentResult
-                {
-                    Content = content,
-                    ContentType = "text/html",
-                    StatusCode = (int)HttpStatusCode.OK
-                };
-            }
-            catch
-            {
-                return BadRequest();
-            }
+            return 2;
         }
 
-
-
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void PlaceBoat([FromBody] int[] StartEnd)
         {
+            //TODO : fonction qui test la validité du bateau et le place ou renvoie une erreur
+            //Parameter : tableau d'int contentant start et end
+            //PlaceBoat(StartEnd);
+        }
+
+        [HttpPost]
+        public bool Shoot([FromBody]int pos)
+        {
+            //TODO : fonction qui test si il y a un bateau et renvoie un bool
+            //CheckShootCell(pos);
+            return false;
         }
 
         // PUT api/values/5
