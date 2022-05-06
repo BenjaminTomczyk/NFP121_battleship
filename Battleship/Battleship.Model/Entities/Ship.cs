@@ -6,6 +6,7 @@ namespace Battleship.Model.Entities
 {
     public class Ship
     {
+        public int Id { get; set; }
         public Position? Start { get; set; }
         public Position? End { get; set; }
 
@@ -25,29 +26,38 @@ namespace Battleship.Model.Entities
             return positions.TrueForAll(p => (0 <= p && p < gridSize ));     
         }
 
-        public bool IsInjuxtapose() 
+        public bool IsInjuxtapose(Game game) 
         {
             foreach(Position posI in Positions)
             {
-                foreach (Position posY in Game.GetInstance().PositionsInvalid)
+                foreach (Position posY in game.PositionsInvalid)
                     if (posI.Equals(posY)) return false;
             }
             return false;
         }
 
-        public void AddPositionInvalid()
+        public void AddPositionInvalid(Game game)
         {
-            foreach(Position posI in Positions)
+            if (this.Positions != null && game!=null)
             {
-                Game game = Game.GetInstance();
-                game.PositionsInvalid.Add(new Position(posI.Row, posI.Column +1));
-                game.PositionsInvalid.Add(new Position(posI.Row +1, posI.Column +1));
-                game.PositionsInvalid.Add(new Position(posI.Row +1, posI.Column));
-                game.PositionsInvalid.Add(new Position(posI.Row +1, posI.Column -1));
-                game.PositionsInvalid.Add(new Position(posI.Row, posI.Column -1));
-                game.PositionsInvalid.Add(new Position(posI.Row -1, posI.Column -1));
-                game.PositionsInvalid.Add(new Position(posI.Row -1, posI.Column));
-                game.PositionsInvalid.Add(new Position(posI.Row -1, posI.Column +1));
+                foreach (Position posI in Positions)
+                {
+                    game.PositionsInvalid.Add(new Position(posI.Row, posI.Column + 1));
+                    game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column + 1));
+                    game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column));
+                    game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column - 1));
+                    game.PositionsInvalid.Add(new Position(posI.Row, posI.Column - 1));
+                    game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column - 1));
+                    game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column));
+                    game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column + 1));
+                }
+            }
+
+            game.PositionsInvalid = game.PositionsInvalid.Distinct().ToList();
+
+            foreach (Position posI in Positions)
+            {
+                game.PositionsInvalid.Remove(posI);
             }
         }
 
@@ -60,6 +70,7 @@ namespace Battleship.Model.Entities
         {
             if (ship1 is null) return false;
             this.GenerationListPositions();
+            //TODO : mettre la fonction lors de la pose du bateau apres les verifications de si il est valide
             ship1.GenerationListPositions();
            
             return this.Positions.Any(ipositionThis => ship1.Positions.Any(ipostionShip1 => ipositionThis.Equals(ipostionShip1)));

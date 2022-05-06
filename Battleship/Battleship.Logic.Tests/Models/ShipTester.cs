@@ -8,7 +8,7 @@ namespace Battleship.Logic.Tests.Models
     [TestClass]
     public class ShipTester
     {
-
+        //private Game game = new Game();
         private Ship ship1 = new Ship()
         {
             Start = new Position(0,0),
@@ -328,9 +328,12 @@ namespace Battleship.Logic.Tests.Models
         [TestMethod]
         public void AddPositionInvalid_WithShip_ThenListCount8()
         {
-            ship1.AddPositionInvalid();
-            //Console.WriteLine(Game.GetInstance().PositionsInvalid.Count.ToString());
-            Assert.AreEqual(8, Game.GetInstance().PositionsInvalid.Count);
+            Game game = new Game();
+            ship4.GenerationListPositions();
+            ship4.AddPositionInvalid(game);
+            //Game game = Game.GetInstance();
+            //Console.WriteLine(game.PositionsInvalid.Count.ToString());
+            Assert.AreEqual(12, game.PositionsInvalid.Count);
         }
 
     }
