@@ -21,17 +21,16 @@ namespace BattleshipAPI.Controllers
 
         // GET: api/ship
         [HttpGet]
-        public List<Ship> Get()
+        public void Get()
         {
-            return _ctx.Ships.ToList();
+           
         }
 
         // POST api/ship
         [HttpPost]
         public void Post([FromBody]Ship ship)
         {
-            _ctx.Ships.Add(ship);
-            _ctx.SaveChanges();
+
         }
 
         // PUT api/values/5

@@ -2,51 +2,45 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
-using Battleship.Repository.Repositories;
+using Battleship.Model.Entities.Auth;
+//using Battleship.Repository.Repositories;
+using BattleshipAPI.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BattleshipAPI.Controllers
 {
-	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class UsersController : ControllerBase
 	{
-		private readonly IJWTManagerRepository _jWTManager;
-
-		public UsersController(IJWTManagerRepository jWTManager)
+		private readonly IUserService _userService;
+		public UsersController(IUserService userService)
 		{
-			this._jWTManager = jWTManager;
+			_userService = userService;
 		}
 
-		[HttpGet]
-		public List<string> Get()
+		[HttpPost("register")]
+		public async Task<ActionResult> RegisterAsync(RegisterModel model)
 		{
-			var users = new List<string>
-		{
-			"Prenom1 Nom1",
-			"Prenom2 Nom2",
-			"Prenom3 Nom3"
-		};
-
-			return users;
+			var result = await _userService.RegisterAsync(model);
+			return Ok(result);
 		}
 
-		[AllowAnonymous]
-		[HttpPost]
-		[Route("authenticate")]
-		public IActionResult Authenticate(User usersdata)
+		[HttpPost("token")]
+		public async Task<IActionResult> GetTokenAsync(TokenRequestModel model)
 		{
-			var token = _jWTManager.Authenticate(usersdata);
+			var result = await _userService.GetTokenAsync(model);
+			return Ok(result);
+		}
 
-			if (token == null)
-			{
-				return Unauthorized();
-			}
-
-			return Ok(token);
+		[HttpPost("addrole")]
+		public async Task<IActionResult> AddRoleAsync(AddRoleModel model)
+		{
+			var result = await _userService.AddRoleAsync(model);
+			return Ok(result);
 		}
 	}
 }
