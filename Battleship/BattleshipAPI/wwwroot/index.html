@@ -2,41 +2,56 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>To-do CRUD</title>
-    <link rel="stylesheet" href="css/site.css" />
+    <title>BATTLESHIP</title>
+    <link rel="stylesheet" href="css/Style.css" />
 </head>
 <body>
-    <h1>To-do CRUD</h1>
-    <h3>Add</h3>
-    <form action="javascript:void(0);" method="POST" onsubmit="addItem()">
-        <input type="text" id="add-name" placeholder="New to-do">
-        <input type="submit" value="Add">
-    </form>
+    <div class="float-container">
+        <div class="float-child">
+            <h1>S'IDENTIFIER</h1>
+            <form action="javascript:void(0);" method="POST" onsubmit="token()">
+                <label for="Email"><p>ADRESSE E-MAIL</p></label><br />
+                <input type="text" placeholder="ADRESSE E-MAIL" name="Email" id="Email" required><br />
 
-    <div id="editForm">
-        <h3>Edit</h3>
-        <form action="javascript:void(0);" onsubmit="updateItem()">
-            <input type="hidden" id="edit-id">
-            <input type="checkbox" id="edit-isComplete">
-            <input type="text" id="edit-name">
-            <input type="submit" value="Save">
-            <a onclick="closeInput()" aria-label="Close">&#10006;</a>
-        </form>
+                <label for="Password"><p>MOT DE PASSE</p></label><br />
+                <input type="password" placeholder="MOT DE PASSE" name="Password" id="Password" required><br />
+
+                <div class="bottom-space">
+                    <button type="submit">CONNEXION</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="float-child">
+            <h1>S'INSCRIRE</h1>
+            <form action="javascript:void(0);" method="POST" onsubmit="register()">
+                <label for="LastName"><p>NOM</p></label><br />
+                <input type="text" placeholder="NOM" name="LastName" id="LastName" required><br />
+
+                <label for="FirstName"><p>PRENOM</p></label><br />
+                <input type="text" placeholder="PRENOM" name="FirstName" id="FirstName" required><br />
+
+                <label for="UserName"><p>NOM D'UTILISATEUR</p></label><br />
+                <input type="text" placeholder="NOM D'UTILISATEUR'" name="UserName" id="UserName" required><br />
+
+                <label for="Email"><p>ADRESSE E-MAIL</p></label><br />
+                <input type="email" placeholder="ADRESSE E-MAIL" name="Email" id="Email1" required><br />
+
+                <label for="Password"><p>MOT DE PASSE</p></label><br />
+                <input type="password" placeholder="MOT DE PASSE" name="Password" id="Password1" required><br />
+
+                <div class="bottom-space">
+                    <button type="submit">INSCRIPTION</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 
-    <p id="counter"></p>
+    <footer>
+        <p>CREDITS | BENJAMIN TOMCZYK - ALEXANDRE BRAND</p>
+    </footer>
 
-    <table>
-        <tr>
-            <th>Is Complete?</th>
-            <th>Name</th>
-            <th></th>
-            <th></th>
-        </tr>
-        <tbody id="todos"></tbody>
-    </table>
-
-    <script src="js/site.js" asp-append-version="true"></script>
-    <script type="text/javascript">getItems();</script>
+    <script src="js/Script.js" asp-append-version="true"></script>
 </body>
 </html>

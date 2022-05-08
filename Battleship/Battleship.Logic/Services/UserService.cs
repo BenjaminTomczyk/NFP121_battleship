@@ -45,11 +45,11 @@ namespace Battleship.Logic.Services
                 {
                     await _userManager.AddToRoleAsync(user, Authorization.default_role.ToString());
                 }
-                return $"Inscription enregistrée avec l'identifiant {user.UserName}";
+                return $"Inscription validée";
             }
             else
             {
-                return $"Email {user.Email } is already registered.";
+                return $"L'e-mail est déjà enregistré";
             }
         }
 
@@ -60,7 +60,7 @@ namespace Battleship.Logic.Services
             if (user == null)
             {
                 authenticationModel.IsAuthenticated = false;
-                authenticationModel.Message = $"No Accounts Registered with {model.Email}.";
+                authenticationModel.Message = $"Pas de compte existant pour l'adresse {model.Email}.";
                 return authenticationModel;
             }
             if (await _userManager.CheckPasswordAsync(user, model.Password))
@@ -75,7 +75,7 @@ namespace Battleship.Logic.Services
                 return authenticationModel;
             }
             authenticationModel.IsAuthenticated = false;
-            authenticationModel.Message = $"Incorrect Credentials for user {user.Email}.";
+            authenticationModel.Message = $"Mot de passe incorrect";
             return authenticationModel;
         }
 

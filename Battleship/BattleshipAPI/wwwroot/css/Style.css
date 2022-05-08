@@ -57,6 +57,14 @@ button {
     margin-bottom: 10rem;
 }
 
+.float-container {
+    width: 100%;
+}
+
+.float-child {
+    flex: 1;
+}
+
 .float-child {
     width: 50%;
     float: left;
@@ -64,15 +72,21 @@ button {
     border-left: 1rem solid #4AB0E7;
 }
 
-.float-child-1 {
+.float-title {
     width: 20%;
     float: left;
     padding: 5px;
 }
 
-.float-child-2 {
-    width: 80%;
-    float: left;
+.float-profile {
+    width: 20%;
+    float: right;
+    padding: 5px;
+}
+
+.float-admin {
+    width: 30%;
+    float: right;
     padding: 5px;
 }
 
