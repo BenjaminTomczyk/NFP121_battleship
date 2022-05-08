@@ -15,22 +15,39 @@ h1 {
     color: #f4f8ff;
     font-family: "Fascinate Inline";
     text-align: center;
-    margin: 3rem;
+    margin: 1rem;
     padding: 70px 0;
 }
 
 h2 {
+    font-size: 30px;
+    margin:10px 20px;
+
+    color: #f4f8ff;
+    font-family: "Fascinate Inline";
+}
+
+h3 {
     font-size: 20px;
+    margin:5px 10px;
     color: #f4f8ff;
     font-family: "Fascinate Inline";
 }
 
 p {
     font-size: 20px;
-    color: #f4f8ff;
+    color: #ffffff;
     font-family: "Fascinate Inline";
     text-align: center;
     margin-top: 2rem;
+}
+
+label {
+    font-size: 15px;
+    color: #184385;
+    font-family: "Fascinate Inline";
+    display: block;
+    text-align: center;
 }
 
 input {
@@ -39,56 +56,54 @@ input {
     padding: 5px 10px;
 }
 
-button {
+button[type=submit] {
     background-color: #4AB0E7;
     color: white;
     padding: 14px 20px;
+    border-radius: 20px;
     border: none;
     cursor: pointer;
-    width: 50%;
+    width: 25%;
     font-family: "Fascinate Inline";
     font-size: 1rem;
     display: block;
     margin: auto;
 }
 
+button {
+    background-color: #4AB0E7;
+    color: white;
+    margin:10px 10px;
+    border-radius: 15px;
+    border: none;
+    cursor: pointer;
+    font-family: "Fascinate Inline";
+    font-size: 1rem;
+}
+
+footer {
+    margin: 10px;
+}
+
 .bottom-space {
     margin-top: 2rem;
-    margin-bottom: 10rem;
+    margin-bottom: 5rem;
 }
 
-.float-container {
-    width: 100%;
-}
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 
-.float-child {
-    flex: 1;
-}
+.container-2 {
+    display: grid;
+    grid-template-columns: 1fr 1rem 1fr;
+  }
 
-.float-child {
-    width: 50%;
-    float: left;
-    padding: 5px;
-    border-left: 1rem solid #4AB0E7;
-}
-
-.float-title {
-    width: 20%;
-    float: left;
-    padding: 5px;
-}
-
-.float-profile {
-    width: 20%;
-    float: right;
-    padding: 5px;
-}
-
-.float-admin {
-    width: 30%;
-    float: right;
-    padding: 5px;
-}
+.container-3 {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 0.5fr 0.9fr;
+  }
 
 #player_board, #enemy_board {
     position: relative;

@@ -44,13 +44,24 @@ namespace Battleship.Logic.Services
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, Authorization.default_role.ToString());
+                    return $"Inscription validée";
                 }
-                return $"Inscription validée";
+                else
+                {
+                    return $"Mot de passe trop faible\nPensez à utiliser des majuscules, des chiffres et des caractères spéciaux !";
+                }
+
             }
             else
             {
                 return $"L'e-mail est déjà enregistré";
             }
+        }
+
+        public async Task<ApplicationUser> GetUserAsync(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            return user;
         }
 
         public async Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model)
@@ -70,6 +81,7 @@ namespace Battleship.Logic.Services
                 authenticationModel.Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 authenticationModel.Email = user.Email;
                 authenticationModel.UserName = user.UserName;
+                authenticationModel.Id = user.Id;
                 var rolesList = await _userManager.GetRolesAsync(user).ConfigureAwait(false);
                 authenticationModel.Roles = rolesList.ToList();
                 return authenticationModel;

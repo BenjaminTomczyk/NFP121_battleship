@@ -13,6 +13,8 @@ namespace Battleship.Logic.Interfaces
         Task<AuthenticationModel> GetTokenAsync(TokenRequestModel model);
 
         Task<string> AddRoleAsync(AddRoleModel model);
+
+        Task<ApplicationUser> GetUserAsync(string id);
     }
 }
 

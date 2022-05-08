@@ -5,24 +5,14 @@
 	<title>BATTLESHIP</title>
 </head>
 <body>
-	<div class="float-container">
-
-		<div class="float-child">
-
+	<div class="container-2">
+		<div>
 			<div id="player_board">
-				<div class="float-container">
-					<div class="float-title">
-						<div id="title"><h2>Joueur</h2></div>
-					</div>
-
-					<div class="float-admin">
-						<div id="admin"><h2>Espace Admin</h2></div>
-					</div>
-
-					<div class="float-profile">
-						<div id="profile"><h2>Compte</h2></div>
-					</div>
-
+				<div class="container-3">
+					<div id="title"><h2>Joueur</h2></div>
+					<div></div>
+					<div><button id="profile" onclick="getUser()"><h3>Profil</h3></button></div>
+					<div><button id="admin" onclick="getUser()"><h3>Espace Admin</h3></button></div>
 				</div>
 				<table>
 					<tr>
@@ -129,16 +119,12 @@
 			</div>
 		</div>
 
-		<div class="float-child">
+		<div style="border:10px solid #4AB0E7"></div>
 
+		<div>
 			<div id="enemy_board">
-				<div class="float-container">
-					<div class="float-child-1">
-						<div id="title"><h2>Adversaire</h2></div>
-					</div>
-					<div class="float-child-2">
-						<div id="messageAreaEnemy"></div>
-					</div>
+				<div class="container-3">
+					<div id="title"><h2>Adversaire</h2></div>
 				</div>
 				<table>
 					<tr>

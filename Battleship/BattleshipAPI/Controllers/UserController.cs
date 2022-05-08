@@ -23,6 +23,14 @@ namespace BattleshipAPI.Controllers
 			_userService = userService;
 		}
 
+		[Authorize]
+		[HttpGet("{id}")]
+		public async Task<ActionResult> GetProfileAsync(string id)
+		{
+			var result = await _userService.GetUserAsync(id);
+			return Ok(result);
+		}
+
 		[HttpPost("register")]
 		public async Task<ActionResult> RegisterAsync(RegisterModel model)
 		{
