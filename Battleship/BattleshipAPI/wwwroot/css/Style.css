@@ -106,7 +106,7 @@ footer {
 
 .container {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 0.5fr 0.5fr 0.01fr 1fr;
   }
 
 .container-1 {
@@ -147,8 +147,8 @@ table {
 
 td {
     position: relative;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border: 2px solid #152C59;
     border-radius: 15px;
 }
@@ -158,8 +158,8 @@ td {
     }
 
     td div {
-        width: 70px;
-        height: 70px;
+        width: 60px;
+        height: 60px;
     }
 
 .numbers, .letters {
@@ -176,7 +176,7 @@ td {
     position: absolute;
     bottom: 5px;
     left: 5px;
-    width: 60px;
+    width: 50px;
     height: 30px;
     background: #851B15;
     border-radius: 5px 5px 50px 35px;
@@ -217,7 +217,7 @@ td {
 }
 
 .miss {
-    width: 60px;
+    width: 50px;
     height: 10px;
     position: absolute;
     top: 30px;
@@ -250,7 +250,7 @@ td {
 
 .miss::after {
     content: '';
-    width: 60px;
+    width: 50px;
     height: 10px;
     position: absolute;
     border-radius: 5px;

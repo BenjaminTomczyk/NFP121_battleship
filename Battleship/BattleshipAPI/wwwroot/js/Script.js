@@ -1,4 +1,54 @@
-﻿function auth() {
+﻿function startGame(diff) {
+    window.alert("WORK IN PROGRESS");
+}
+
+function loadAdmin(){
+    window.alert("WORK IN PROGRESS");
+}
+
+var count = 0;
+
+function getCells() {
+	var guessClick = document.getElementsByTagName("td");
+		for (var i = 0; i < guessClick.length; i++) {
+			guessClick[i].onclick = answer;
+		}
+}
+
+function answer(eventObj) {
+	var fire = eventObj.target;
+
+    if(count == 0){
+        sessionStorage.setItem("ShipStartPos",fire.id);
+        document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
+        count++;
+    }
+    
+    else if (count == 1){
+        if(fire.id == sessionStorage.getItem("ShipStartPos")){
+            document.getElementById(fire.id).parentElement.style.backgroundColor = "";
+            sessionStorage.removeItem("ShipStartPos");
+            count = 0;
+        }
+        else{
+            sessionStorage.setItem("ShipEndPos",fire.id);
+            document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
+            count++;
+        }
+    }
+
+    if(count == 2){
+        position = [sessionStorage.getItem("ShipStartPos"),sessionStorage.getItem("ShipEndPos")]
+        count++;
+        sessionStorage.removeItem("ShipStartPos");
+        sessionStorage.removeItem("ShipEndPos");
+        count = 0;
+    }
+
+    //TODO : Requete poste avec #position en paramètre
+}
+
+function auth() {
     if(sessionStorage.user == undefined){
         window.alert("Vous n'êtes pas connectés");
         window.location.assign("index.html");
@@ -22,6 +72,7 @@ function loadProfile() {
 }
 
 function getUser() {
+    console.log("test");
     auth();
     var user = JSON.parse(sessionStorage.user);
 

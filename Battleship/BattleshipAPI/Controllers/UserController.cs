@@ -18,9 +18,11 @@ namespace BattleshipAPI.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly IUserService _userService;
-		public UsersController(IUserService userService)
+		private BattleshipDbContext _ctx;
+		public UsersController(IUserService userService, BattleshipDbContext ctx)
 		{
 			_userService = userService;
+			_ctx = ctx;
 		}
 
 		[Authorize]
@@ -28,6 +30,8 @@ namespace BattleshipAPI.Controllers
 		public async Task<ActionResult> GetProfileAsync(string id)
 		{
 			var result = await _userService.GetUserAsync(id);
+			var games = _ctx.Game.Where(c => c.Player.Id == id).ToList();
+			result.Games = games;
 			return Ok(result);
 		}
 

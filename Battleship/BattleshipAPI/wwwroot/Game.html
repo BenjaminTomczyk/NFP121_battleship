@@ -12,7 +12,7 @@
 					<div id="title"><h2>Joueur</h2></div>
 					<div></div>
 					<div><button id="profile" onclick="loadProfile()"><h3>Profil</h3></button></div>
-					<div><button id="admin" onclick="getUser()"><h3>Espace Admin</h3></button></div>
+					<div><button id="admin" onclick="loadAdmin()"><h3>Espace Admin</h3></button></div>
 				</div>
 				<table>
 					<tr>
@@ -125,6 +125,9 @@
 			<div id="enemy_board">
 				<div class="container-3">
 					<div id="title"><h2>Adversaire</h2></div>
+					<div></div>
+					<div><button id="admin" onclick="startGame('facile')"><h3>Facile</h3></button></div>
+					<div><button id="admin" onclick="startGame('moyen')"><h3>Moyen</h3></button></div>
 				</div>
 				<table>
 					<tr>
@@ -231,6 +234,11 @@
 			</div>
 		</div>
 	</div>
-	<script src="js/Script.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+			getCells();
+        }   
+    </script>
+    <script src="js/Script.js" asp-append-version="true"></script>
 </body>
 </html>

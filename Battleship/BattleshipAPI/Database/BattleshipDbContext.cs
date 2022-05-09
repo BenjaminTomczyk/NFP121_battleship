@@ -10,6 +10,8 @@ namespace BattleshipAPI.Database
         public BattleshipDbContext(DbContextOptions<BattleshipDbContext> options) : base(options)
         {
         }
+
+        public DbSet<Game> Game { get; set; }
     }
 }
 
