@@ -70,6 +70,20 @@ button[type=submit] {
     margin: auto;
 }
 
+button[type=button] {
+    background-color: #4AB0E7;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    width: 50%;
+    font-family: "Fascinate Inline";
+    font-size: 1rem;
+    display: block;
+    margin: auto;
+}
+
 button {
     background-color: #4AB0E7;
     color: white;
@@ -93,6 +107,11 @@ footer {
 .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+.container-1 {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 0.5fr;
   }
 
 .container-2 {

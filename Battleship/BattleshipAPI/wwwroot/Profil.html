@@ -6,7 +6,15 @@
     <link rel="stylesheet" href="css/Style.css" />
 </head>
 <body>
-    <h1>VOTRE PROFIL</h1>
+    <div class="container-1">
+        <div>
+            <h1><button id="back" onclick="back()" type="submit" style="font-size:2rem; padding:5px 10px">&larr;</button></h1>
+        </div>
+        <div>
+            <h1>VOTRE PROFIL</h1>
+        </div>
+    </div>
+    
 
     <div class="container">
         <div></div>
@@ -15,10 +23,10 @@
             <label id="LastName">Tomczyk</label><br />
 
             <label><p>PRÉNOM</p></label><br />
-            <label id="FIRSTNAME">Benjamin</label><br />
+            <label id="FirstName">Benjamin</label><br />
 
             <div class="bottom-space">
-                <button type="submit">DECONNEXION</button>
+                <button type="button" id="disconnect" onclick="disconnect()">DECONNEXION</button>
             </div>
         </div>
         <div>
@@ -28,9 +36,8 @@
             <label><p>ADRESSE E-MAIL</p></label><br />
             <label id="Email">benjamin.tomczyk@gmail.com</label><br />
 
-            <div class="bottom-space">
-                <button type="submit">PASSER ADMIN</button>
-            </div>
+            <label><p>TYPE DE COMPTE</p></label><br />
+            <label id="Role">User</label><br />
         </div>
         <div></div>
     </div>
@@ -39,6 +46,11 @@
         <p>CREDITS | BENJAMIN TOMCZYK - ALEXANDRE BRAND</p>
     </footer>
 
+    <script type="text/javascript">
+        window.onload = function() {
+            getUser();
+        }   
+    </script>
     <script src="js/Script.js" asp-append-version="true"></script>
 </body>
 </html>
