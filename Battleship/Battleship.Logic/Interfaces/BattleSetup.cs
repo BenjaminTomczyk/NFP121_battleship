@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using Battleship.Logic.Services;
 using Battleship.Model.Entities;
 
 namespace Battleship.Logic.Interfaces
 {
     public class BattleSetup : IBattleSetup
     {
-        public List<Ship> PlaceBoats(Player p1, int gridSize, List<int> requiredShips)
+        public List<ShipService> PlaceBoats(Player p1, int gridSize, List<int> requiredShips)
         {
-            var res = new List<Ship>();
+            var res = new List<ShipService>();
             for (int i = 0; i < requiredShips.Count; i++)
             {
-                res.Add(new Ship()
-                {
-                    Start = new Position(),
-                    End = new Position()
-                });
+                res.Add(new ShipService(new Position(),new Position()));
             }
             return res;
         }

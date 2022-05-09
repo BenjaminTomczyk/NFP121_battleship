@@ -35,14 +35,14 @@ namespace Battleship.Logic.Tests.Services
         public void PlaceBoats_With3RequiredShips_ThenAllShipsAreSet()
         {
             var res = _battleSetup.PlaceBoats(null, 0, threeRequiredShips);
-            Assert.IsTrue(res.All(x => x.IsSet));
+            Assert.IsTrue(res.All(x => x.IsSet()));
         }
 
         [TestMethod]
         public void PlaceBoats_With3RequiredShipsInGridOf4_ThenAllShipsAreInGrid()
         {
             var res = _battleSetup.PlaceBoats(null, 4, threeRequiredShips);
-            Assert.IsTrue(res.All(x => x.Start.Row < 4 && x.Start.Row >= 0 ));
+            Assert.IsTrue(res.All(x => x._Start.Row < 4 && x._Start.Row >= 0 ));
         }
     }
 }
