@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>BATTLESHIP</title>
+    <link rel="stylesheet" href="css/Style.css" />
+</head>
+<body>
+    <div class="container-2">
+        <div>
+            <h1>S'IDENTIFIER</h1>
+            <form action="javascript:void(0);" method="POST" onsubmit="token()">
+                <label for="Email"><p>ADRESSE E-MAIL</p></label><br />
+                <input type="text" placeholder="ADRESSE E-MAIL" name="Email" id="Email" required><br />
+
+                <label for="Password"><p>MOT DE PASSE</p></label><br />
+                <input type="password" placeholder="MOT DE PASSE" name="Password" id="Password" required><br />
+
+                <div class="bottom-space">
+                    <button type="submit">CONNEXION</button>
+                </div>
+            </form>
+        </div>
+
+        <div style="border:10px solid #4AB0E7"></div>
+
+        <div>
+            <h1>S'INSCRIRE</h1>
+            <form action="javascript:void(0);" method="POST" onsubmit="register()">
+                <label for="LastName"><p>NOM</p></label><br />
+                <input type="text" placeholder="NOM" name="LastName" id="LastName" required><br />
+
+                <label for="FirstName"><p>PRENOM</p></label><br />
+                <input type="text" placeholder="PRENOM" name="FirstName" id="FirstName" required><br />
+
+                <label for="UserName"><p>NOM D'UTILISATEUR</p></label><br />
+                <input type="text" placeholder="NOM D'UTILISATEUR'" name="UserName" id="UserName" required><br />
+
+                <label for="Email"><p>ADRESSE E-MAIL</p></label><br />
+                <input type="email" placeholder="ADRESSE E-MAIL" name="Email" id="Email1" required><br />
+
+                <label for="Password"><p>MOT DE PASSE</p></label><br />
+                <input type="password" placeholder="MOT DE PASSE" name="Password" id="Password1" required><br />
+
+                <div class="bottom-space">
+                    <button type="submit">INSCRIPTION</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>CREDITS | BENJAMIN TOMCZYK - ALEXANDRE BRAND</p>
+    </footer>
+
+    <script src="js/Script.js" asp-append-version="true"></script>
+</body>
+</html>
