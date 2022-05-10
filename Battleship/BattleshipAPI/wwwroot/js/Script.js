@@ -16,10 +16,11 @@ function getCells() {
 }
 
 function answer(eventObj) {
+    auth();
 	var fire = eventObj.target;
 
     if(count == 0){
-        sessionStorage.setItem("ShipStartPos",fire.id);
+        sessionStorage.setItem("ShipStartPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
         document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
         count++;
     }
@@ -31,21 +32,80 @@ function answer(eventObj) {
             count = 0;
         }
         else{
-            sessionStorage.setItem("ShipEndPos",fire.id);
+            sessionStorage.setItem("ShipEndPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
             document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
             count++;
         }
     }
 
     if(count == 2){
-        position = [sessionStorage.getItem("ShipStartPos"),sessionStorage.getItem("ShipEndPos")]
+
+        var cellStart = sessionStorage.getItem("ShipStartPos").replace(',','');
+        var cellEnd = sessionStorage.getItem("ShipEndPos").replace(',','');
+
+        document.getElementById(cellStart).parentElement.style.backgroundColor = "";
+        document.getElementById(cellEnd).parentElement.style.backgroundColor = "";
+
+        var start = sessionStorage.getItem("ShipStartPos").split(",").map(str => {return Number(str);});
+        var end = sessionStorage.getItem("ShipEndPos").split(",").map(str => { return Number(str);});
+        position = [start,end]
         count++;
         sessionStorage.removeItem("ShipStartPos");
         sessionStorage.removeItem("ShipEndPos");
         count = 0;
+        
+        tryShip(position);
     }
+}
 
-    //TODO : Requete poste avec #position en paramètre
+function tryShip(position){
+    auth();
+    var user = JSON.parse(sessionStorage.user);
+
+    const item = {
+        isComplete: false,
+        Start: position[0],
+        End: position[1]
+    };
+
+    fetch('api/ship/placeship', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer ' + user.token,
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(item)
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        placeShip(data);
+        })
+        .catch(error => console.error('Error ', error));
+}
+
+function placeShip(ship) {
+    if(ship.isValid){
+        var positions = ship.positions;
+
+        positions.forEach(element => {
+            var cell = element.row.toString() + element.column.toString();
+            document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
+            document.getElementById(cell).setAttribute("class","hit");
+            
+        });
+    }
+    else {
+        window.alert("Placement invalide !");
+    }
+}
+
+function unauthorized(response) {
+    if(response.status == 401){
+        window.alert("Vous n'avez pas accès à cette ressource");
+        back();
+    }
 }
 
 function auth() {
@@ -64,6 +124,7 @@ function disconnect() {
     auth();
     sessionStorage.removeItem("user");
     window.location.assign("index.html");
+    window.alert("Vous avez été déconnecté");
 }
 
 function loadProfile() {
@@ -72,7 +133,6 @@ function loadProfile() {
 }
 
 function getUser() {
-    console.log("test");
     auth();
     var user = JSON.parse(sessionStorage.user);
 
@@ -83,23 +143,22 @@ function getUser() {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
-    .then((response) => {
-        document.getElementById('LastName').innerHTML= response.lastName;
-        document.getElementById('FirstName').innerHTML= response.firstName;
-        document.getElementById('UserName').innerHTML= response.userName;
-        document.getElementById('Email').innerHTML= response.email;
-        if(Array.from(user.roles).includes("Administrator")){
-            document.getElementById('Role').innerHTML= "Administrateur";
-        }
-        else {
-            document.getElementById('Role').innerHTML= "Joueur";
-        }
-        
+    .then(response => Promise.all([response, response.json()]))
+    .then(([status, response]) => {
+    unauthorized(status);
+    document.getElementById('LastName').innerHTML= response.lastName;
+    document.getElementById('FirstName').innerHTML= response.firstName;
+    document.getElementById('UserName').innerHTML= response.userName;
+    document.getElementById('Email').innerHTML= response.email;
+    if(Array.from(user.roles).includes("Administrator")){
+        document.getElementById('Role').innerHTML= "Administrateur";
+    }
+    else {
+        document.getElementById('Role').innerHTML= "Joueur";
+    }
     })
     .catch(error => console.error('Error ', error));
 }
-
 
 function game(res) {
     if (arguments.length == 0) {
@@ -117,14 +176,14 @@ function game(res) {
                 window.location.assign("Game.html");
                 sessionStorage.setItem("user",JSON.stringify(res))
             }
-            else {
+            else{
+                unauthorized(response);
                 window.alert("Error " + response.statusText);
             }
             return response.text();
         })
         .catch(error => console.error('Error ', error));
 }
-
 
 function token(mail, pwd) {
     var email;
@@ -165,7 +224,6 @@ function token(mail, pwd) {
         })
         .catch(error => console.error('Error ', error));
 }
-
 
 function register() {
     email = document.getElementById('Email1');

@@ -3,6 +3,7 @@ using Battleship.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Battleship.Logic.Services
 {
@@ -22,6 +23,27 @@ namespace Battleship.Logic.Services
             _Start = Start;
             _End = End;
             _Positions = new List<Position>();
+        }
+
+        
+        public Ship VerifyShipValidity(PlaceShipModel positions)
+        {
+            bool isValid = false;
+            _Start = new Position(positions.Start[0], positions.Start[1]);
+            _End = new Position(positions.End[0], positions.End[1]);
+            GenerationListPositions();
+
+            //if(conditions){
+                isValid = true;
+            //}
+            //else {
+                //isValid = false;
+            //}
+
+
+            if (isValid) return new Ship(_Start,_End,_Positions, isValid);
+            
+            else return new Ship(null,null,null,isValid);
         }
 
         public bool IsSet() => _Start != null && _End != null;

@@ -14,7 +14,7 @@ namespace Battleship.Model.Entities
         [Required]
         public ApplicationUser Player { get; set; }
         [Required]
-        public bool result { get; set; }
+        public bool Result { get; set; }
         [Required]
         public int PlayerShootsNumber { get; set; }
         [Required]
@@ -25,5 +25,19 @@ namespace Battleship.Model.Entities
         public int GridSize { get; set; }
 
         public List<Position>? PositionsInvalid = new List<Position>() { };
+
+        public Game()
+        {
+        }
+
+        public Game(IA ia, ApplicationUser player, bool result, int playerShootNumber, int iaShootNumber, TimeSpan duration, List<Position> positionsInvalid) {
+            IA = ia;
+            Player = player;
+            Result = result;
+            PlayerShootsNumber = playerShootNumber;
+            IAShootsNumber = iaShootNumber;
+            Duration = duration;
+            PositionsInvalid = positionsInvalid;
+        }
     }
 }

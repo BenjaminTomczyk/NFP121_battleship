@@ -12,6 +12,16 @@ namespace Battleship.Model.Entities
         public Position? End { get; set; }
 
         public List<Position>? Positions { get; set; }
-        
+
+        public bool IsValid { get; set; }
+
+        public Ship() { }
+        public Ship(Position start, Position end, List<Position> positions, bool isValid)
+        {
+            Start = start;
+            End = end;
+            Positions = positions;
+            IsValid = isValid;
+        }
     }
 }

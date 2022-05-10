@@ -41,6 +41,7 @@ namespace BattleshipAPI
             //User Manager Service
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<BattleshipDbContext>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IShipService, ShipService>();
 
             services.AddDbContextPool<BattleshipDbContext>(opt =>
             {

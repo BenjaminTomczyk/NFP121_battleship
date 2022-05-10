@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
 using Battleship.Model.Entities.Auth;
-//using Battleship.Repository.Repositories;
 using BattleshipAPI.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +15,7 @@ namespace BattleshipAPI.Controllers
 	{
 		private readonly IUserService _userService;
 		private BattleshipDbContext _ctx;
+
 		public UsersController(IUserService userService, BattleshipDbContext ctx)
 		{
 			_userService = userService;

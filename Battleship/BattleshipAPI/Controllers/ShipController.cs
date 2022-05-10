@@ -1,30 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
 using BattleshipAPI.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BattleshipAPI.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class ShipController : Controller
     {
+        private readonly IShipService _shipService;
         private BattleshipDbContext _ctx;
 
-        public ShipController(BattleshipDbContext ctx)
+        public ShipController(IShipService shipService, BattleshipDbContext ctx)
         {
+            _shipService = shipService;
             _ctx = ctx;
         }
 
-        // GET: api/ship
-        [HttpGet]
-        public void Get()
+        [Authorize]
+        [HttpPost("placeship")]
+        public Ship TestShipPlacement(PlaceShipModel positions)
         {
-           
+
+            var result = _shipService.VerifyShipValidity(positions);
+            return result;
         }
+
 
         // POST api/ship
         [HttpPost]

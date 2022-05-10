@@ -6,6 +6,7 @@ namespace Battleship.Logic.Interfaces
 {
     public interface IShipService
     {
+        Ship VerifyShipValidity(PlaceShipModel positions);
         bool IsSet();
         bool IsPosition();
         bool IsInGrid(int gridSize);
