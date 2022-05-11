@@ -16,5 +16,8 @@ namespace Battleship.Logic.Interfaces
             }
             return res;
         }
+
+
+
     }
 }

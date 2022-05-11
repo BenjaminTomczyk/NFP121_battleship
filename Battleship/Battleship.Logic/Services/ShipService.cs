@@ -31,19 +31,37 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
-            GenerationListPositions();
+            //GenerationListPositions();
 
-            //if(conditions){
-                isValid = true;
-            //}
-            //else {
-                //isValid = false;
-            //}
+            if(IsSet()){
+                if (IsPosition())
+                {
+                    if (IsInGrid(5)) //todo mettre int gridsize attribut sur battleService ? jsp en tout cas faut crée un GetGridsSize() qui retour la taille de la grille
+                    {
+                        if (!IsCollisionWithListPlaceShip())
+                        {
+                            if (!IsInjuxtapose(new Game())) //TODO remplacer par un accesseur à la l'instance "game" GetGameInstance()
+                            {
+                                isValid = true;
+                            }
+
+                        }
+
+                    }
+                }
+            }
 
 
-            if (isValid) return new Ship(_Start,_End,_Positions, isValid);
-            
-            else return new Ship(null,null,null,isValid);
+
+            if (isValid)
+            {
+                //TODO ajouter le bateau a la liste des bateaux placer ou en base de données 
+                //TODO mettre a jour la liste des coordonnées invalid sur lequelles on ne peut pas mettre de bateaux
+                this.AddPositionInvalid(new Game()); //TODO remplacer par un accesseur à la l'instance "game" 
+                return new Ship(_Start, _End, _Positions, isValid);
+            }
+
+            else return new Ship(null, null, null, isValid);
         }
 
         public bool IsSet() => _Start != null && _End != null;
@@ -66,12 +84,12 @@ namespace Battleship.Logic.Services
             foreach (Position posI in _Positions)
             {
                 foreach (Position posY in game.PositionsInvalid)
-                    if (posI.Equals(posY)) return false;
+                    if (posI.Equals(posY)) return true;
             }
             return false;
         }
 
-        public void AddPositionInvalid(Game game)
+        public void AddPositionInvalid(Game game)//fonction a appeler quand le bateau est creer définitivement
         {
             if (this._Positions != null && game != null)
             {
@@ -101,9 +119,18 @@ namespace Battleship.Logic.Services
             return (_Start.Column != _End.Column && _Start.Row != _End.Row);
         }
 
+        public bool IsCollisionWithListPlaceShip()
+        {//TODO 
+            foreach(ShipService placeShip in new List<ShipService>()/*placeShips*/)//TODO : creer un attribut sur la game qui est une list qui contient tout les ship placer ou faire appele a la base de données
+            {
+                if (this.IsCollision(placeShip)) return true;
+            }
+            return false;
+        }
+
         public bool IsCollision(ShipService ship1)
         {
-            if (ship1 is null) return false;
+            if (!ship1.IsSet()&&!this.IsSet()) return true;
             this.GenerationListPositions();
             //TODO : mettre la fonction lors de la pose du bateau apres les verifications de si il est valide
             ship1.GenerationListPositions();
