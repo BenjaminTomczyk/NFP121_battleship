@@ -1,18 +1,27 @@
 ﻿using System;
 using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
+using Battleship.Repository.Interfaces;
 
 namespace Battleship.Logic.Services
 {
 	public class GameService : IGameService
 	{
-		public GameService()
+		private readonly IGameRepository _gameRepository;
+
+		public GameService(IGameRepository gameRepository)
 		{
+			_gameRepository = gameRepository;
 		}
 
-		public Game StartGame()
+		public string SetIA()
         {
-			return new Game();
+			return _gameRepository.SetIALevels();
+        }
+
+		public Game StartGame(Game game)
+        {
+			return _gameRepository.setNewGame(game);
         }
 	}
 }

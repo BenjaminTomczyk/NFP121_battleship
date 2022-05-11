@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Battleship.Model.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
-namespace BattleshipAPI.Database
+namespace Battleship.Repository.DBContext
 {
     public class BattleshipDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -12,6 +12,6 @@ namespace BattleshipAPI.Database
         }
 
         public DbSet<Game> Game { get; set; }
+        public DbSet<IA> IA { get; set; }
     }
 }
-

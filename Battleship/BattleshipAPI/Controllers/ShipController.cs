@@ -13,12 +13,10 @@ namespace BattleshipAPI.Controllers
     public class ShipController : Controller
     {
         private readonly IShipService _shipService;
-        private BattleshipDbContext _ctx;
 
-        public ShipController(IShipService shipService, BattleshipDbContext ctx)
+        public ShipController(IShipService shipService)
         {
             _shipService = shipService;
-            _ctx = ctx;
         }
 
         [Authorize]

@@ -4,9 +4,9 @@ using Battleship.Model.Entities;
 
 namespace Battleship.Repository.Interfaces
 {
-	public interface IUserRepository
+	public interface IShipRepository
 	{
-		List<Game> GetUserHistory(string id);
+		
 	}
 
 }

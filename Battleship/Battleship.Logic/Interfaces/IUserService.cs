@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Battleship.Model.Entities;
 using Battleship.Model.Entities.Auth;
@@ -15,6 +15,8 @@ namespace Battleship.Logic.Interfaces
         Task<string> AddRoleAsync(AddRoleModel model);
 
         Task<ApplicationUser> GetUserAsync(string id);
+
+        List<Game> GetPlayerHistory(string id);
     }
 }
 

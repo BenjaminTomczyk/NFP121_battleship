@@ -220,7 +220,7 @@ namespace BattleshipAPI.Migrations
                     IAId = table.Column<int>(type: "int", nullable: true),
                     PlayerId = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    result = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Result = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     PlayerShootsNumber = table.Column<int>(type: "int", nullable: false),
                     IAShootsNumber = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time(6)", nullable: false),

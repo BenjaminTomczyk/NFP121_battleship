@@ -8,18 +8,13 @@ using BattleshipAPI.Database;
 
 namespace Battleship.Repository.Repositories
 {
-	public class UserRepository : IUserRepository
+	public class ShipRepository : IShipRepository
 	{
 		private BattleshipDbContext _ctx;
 
-		public UserRepository(BattleshipDbContext ctx)
+		public ShipRepository(BattleshipDbContext ctx)
 		{
 			_ctx = ctx;
-		}
-
-		public List<Game> GetUserHistory(string id)
-        {
-			return _ctx.Game.Where(c => c.Player.Id == id).ToList();
 		}
 	}
 }

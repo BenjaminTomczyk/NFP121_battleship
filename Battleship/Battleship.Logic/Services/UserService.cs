@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
 using Battleship.Model.Entities.Auth;
+using Battleship.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -20,12 +21,19 @@ namespace Battleship.Logic.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly JWT _jwt;
+        private readonly IUserRepository _userRepository;
 
-        public UserService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IOptions<JWT> jwt)
+        public UserService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IOptions<JWT> jwt, IUserRepository userRepository)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwt = jwt.Value;
+            _userRepository = userRepository;
+        }
+
+        public List<Game> GetPlayerHistory(string id)
+        {
+            return _userRepository.GetUserHistory(id);
         }
 
         public async Task<string> RegisterAsync(RegisterModel model)

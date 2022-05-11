@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
 using Battleship.Model.Entities.Auth;
-using BattleshipAPI.Database;
+using Battleship.Repository.DBContext;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,12 +14,10 @@ namespace BattleshipAPI.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly IUserService _userService;
-		private BattleshipDbContext _ctx;
 
-		public UsersController(IUserService userService, BattleshipDbContext ctx)
+		public UsersController(IUserService userService)
 		{
 			_userService = userService;
-			_ctx = ctx;
 		}
 
 		[Authorize]
@@ -27,8 +25,8 @@ namespace BattleshipAPI.Controllers
 		public async Task<ActionResult> GetProfileAsync(string id)
 		{
 			var result = await _userService.GetUserAsync(id);
-			var games = _ctx.Game.Where(c => c.Player.Id == id).ToList();
-			result.Games = games;
+			result.Games = _userService.GetPlayerHistory(id);
+
 			return Ok(result);
 		}
 

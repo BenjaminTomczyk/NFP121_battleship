@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship", "Battleship\Ba
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship.Tests", "Battleship.Tests\Battleship.Tests.csproj", "{8F4321B9-8799-4F79-9EAA-A98B5BBE95D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship.Logic", "Battleship.Logic\Battleship.Logic.csproj", "{4715D268-6106-41A4-8EAB-2C086088CD6F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship.Logic.Tests", "Battleship.Logic.Tests\Battleship.Logic.Tests.csproj", "{AE393765-273C-4395-8B1B-DB81AB8CF1AC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship.Model", "Battleship.Model\Battleship.Model.csproj", "{36452A36-1DD3-4412-BFC1-AFAE744E1BE9}"
@@ -16,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleshipAPI", "BattleshipAPI\BattleshipAPI.csproj", "{021EDDD7-57AE-48E8-8DFF-CD7082184000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battleship.Repository", "Battleship.Repository\Battleship.Repository.csproj", "{E3F00C1A-076D-4B83-A995-D52470191C54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Battleship.Logic", "Battleship.Logic\Battleship.Logic.csproj", "{C3CDA66F-3833-4497-8D0C-8B84FD3DF8F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +31,6 @@ Global
 		{8F4321B9-8799-4F79-9EAA-A98B5BBE95D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F4321B9-8799-4F79-9EAA-A98B5BBE95D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F4321B9-8799-4F79-9EAA-A98B5BBE95D1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4715D268-6106-41A4-8EAB-2C086088CD6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4715D268-6106-41A4-8EAB-2C086088CD6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4715D268-6106-41A4-8EAB-2C086088CD6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4715D268-6106-41A4-8EAB-2C086088CD6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE393765-273C-4395-8B1B-DB81AB8CF1AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AE393765-273C-4395-8B1B-DB81AB8CF1AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE393765-273C-4395-8B1B-DB81AB8CF1AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -51,6 +47,10 @@ Global
 		{E3F00C1A-076D-4B83-A995-D52470191C54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E3F00C1A-076D-4B83-A995-D52470191C54}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E3F00C1A-076D-4B83-A995-D52470191C54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3CDA66F-3833-4497-8D0C-8B84FD3DF8F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CDA66F-3833-4497-8D0C-8B84FD3DF8F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3CDA66F-3833-4497-8D0C-8B84FD3DF8F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3CDA66F-3833-4497-8D0C-8B84FD3DF8F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

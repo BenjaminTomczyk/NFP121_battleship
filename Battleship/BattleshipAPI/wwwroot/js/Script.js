@@ -171,17 +171,13 @@ function game(res) {
             'Authorization': 'Bearer ' + res.token
         }
     })
-        .then(function (response) {
-            if (response.status == 200) {
-                window.location.assign("Game.html");
-                sessionStorage.setItem("user",JSON.stringify(res))
-            }
-            else{
-                unauthorized(response);
-                window.alert("Error " + response.statusText);
-            }
-            return response.text();
+        .then(response => Promise.all([response, response.text()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        window.location.assign("Game.html");
+        sessionStorage.setItem("user",JSON.stringify(res))
         })
+
         .catch(error => console.error('Error ', error));
 }
 
