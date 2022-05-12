@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Battleship.Model.Entities;
 
@@ -10,7 +12,11 @@ namespace Battleship.Logic.Interfaces
 
 		Task<Game> StartGame(string id);
 
-		Game GetGame();
+		Game GetGame(int id);
+
+		List<PlayerStatisticsModel> GetUserHistory(string id);
+
+		IQueryable<Game> GetFullHistory();
 	}
 }
 

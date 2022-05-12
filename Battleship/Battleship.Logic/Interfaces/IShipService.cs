@@ -6,6 +6,7 @@ namespace Battleship.Logic.Interfaces
 {
     public interface IShipService
     {
+        void setCurrentGame(Game game);
         Ship VerifyShipValidity(PlaceShipModel positions);
         bool IsSet();
         bool IsPosition();

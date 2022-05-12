@@ -16,27 +16,25 @@ namespace Battleship.Logic.Services
         public List<Position> _Positions;
         public Game _Game;
 
-        private readonly IShipRepository _shipRepository;
-        //private readonly IGameService _gameService;
-
         public ShipService() { }
-        public ShipService(/*IShipRepository shipRepository, IGameService gameService, */Position Start, Position End)
+        public ShipService(Position Start, Position End)
         {
             _Id = 0;
             _Start = Start;
             _End = End;
             _Positions = new List<Position>();
-            //_shipRepository = shipRepository;
-            //_gameService = gameService;
         }
 
-        
+        public void setCurrentGame(Game game)
+        {
+            _Game = game;
+        }
+
         public Ship VerifyShipValidity(PlaceShipModel positions)
         {
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
-            //_Game = _gameService.GetGame();
             //GenerationListPositions();
 
             if(IsSet()){
@@ -46,7 +44,7 @@ namespace Battleship.Logic.Services
                     {
                         if (!IsCollisionWithListPlaceShip())
                         {
-                            if (!IsInjuxtapose(new Game())) //TODO remplacer par un accesseur à la l'instance "game" GetGameInstance()
+                            if (!IsInjuxtapose(_Game)) //TODO remplacer par un accesseur à la l'instance "game" GetGameInstance()
                             {
                                 isValid = true;
                             }

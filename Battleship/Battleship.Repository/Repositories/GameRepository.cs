@@ -54,6 +54,11 @@ namespace Battleship.Repository.Repositories
         {
 			return _ctx.Game.First(g => g.Id == id);
 		}
+
+		public IQueryable<Game> getHistory()
+        {
+			return _ctx.Game;
+		}
 	}
 }
 

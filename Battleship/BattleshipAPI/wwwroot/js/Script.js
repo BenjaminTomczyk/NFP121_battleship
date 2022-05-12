@@ -171,12 +171,78 @@ function game(res) {
             'Authorization': 'Bearer ' + res.token
         }
     })
-        .then(response => Promise.all([response, response.text()]))
+        .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
         window.location.assign("Game.html");
         sessionStorage.setItem("user",JSON.stringify(res));
-        console.log(data);
+        sessionStorage.setItem("game",JSON.stringify(data));
+        })
+
+        .catch(error => console.error('Error ', error));
+}
+
+function getGame(id) {
+    auth();
+    var res = JSON.parse(sessionStorage.user);
+    var game = JSON.parse(sessionStorage.game);
+
+    fetch('api/game/get/' + game.id, {
+        headers: {
+            'Authorization': 'Bearer ' + res.token
+        }
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        sessionStorage.setItem("user",JSON.stringify(res));
+        sessionStorage.setItem("game",JSON.stringify(data));
+        })
+
+        .catch(error => console.error('Error ', error));
+}
+
+function getUserGames() {
+    auth();
+    var res = JSON.parse(sessionStorage.user);
+    var game = JSON.parse(sessionStorage.game);
+
+    fetch('api/game/history/'+ res.id, {
+        headers: {
+            'Authorization': 'Bearer ' + res.token
+        }
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+
+        var col = [];
+        for (var i = 0; i < data.length; i++) {
+            for (var key in data[i]) {
+                if (col.indexOf(key) === -1) {
+                    col.push(key);
+                }
+            }
+        }
+
+        var table = document.getElementById("stats");
+
+        var tr = table.insertRow(-1);
+
+        for (var i = 0; i < data.length; i++) {
+
+            tr = table.insertRow(-1);
+
+            for (var j = 0; j < col.length-1; j++) {
+                var tabCell = tr.insertCell(-1);
+                tabCell.innerHTML = data[i][col[j]];
+            }
+        }
+
+        var divContainer = document.getElementById("showData");
+        divContainer.innerHTML = "";
+        divContainer.appendChild(table);
+
         })
 
         .catch(error => console.error('Error ', error));

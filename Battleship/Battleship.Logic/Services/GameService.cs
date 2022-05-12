@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Battleship.Logic.Interfaces;
@@ -8,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Battleship.Logic.Services
 {
-	public class GameService : IGameService
+    public class GameService : IGameService
 	{
 		private readonly IGameRepository _gameRepository;
 		private readonly IUserService _userService;
@@ -32,6 +34,8 @@ namespace Battleship.Logic.Services
 
 			_Game.Player = await _userService.GetUserAsync(id);
 
+			_Game.Result = "";
+
 			_Game.GridSize = 8;
 
 			Game game = _gameRepository.setNewGame(_Game);
@@ -39,10 +43,38 @@ namespace Battleship.Logic.Services
 			return _Game;
 		}
 
-		public Game GetGame()
+		public Game GetGame(int id)
         {
-			return _gameRepository.getGame(_Game.Id);
+			return _gameRepository.getGame(id);
         }
+
+		public List<PlayerStatisticsModel> GetUserHistory(string id)
+        {
+			IQueryable<Game> res = _gameRepository.getHistory();
+
+			res
+				.Where(g => g.Finished == true)
+				.Where(g => g.Player.Id == id)
+				.Take(10);
+
+			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
+			foreach(Game g in res)
+            {
+				stats.Add(new PlayerStatisticsModel(g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA, g.Duration, g.Player));
+            }
+
+			return stats;
+        }
+
+		public IQueryable<Game> GetFullHistory()
+		{
+			IQueryable<Game> res = _gameRepository.getHistory();
+			res
+				.Where(g => g.Finished == true)
+				.Take(10);
+
+			return res;
+		}
 	}
 }
 

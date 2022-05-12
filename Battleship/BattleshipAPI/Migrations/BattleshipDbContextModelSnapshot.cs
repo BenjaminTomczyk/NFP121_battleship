@@ -98,6 +98,9 @@ namespace BattleshipAPI.Migrations
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time(6)");
 
+                    b.Property<bool>("Finished")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("GridSize")
                         .HasColumnType("int");
 
@@ -114,8 +117,9 @@ namespace BattleshipAPI.Migrations
                     b.Property<int>("PlayerShootsNumber")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Result")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

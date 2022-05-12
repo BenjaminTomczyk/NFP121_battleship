@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Battleship.Model.Entities;
 
 namespace Battleship.Repository.Interfaces
@@ -11,6 +12,8 @@ namespace Battleship.Repository.Interfaces
         Game setNewGame(Game game);
 
         Game getGame(int id);
+
+        IQueryable<Game> getHistory();
     }
 
 }

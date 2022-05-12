@@ -12,7 +12,7 @@ namespace Battleship.Logic.Interfaces
             var res = new List<ShipService>();
             for (int i = 0; i < requiredShips.Count; i++)
             {
-                res.Add(new ShipService(new Position(),new Position()));
+                res.Add(new ShipService(new Position(), new Position()));
             }
             return res;
         }

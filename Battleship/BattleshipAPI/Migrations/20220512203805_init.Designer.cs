@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BattleshipAPI.Migrations
 {
     [DbContext(typeof(BattleshipDbContext))]
-    [Migration("20220512174927_init")]
+    [Migration("20220512203805_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -100,6 +100,9 @@ namespace BattleshipAPI.Migrations
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time(6)");
 
+                    b.Property<bool>("Finished")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<int>("GridSize")
                         .HasColumnType("int");
 
@@ -116,8 +119,9 @@ namespace BattleshipAPI.Migrations
                     b.Property<int>("PlayerShootsNumber")
                         .HasColumnType("int");
 
-                    b.Property<bool>("Result")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<string>("Result")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 

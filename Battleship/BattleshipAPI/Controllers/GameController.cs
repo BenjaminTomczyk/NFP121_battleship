@@ -19,11 +19,13 @@ namespace BattleshipAPI.Controllers
     public class GameController : ControllerBase
     {
         private readonly IGameService _gameService;
+        private readonly IShipService _shipService;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public GameController(IGameService gameService, UserManager<ApplicationUser> userManager)
+        public GameController(IGameService gameService, IShipService shipService, UserManager<ApplicationUser> userManager)
         {
             _gameService = gameService;
+            _shipService = shipService;
             _userManager = userManager;
         }
 
@@ -32,6 +34,26 @@ namespace BattleshipAPI.Controllers
         {
             _gameService.SetIA();
             return await _gameService.StartGame(id);
+        }
+
+        [HttpGet("get/{id}")]
+        public Game GetGame(int id)
+        {
+            Game game = _gameService.GetGame(id);
+            _shipService.setCurrentGame(game);
+            return game;
+        }
+
+        [HttpGet("history/{id}")]
+        public List<PlayerStatisticsModel> GetHistory(string id)
+        {
+            return _gameService.GetUserHistory(id);
+        }
+
+        [HttpGet("history")]
+        public IQueryable<Game> GetFullHistory()
+        {
+            return _gameService.GetFullHistory();
         }
     }
 }
