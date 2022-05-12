@@ -166,7 +166,7 @@ function game(res) {
         res = JSON.parse(sessionStorage.user);
     }
 
-    fetch('api/game', {
+    fetch('api/game/'+ res.id, {
         headers: {
             'Authorization': 'Bearer ' + res.token
         }
@@ -175,7 +175,8 @@ function game(res) {
         .then(([status, data]) => {
         unauthorized(status);
         window.location.assign("Game.html");
-        sessionStorage.setItem("user",JSON.stringify(res))
+        sessionStorage.setItem("user",JSON.stringify(res));
+        console.log(data);
         })
 
         .catch(error => console.error('Error ', error));

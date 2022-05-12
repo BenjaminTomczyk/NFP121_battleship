@@ -1,5 +1,6 @@
 ﻿using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
+using Battleship.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +14,20 @@ namespace Battleship.Logic.Services
         public Position _Start;
         public Position _End;
         public List<Position> _Positions;
+        public Game _Game;
+
+        private readonly IShipRepository _shipRepository;
+        //private readonly IGameService _gameService;
 
         public ShipService() { }
-
-        public ShipService( Position Start, Position End)
+        public ShipService(/*IShipRepository shipRepository, IGameService gameService, */Position Start, Position End)
         {
-            //TODO systeme d'ID a faire
             _Id = 0;
             _Start = Start;
             _End = End;
             _Positions = new List<Position>();
+            //_shipRepository = shipRepository;
+            //_gameService = gameService;
         }
 
         
@@ -31,6 +36,7 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
+            //_Game = _gameService.GetGame();
             //GenerationListPositions();
 
             if(IsSet()){
@@ -57,11 +63,11 @@ namespace Battleship.Logic.Services
             {
                 //TODO ajouter le bateau a la liste des bateaux placer ou en base de données 
                 //TODO mettre a jour la liste des coordonnées invalid sur lequelles on ne peut pas mettre de bateaux
-                this.AddPositionInvalid(new Game()); //TODO remplacer par un accesseur à la l'instance "game" 
-                return new Ship(_Start, _End, _Positions, isValid);
+                this.AddPositionInvalid(new Game()); //TODO remplacer par un accesseur à la l'instance "game"
+                return new Ship(_Start, _End, _Positions, _Game, isValid);
             }
 
-            else return new Ship(null, null, null, isValid);
+            else return new Ship(null, null, null, null, isValid);
         }
 
         public bool IsSet() => _Start != null && _End != null;

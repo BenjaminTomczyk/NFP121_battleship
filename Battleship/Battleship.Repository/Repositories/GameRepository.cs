@@ -47,7 +47,12 @@ namespace Battleship.Repository.Repositories
 			_ctx.Game.Add(game);
 			_ctx.SaveChanges();
 
-			return (Game)_ctx.Game.Where(c => c.Id == game.Id);
+			return _ctx.Game.First(c => c.Id == game.Id);
+		}
+
+		public Game getGame(int id)
+        {
+			return _ctx.Game.First(g => g.Id == id);
 		}
 	}
 }

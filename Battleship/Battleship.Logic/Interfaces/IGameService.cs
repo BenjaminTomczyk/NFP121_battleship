@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Battleship.Model.Entities;
 
 namespace Battleship.Logic.Interfaces
@@ -7,7 +8,9 @@ namespace Battleship.Logic.Interfaces
 	{
 		string SetIA();
 
-		Game StartGame(Game game);
+		Task<Game> StartGame(string id);
+
+		Game GetGame();
 	}
 }
 
