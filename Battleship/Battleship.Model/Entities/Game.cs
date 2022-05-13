@@ -36,8 +36,6 @@ namespace Battleship.Model.Entities
 
         public List<Position>? PositionsInvalid = new List<Position>();
 
-        public List<Ship> ShipsPose = new List<Ship>();
-
 
         public Game()
         {
@@ -53,7 +51,6 @@ namespace Battleship.Model.Entities
             IAShootsNumber = iaShootNumber;
             Duration = duration;
             PositionsInvalid = positionsInvalid;
-            ShipsPose = shipsPose;
             Finished = finished;
             Date = date;
             Ship2Number = 1;

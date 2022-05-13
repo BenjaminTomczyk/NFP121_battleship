@@ -13,5 +13,6 @@ namespace Battleship.Repository.DBContext
 
         public DbSet<Game> Game { get; set; }
         public DbSet<IA> IA { get; set; }
+        public DbSet<Ship> Ship { get; set; }
     }
 }

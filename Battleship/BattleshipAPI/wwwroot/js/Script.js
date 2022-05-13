@@ -65,7 +65,8 @@ function tryShip(position){
     const item = {
         isComplete: false,
         Start: position[0],
-        End: position[1]
+        End: position[1],
+        UserId: user.id
     };
 
     fetch('api/ship/placeship', {

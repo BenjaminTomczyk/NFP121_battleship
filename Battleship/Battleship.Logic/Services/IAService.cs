@@ -20,6 +20,7 @@ namespace Battleship.Logic.Services
             _Id = id;
             _Level = level;
         }
+
         public void setCurrentGame(Game game)
         {
             _Game = game;
@@ -31,7 +32,7 @@ namespace Battleship.Logic.Services
         {
             bool shootresult = false;
             
-            foreach(Ship userShip in _Game.ShipsPose)//TODO parcourir la liste des bateaux de l'utilisateur // Rajouter un string sur le ship pour savoir si c'est un bateau de l'IA ou de l'utilisateur
+            /*foreach(Ship userShip in _Game.ShipsPose)//TODO parcourir la liste des bateaux de l'utilisateur // Rajouter un string sur le ship pour savoir si c'est un bateau de l'IA ou de l'utilisateur
             {
                 if (userShip.NamePlayer == "User")
                 {
@@ -40,7 +41,7 @@ namespace Battleship.Logic.Services
                         if (position.Equals(posUserShip)) return true;
                     }
                 }
-            }
+            }*/
             return shootresult;
         }
         

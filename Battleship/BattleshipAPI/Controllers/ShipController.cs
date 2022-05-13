@@ -22,7 +22,7 @@ namespace BattleshipAPI.Controllers
         [HttpPost("placeship")]
         public Ship TestShipPlacement(PlaceShipModel positions)
         {
-
+            _shipService.setCurrentUser(positions.UserId);
             var result = _shipService.VerifyShipValidity(positions);
             return result;
         }

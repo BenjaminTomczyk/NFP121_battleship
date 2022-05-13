@@ -15,11 +15,13 @@ namespace Battleship.Logic.Services
         public Position _End;
         public List<Position> _Positions;
         public Game _Game;
+        public ApplicationUser _User;
 
         private readonly IShipRepository _shipRepository;
+        private readonly IUserService _userService;
 
         public ShipService() { }
-        public ShipService(Position Start, Position End, IShipRepository shipRepository)
+        public ShipService(Position Start, Position End, IShipRepository shipRepository, IUserService userService)
         {
             //TODO mettre un système d'id en place
             _Id = 0;
@@ -27,6 +29,7 @@ namespace Battleship.Logic.Services
             _End = End;
             _Positions = new List<Position>();
             _shipRepository = shipRepository;
+            _userService = userService;
         }
 
         public void setCurrentGame(Game game)
@@ -34,7 +37,12 @@ namespace Battleship.Logic.Services
             _Game = game;
         }
 
-        public Ship VerifyShipValidity(PlaceShipModel positions,String NamePlayer)
+        public async void setCurrentUser(string userId)
+        {
+            _User = await _userService.GetUserAsync(userId);
+        }
+
+        public Ship VerifyShipValidity(PlaceShipModel positions)
         {
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
@@ -60,8 +68,8 @@ namespace Battleship.Logic.Services
             if (isValid)
             {
                 
-                Ship newShip = new Ship(_Start, _End, _Positions, _Game, NamePlayer, isValid);
-                _Game.ShipsPose.Add(newShip); //TODO ajouter le bateau a la liste des bateaux placer ou en base de données )    
+                Ship newShip = new Ship(_Start, _End, _Positions, _Game, _User, isValid);
+                _shipRepository.AddShip(newShip);   
                 this.AddPositionInvalid(_Game); //TODO remplacer par un accesseur à la l'instance "game" //TODO mettre a jour la liste des coordonnées invalid sur lequelles on ne peut pas mettre de bateaux
                 return newShip;
             }

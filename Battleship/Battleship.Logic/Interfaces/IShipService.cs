@@ -8,7 +8,8 @@ namespace Battleship.Logic.Interfaces
     public interface IShipService
     {
         void setCurrentGame(Game game);
-        Ship VerifyShipValidity(PlaceShipModel positions, String NamePlayer);
+        void setCurrentUser(string userId);
+        Ship VerifyShipValidity(PlaceShipModel positions);
         bool IsSet();
         bool IsPosition();
         bool IsInGrid(int gridSize);

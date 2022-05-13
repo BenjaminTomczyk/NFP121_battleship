@@ -160,6 +160,62 @@ namespace BattleshipAPI.Migrations
                     b.ToTable("IA");
                 });
 
+            modelBuilder.Entity("Battleship.Model.Entities.Position", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("Column")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Row")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ShipId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShipId");
+
+                    b.ToTable("Position");
+                });
+
+            modelBuilder.Entity("Battleship.Model.Entities.Ship", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EndId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsValid")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("PlayerId")
+                        .HasColumnType("varchar(255)");
+
+                    b.Property<int?>("StartId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EndId");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("PlayerId");
+
+                    b.HasIndex("StartId");
+
+                    b.ToTable("Ship");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -305,6 +361,40 @@ namespace BattleshipAPI.Migrations
                     b.Navigation("Player");
                 });
 
+            modelBuilder.Entity("Battleship.Model.Entities.Position", b =>
+                {
+                    b.HasOne("Battleship.Model.Entities.Ship", null)
+                        .WithMany("Positions")
+                        .HasForeignKey("ShipId");
+                });
+
+            modelBuilder.Entity("Battleship.Model.Entities.Ship", b =>
+                {
+                    b.HasOne("Battleship.Model.Entities.Position", "End")
+                        .WithMany()
+                        .HasForeignKey("EndId");
+
+                    b.HasOne("Battleship.Model.Entities.Game", "Game")
+                        .WithMany()
+                        .HasForeignKey("GameId");
+
+                    b.HasOne("Battleship.Model.Entities.ApplicationUser", "Player")
+                        .WithMany()
+                        .HasForeignKey("PlayerId");
+
+                    b.HasOne("Battleship.Model.Entities.Position", "Start")
+                        .WithMany()
+                        .HasForeignKey("StartId");
+
+                    b.Navigation("End");
+
+                    b.Navigation("Game");
+
+                    b.Navigation("Player");
+
+                    b.Navigation("Start");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -359,6 +449,11 @@ namespace BattleshipAPI.Migrations
             modelBuilder.Entity("Battleship.Model.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("Battleship.Model.Entities.Ship", b =>
+                {
+                    b.Navigation("Positions");
                 });
 #pragma warning restore 612, 618
         }
