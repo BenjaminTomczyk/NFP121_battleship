@@ -1,5 +1,6 @@
 ﻿using Battleship.Logic.Services;
 using Battleship.Model.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Battleship.Logic.Interfaces
@@ -7,7 +8,7 @@ namespace Battleship.Logic.Interfaces
     public interface IShipService
     {
         void setCurrentGame(Game game);
-        Ship VerifyShipValidity(PlaceShipModel positions);
+        Ship VerifyShipValidity(PlaceShipModel positions, String NamePlayer);
         bool IsSet();
         bool IsPosition();
         bool IsInGrid(int gridSize);

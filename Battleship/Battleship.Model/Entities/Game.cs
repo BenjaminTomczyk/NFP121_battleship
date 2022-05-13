@@ -26,12 +26,18 @@ namespace Battleship.Model.Entities
 
         public int GridSize { get; set; }
 
+<<<<<<< Updated upstream
         public int Ship2Number { get; set; }
         public int Ship3Number { get; set; }
         public int Ship4Number { get; set; }
         public int Ship5Number { get; set; }
 
         public List<Position>? PositionsInvalid = new List<Position>() { };
+=======
+        public List<Position>? PositionsInvalid = new List<Position>();
+
+        public List<Ship> ShipsPose = new List<Ship>();
+>>>>>>> Stashed changes
 
         public Game()
         {
