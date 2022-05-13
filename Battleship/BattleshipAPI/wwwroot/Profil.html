@@ -11,7 +11,7 @@
             <h1><button id="back" onclick="back()" type="submit" style="font-size:2rem; padding:5px 10px">&larr;</button></h1>
         </div>
         <div>
-            <h1>VOTRE PROFIL</h1>
+            <h1 id="Title">VOTRE PROFIL</h1>
         </div>
     </div>
     
@@ -47,20 +47,19 @@
             <label><p>HISTORIQUE DES PARTIES</p></label>
             <p id="showData">
                 <table id="stats" style="width:90%">
-                    <tr>
-                        <th class="numbers">Résultat</th>
-                        <th class="numbers">Tirs Joueur</th>
-                        <th class="numbers">Tirs IA</th>
-                        <th class="numbers">Niveau IA</th>
-                        <th class="numbers">Durée</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th class="numbers">Joueur</th>
+                            <th class="numbers">Résultat</th>
+                            <th class="numbers">Tirs Joueur</th>
+                            <th class="numbers">Tirs IA</th>
+                            <th class="numbers">Niveau IA</th>
+                            <th class="numbers">Durée</th>
+                        </tr>
+                    </thead>
+
                 </table>
             </p>
-            <script type="text/javascript">
-                window.onload = function() {
-                    getUserGames();
-                }
-            </script>
         </div>
     </div>
 
@@ -71,7 +70,6 @@
     <script type="text/javascript">
         window.onload = function() {
             getUser();
-            getUserGames();
         }   
     </script>
     <script src="js/Script.js" asp-append-version="true"></script>

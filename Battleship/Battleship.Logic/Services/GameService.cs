@@ -52,9 +52,10 @@ namespace Battleship.Logic.Services
         {
 			IQueryable<Game> res = _gameRepository.getHistory();
 
-			res
-				.Where(g => g.Finished == true)
-				.Where(g => g.Player.Id == id)
+			res = res
+				.Where(g =>
+					g.Finished == false &&
+					g.Player.Id == id)
 				.Take(10);
 
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
@@ -66,14 +67,22 @@ namespace Battleship.Logic.Services
 			return stats;
         }
 
-		public IQueryable<Game> GetFullHistory()
+		public List<PlayerStatisticsModel> GetFullHistory()
 		{
 			IQueryable<Game> res = _gameRepository.getHistory();
-			res
-				.Where(g => g.Finished == true)
+
+			res = res
+				.Where(g =>
+					g.Finished == false)
 				.Take(10);
 
-			return res;
+			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
+			foreach (Game g in res)
+			{
+				stats.Add(new PlayerStatisticsModel(g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA, g.Duration, g.Player));
+			}
+
+			return stats;
 		}
 	}
 }

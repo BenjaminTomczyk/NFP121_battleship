@@ -51,7 +51,7 @@ namespace BattleshipAPI.Controllers
         }
 
         [HttpGet("history")]
-        public IQueryable<Game> GetFullHistory()
+        public List<PlayerStatisticsModel> GetFullHistory()
         {
             return _gameService.GetFullHistory();
         }

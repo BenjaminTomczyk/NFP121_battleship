@@ -121,6 +121,18 @@ namespace BattleshipAPI.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("Ship2Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ship3Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ship4Number")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ship5Number")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IAId");

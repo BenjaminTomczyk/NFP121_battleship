@@ -136,6 +136,15 @@ function getUser() {
     auth();
     var user = JSON.parse(sessionStorage.user);
 
+    if(Array.from(user.roles).includes("Administrator")){
+        document.getElementById('Title').innerHTML = "VOTRE ESPACE ADMIN"
+        document.getElementById('Role').innerHTML = "Administrateur";
+    }
+    else {
+        document.getElementById('Role').innerHTML= "Joueur";
+    }
+    getGames();
+
     fetch('api/users/' + user.id, {
         headers: {
             'Authorization': 'Bearer ' + user.token,
@@ -150,12 +159,7 @@ function getUser() {
     document.getElementById('FirstName').innerHTML= response.firstName;
     document.getElementById('UserName').innerHTML= response.userName;
     document.getElementById('Email').innerHTML= response.email;
-    if(Array.from(user.roles).includes("Administrator")){
-        document.getElementById('Role').innerHTML= "Administrateur";
-    }
-    else {
-        document.getElementById('Role').innerHTML= "Joueur";
-    }
+
     })
     .catch(error => console.error('Error ', error));
 }
@@ -202,12 +206,19 @@ function getGame(id) {
         .catch(error => console.error('Error ', error));
 }
 
-function getUserGames() {
+function getGames() {
     auth();
     var res = JSON.parse(sessionStorage.user);
-    var game = JSON.parse(sessionStorage.game);
+    var url;
 
-    fetch('api/game/history/'+ res.id, {
+    if(Array.from(res.roles).includes("Administrator")){
+        url = "api/game/history";
+    }
+    else {
+        url = "api/game/history/" + res.id;
+    }
+
+    fetch(url, {
         headers: {
             'Authorization': 'Bearer ' + res.token
         }
@@ -224,27 +235,22 @@ function getUserGames() {
                 }
             }
         }
-
         var table = document.getElementById("stats");
-
         var tr = table.insertRow(-1);
 
         for (var i = 0; i < data.length; i++) {
 
             tr = table.insertRow(-1);
 
-            for (var j = 0; j < col.length-1; j++) {
+            for (var j = 0; j < col.length; j++) {
                 var tabCell = tr.insertCell(-1);
                 tabCell.innerHTML = data[i][col[j]];
             }
         }
-
         var divContainer = document.getElementById("showData");
         divContainer.innerHTML = "";
         divContainer.appendChild(table);
-
         })
-
         .catch(error => console.error('Error ', error));
 }
 

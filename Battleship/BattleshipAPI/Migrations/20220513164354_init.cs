@@ -226,7 +226,11 @@ namespace BattleshipAPI.Migrations
                     IAShootsNumber = table.Column<int>(type: "int", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "time(6)", nullable: false),
                     Finished = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    GridSize = table.Column<int>(type: "int", nullable: false)
+                    GridSize = table.Column<int>(type: "int", nullable: false),
+                    Ship2Number = table.Column<int>(type: "int", nullable: false),
+                    Ship3Number = table.Column<int>(type: "int", nullable: false),
+                    Ship4Number = table.Column<int>(type: "int", nullable: false),
+                    Ship5Number = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

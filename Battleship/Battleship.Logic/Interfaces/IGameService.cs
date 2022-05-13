@@ -16,7 +16,7 @@ namespace Battleship.Logic.Interfaces
 
 		List<PlayerStatisticsModel> GetUserHistory(string id);
 
-		IQueryable<Game> GetFullHistory();
+		List<PlayerStatisticsModel> GetFullHistory();
 	}
 }
 

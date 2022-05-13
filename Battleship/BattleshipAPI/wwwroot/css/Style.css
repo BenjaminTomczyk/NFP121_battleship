@@ -42,6 +42,13 @@ p {
     margin-top: 2rem;
 }
 
+d {
+    font-size: 15;
+    color: #ffffff;
+    font-family: "Fascinate Inline";
+    text-align: center;
+}
+
 label {
     font-size: 15px;
     color: #184385;
@@ -121,7 +128,7 @@ footer {
 
 .container-3 {
     display: grid;
-    grid-template-columns: 0.5fr 1fr 0.5fr 0.9fr;
+    grid-template-columns: 0.5fr 1fr 0.5fr 0.5fr;
   }
 
 #player_board, #enemy_board {
