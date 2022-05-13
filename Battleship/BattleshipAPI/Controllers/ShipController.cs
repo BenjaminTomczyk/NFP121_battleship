@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
-using BattleshipAPI.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

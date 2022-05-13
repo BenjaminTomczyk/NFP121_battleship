@@ -4,7 +4,6 @@ using System.Linq;
 using Battleship.Model.Entities;
 using Battleship.Repository.DBContext;
 using Battleship.Repository.Interfaces;
-using BattleshipAPI.Database;
 
 namespace Battleship.Repository.Repositories
 {

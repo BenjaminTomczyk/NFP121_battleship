@@ -23,6 +23,9 @@ namespace Battleship.Model.Entities
         public TimeSpan Duration { get; set; }
         [Required]
         public bool Finished { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
+
 
         public int GridSize { get; set; }
 
@@ -38,7 +41,7 @@ namespace Battleship.Model.Entities
         }
 
         public Game(IA ia, ApplicationUser player, string result, int playerShootNumber,
-            int iaShootNumber, TimeSpan duration, List<Position> positionsInvalid, bool finished) {
+            int iaShootNumber, TimeSpan duration, List<Position> positionsInvalid, bool finished, DateTime date) {
 
             IA = ia;
             Player = player;
@@ -48,6 +51,7 @@ namespace Battleship.Model.Entities
             Duration = duration;
             PositionsInvalid = positionsInvalid;
             Finished = finished;
+            Date = date;
             Ship2Number = 1;
             Ship3Number = 2;
             Ship4Number = 2;

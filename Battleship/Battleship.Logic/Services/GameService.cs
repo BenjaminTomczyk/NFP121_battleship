@@ -38,32 +38,32 @@ namespace Battleship.Logic.Services
 
 			_Game.GridSize = 8;
 
-			Game game = _gameRepository.setNewGame(_Game);
+			_Game.Date = DateTime.Now;
 
-			return _Game;
+			return _gameRepository.setNewGame(_Game);
 		}
 
 		public Game GetGame(int id)
         {
 			return _gameRepository.getGame(id);
-        }
+		}
 
 		public List<PlayerStatisticsModel> GetUserHistory(string id)
         {
 			IQueryable<Game> res = _gameRepository.getHistory();
 
 			res = res
+				.OrderByDescending(g => g.Date)
 				.Where(g =>
-					g.Finished == false &&
+					g.Finished == true &&
 					g.Player.Id == id)
 				.Take(10);
 
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach(Game g in res)
             {
-				stats.Add(new PlayerStatisticsModel(g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA, g.Duration, g.Player));
-            }
-
+				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.Level, g.Duration));
+			}
 			return stats;
         }
 
@@ -72,14 +72,15 @@ namespace Battleship.Logic.Services
 			IQueryable<Game> res = _gameRepository.getHistory();
 
 			res = res
+				.OrderByDescending(g => g.Date)
 				.Where(g =>
-					g.Finished == false)
+					g.Finished == true)
 				.Take(10);
 
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach (Game g in res)
 			{
-				stats.Add(new PlayerStatisticsModel(g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA, g.Duration, g.Player));
+				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.Level, g.Duration));
 			}
 
 			return stats;

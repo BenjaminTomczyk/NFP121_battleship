@@ -95,6 +95,9 @@ namespace BattleshipAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time(6)");
 

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Battleship.Model.Entities;
 using Microsoft.AspNetCore.Identity;
 
-namespace BattleshipAPI.Database
+namespace Battleship.Repository.DBContext
 {
     public class ApplicationDbContextSeed
     {
@@ -23,4 +23,3 @@ namespace BattleshipAPI.Database
         }
     }
 }
-

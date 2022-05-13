@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BattleshipAPI.Migrations
 {
     [DbContext(typeof(BattleshipDbContext))]
-    [Migration("20220513164354_init")]
+    [Migration("20220513194430_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,9 @@ namespace BattleshipAPI.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time(6)");

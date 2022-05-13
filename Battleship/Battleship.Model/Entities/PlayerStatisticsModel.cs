@@ -6,7 +6,7 @@ namespace Battleship.Model.Entities
 	public class PlayerStatisticsModel
 	{
         [Required]
-        public ApplicationUser Player { get; set; }
+        public string Player { get; set; }
         [Required]
         public string Result { get; set; }
         [Required]
@@ -14,15 +14,15 @@ namespace Battleship.Model.Entities
         [Required]
         public int IAShootsNumber { get; set; }
         [Required]
-        public IA IA { get; set; }
+        public string IA { get; set; }
         [Required]
         public TimeSpan Duration { get; set; }
 
 
         public PlayerStatisticsModel() { }
 
-        public PlayerStatisticsModel(string result, int playerShootsNumber,
-            int iaShootNumber, IA ia, TimeSpan duration, ApplicationUser player)
+        public PlayerStatisticsModel(string player, string result, int playerShootsNumber,
+            int iaShootNumber, string ia, TimeSpan duration)
         {
             Result = result;
             PlayerShootsNumber = playerShootsNumber;

@@ -10,6 +10,8 @@ using System.Net.Http;
 using System.IO;
 using Battleship.Logic.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Battleship.Repository.DBContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace BattleshipAPI.Controllers
 {
@@ -20,13 +22,11 @@ namespace BattleshipAPI.Controllers
     {
         private readonly IGameService _gameService;
         private readonly IShipService _shipService;
-        private readonly UserManager<ApplicationUser> _userManager;
 
-        public GameController(IGameService gameService, IShipService shipService, UserManager<ApplicationUser> userManager)
+        public GameController(IGameService gameService, IShipService shipService)
         {
             _gameService = gameService;
             _shipService = shipService;
-            _userManager = userManager;
         }
 
         [HttpGet("{id}")]

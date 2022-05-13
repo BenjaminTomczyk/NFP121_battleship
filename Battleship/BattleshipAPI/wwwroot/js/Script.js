@@ -247,6 +247,7 @@ function getGames() {
                 tabCell.innerHTML = data[i][col[j]];
             }
         }
+        console.log(data);
         var divContainer = document.getElementById("showData");
         divContainer.innerHTML = "";
         divContainer.appendChild(table);

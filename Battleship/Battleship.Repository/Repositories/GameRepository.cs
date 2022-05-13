@@ -4,7 +4,7 @@ using System.Linq;
 using Battleship.Model.Entities;
 using Battleship.Repository.DBContext;
 using Battleship.Repository.Interfaces;
-using BattleshipAPI.Database;
+using Microsoft.EntityFrameworkCore;
 
 namespace Battleship.Repository.Repositories
 {
@@ -52,12 +52,12 @@ namespace Battleship.Repository.Repositories
 
 		public Game getGame(int id)
         {
-			return _ctx.Game.First(g => g.Id == id);
+			return _ctx.Game.Include(p => p.Player).First(g => g.Id == id);
 		}
 
 		public IQueryable<Game> getHistory()
         {
-			return _ctx.Game;
+			return _ctx.Game.Include(p => p.Player);
 		}
 	}
 }

@@ -16,13 +16,16 @@ namespace Battleship.Logic.Services
         public List<Position> _Positions;
         public Game _Game;
 
+        private readonly IShipRepository _shipRepository;
+
         public ShipService() { }
-        public ShipService(Position Start, Position End)
+        public ShipService(Position Start, Position End, IShipRepository shipRepository)
         {
             _Id = 0;
             _Start = Start;
             _End = End;
             _Positions = new List<Position>();
+            _shipRepository = shipRepository;
         }
 
         public void setCurrentGame(Game game)
@@ -40,11 +43,11 @@ namespace Battleship.Logic.Services
             if(IsSet()){
                 if (IsPosition())
                 {
-                    if (IsInGrid(5)) //todo mettre int gridsize attribut sur battleService ? jsp en tout cas faut crée un GetGridsSize() qui retour la taille de la grille
+                    if (IsInGrid(8)) //osef de la gridsize dans le cdc c'est marqué 8x8
                     {
                         if (!IsCollisionWithListPlaceShip())
                         {
-                            if (!IsInjuxtapose(_Game)) //TODO remplacer par un accesseur à la l'instance "game" GetGameInstance()
+                            if (!IsInjuxtapose(_Game))
                             {
                                 isValid = true;
                             }
@@ -55,10 +58,11 @@ namespace Battleship.Logic.Services
                 }
             }
 
-
+            //TODO
 
             if (isValid)
             {
+                //_shipRepository.AddShip(ship);
                 //TODO ajouter le bateau a la liste des bateaux placer ou en base de données 
                 //TODO mettre a jour la liste des coordonnées invalid sur lequelles on ne peut pas mettre de bateaux
                 this.AddPositionInvalid(new Game()); //TODO remplacer par un accesseur à la l'instance "game"
