@@ -4,15 +4,13 @@
 	{
 		public int Id { get; set; }
 		public string Level { get; set; }
+		public Game Game { get; set; }
 
-		public IA()
-        {
-        }
-
-		public IA(int id, string level)
+		public IA(int id, string level,Game game)
         {
 			Id = id;
 			Level = level;
+			Game = game;
         }
 	}
 }

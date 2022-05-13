@@ -42,7 +42,7 @@ namespace Battleship.Logic.Tests.Models
         [TestMethod]
         public void IsInGrid_WithGridSize_ThenFalse()
         {
-            Assert.IsFalse(new ShipService() .IsInGrid(0));
+            Assert.IsFalse(new ShipService().IsInGrid(0));
         }
 
         [TestMethod]

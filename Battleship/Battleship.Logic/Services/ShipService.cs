@@ -21,6 +21,7 @@ namespace Battleship.Logic.Services
         public ShipService() { }
         public ShipService(Position Start, Position End, IShipRepository shipRepository)
         {
+            //TODO mettre un système d'id en place
             _Id = 0;
             _Start = Start;
             _End = End;
@@ -33,7 +34,7 @@ namespace Battleship.Logic.Services
             _Game = game;
         }
 
-        public Ship VerifyShipValidity(PlaceShipModel positions)
+        public Ship VerifyShipValidity(PlaceShipModel positions,String NamePlayer)
         {
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
@@ -51,25 +52,21 @@ namespace Battleship.Logic.Services
                             {
                                 isValid = true;
                             }
-
                         }
-
                     }
                 }
             }
 
-            //TODO
-
             if (isValid)
             {
-                //_shipRepository.AddShip(ship);
-                //TODO ajouter le bateau a la liste des bateaux placer ou en base de données 
-                //TODO mettre a jour la liste des coordonnées invalid sur lequelles on ne peut pas mettre de bateaux
-                this.AddPositionInvalid(new Game()); //TODO remplacer par un accesseur à la l'instance "game"
-                return new Ship(_Start, _End, _Positions, _Game, isValid);
+                
+                Ship newShip = new Ship(_Start, _End, _Positions, _Game, NamePlayer, isValid);
+                _Game.ShipsPose.Add(newShip); //TODO ajouter le bateau a la liste des bateaux placer ou en base de données )    
+                this.AddPositionInvalid(_Game); //TODO remplacer par un accesseur à la l'instance "game" //TODO mettre a jour la liste des coordonnées invalid sur lequelles on ne peut pas mettre de bateaux
+                return newShip;
             }
 
-            else return new Ship(null, null, null, null, isValid);
+            else return new Ship(null, null, null, null, null,isValid);
         }
 
         public bool IsSet() => _Start != null && _End != null;
