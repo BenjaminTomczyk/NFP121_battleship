@@ -26,25 +26,22 @@ namespace Battleship.Model.Entities
 
         public int GridSize { get; set; }
 
-<<<<<<< Updated upstream
         public int Ship2Number { get; set; }
         public int Ship3Number { get; set; }
         public int Ship4Number { get; set; }
         public int Ship5Number { get; set; }
 
-        public List<Position>? PositionsInvalid = new List<Position>() { };
-=======
         public List<Position>? PositionsInvalid = new List<Position>();
 
         public List<Ship> ShipsPose = new List<Ship>();
->>>>>>> Stashed changes
+
 
         public Game()
         {
         }
 
         public Game(IA ia, ApplicationUser player, string result, int playerShootNumber,
-            int iaShootNumber, TimeSpan duration, List<Position> positionsInvalid, bool finished) {
+            int iaShootNumber, TimeSpan duration, List<Position> positionsInvalid, List<Ship> shipsPose, bool finished) {
 
             IA = ia;
             Player = player;
@@ -53,6 +50,7 @@ namespace Battleship.Model.Entities
             IAShootsNumber = iaShootNumber;
             Duration = duration;
             PositionsInvalid = positionsInvalid;
+            ShipsPose = shipsPose;
             Finished = finished;
             Ship2Number = 1;
             Ship3Number = 2;
