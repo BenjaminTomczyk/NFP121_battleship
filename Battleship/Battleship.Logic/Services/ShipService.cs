@@ -23,7 +23,8 @@ namespace Battleship.Logic.Services
         public ShipService() { }
         public ShipService(Position Start, Position End, IShipRepository shipRepository, IUserService userService)
         {
-            //TODO mettre un système d'id en place
+            //TODO mettre un système d'id en place pour l'instant c'est tout le temps 0
+
             _Id = 0;
             _Start = Start;
             _End = End;
@@ -52,7 +53,7 @@ namespace Battleship.Logic.Services
             if(IsSet()){
                 if (IsPosition())
                 {
-                    if (IsInGrid(8)) //osef de la gridsize dans le cdc c'est marqué 8x8
+                    if (IsInGrid(8)) //osef de la gridsize dans le cdc c'est marqué 8x8 //ok frr le boss j'avoue que c'est tout le temps 8X8 xD
                     {
                         if (!IsCollisionWithListPlaceShip())
                         {

@@ -28,12 +28,17 @@ namespace Battleship.Logic.Services
 
         public Position ExecuteLevelStrategy()
         {
-            return _LevelStrategy.LogicIA();
+            return _LevelStrategy.LogicIA(_Shootings);
         }
         
 
         public void gameStage()
-        { 
+        {
+            Position positionSelected = ExecuteLevelStrategy();
+            bool shootResult = Shoot(positionSelected);
+            _Shootings.Add(new Explosion(positionSelected,shootResult));
+
+            if (shootResult) gameStage();
 
         }
 
