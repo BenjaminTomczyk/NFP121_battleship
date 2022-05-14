@@ -17,6 +17,9 @@ namespace Battleship.Logic.Services
 
 		public static Game _Game;
 
+		public List<Ship> ShipsPose = new List<Ship>();
+
+
 		public GameService(IGameRepository gameRepository, IUserService userService)
 		{
 			_gameRepository = gameRepository;

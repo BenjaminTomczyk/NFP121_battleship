@@ -35,6 +35,7 @@ namespace Battleship.Model.Entities
         public int Ship5Number { get; set; }
 
         public List<Position>? PositionsInvalid = new List<Position>();
+        public List<Ship> ShipsPose = new List<Ship>();
 
 
         public Game()

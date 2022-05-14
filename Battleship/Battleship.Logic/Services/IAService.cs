@@ -28,7 +28,7 @@ namespace Battleship.Logic.Services
 
         public Position ExecuteLevelStrategy()
         {
-            return _LevelStrategy.logicIA();
+            return _LevelStrategy.LogicIA();
         }
         
 
@@ -44,7 +44,7 @@ namespace Battleship.Logic.Services
             
             foreach(Ship userShip in _Game.ShipsPose)
             {
-                if (userShip.NamePlayer == "User")//TODO parcourir la liste des bateaux de l'utilisateur // Rajouter un string sur le ship pour savoir si c'est un bateau de l'IA ou de l'utilisateur
+                if (userShip.Player == null)//TODO parcourir la liste des bateaux de l'utilisateur// se mettre d'accord si pour une IA le Player est null ou pas
                 {
                     foreach (Position posUserShip in userShip.Positions)
                     {
