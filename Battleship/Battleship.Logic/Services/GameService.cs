@@ -61,7 +61,7 @@ namespace Battleship.Logic.Services
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach(Game g in res)
             {
-				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.Level, g.Duration));
+				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.LevelStrategy.GetName(), g.Duration));
 			}
 			return stats;
         }
@@ -79,7 +79,7 @@ namespace Battleship.Logic.Services
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach (Game g in res)
 			{
-				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.Level, g.Duration));
+				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.LevelStrategy.GetName(), g.Duration));
 			}
 
 			return stats;

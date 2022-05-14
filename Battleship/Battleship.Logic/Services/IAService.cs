@@ -42,11 +42,7 @@ namespace Battleship.Logic.Services
         {
             bool shootresult = false;
             
-<<<<<<< Updated upstream
-            /*foreach(Ship userShip in _Game.ShipsPose)//TODO parcourir la liste des bateaux de l'utilisateur // Rajouter un string sur le ship pour savoir si c'est un bateau de l'IA ou de l'utilisateur
-=======
             foreach(Ship userShip in _Game.ShipsPose)
->>>>>>> Stashed changes
             {
                 if (userShip.NamePlayer == "User")//TODO parcourir la liste des bateaux de l'utilisateur // Rajouter un string sur le ship pour savoir si c'est un bateau de l'IA ou de l'utilisateur
                 {
@@ -55,7 +51,7 @@ namespace Battleship.Logic.Services
                         if (position.Equals(posUserShip)) return true;
                     }
                 }
-            }*/
+            }
             return shootresult;
         }
         

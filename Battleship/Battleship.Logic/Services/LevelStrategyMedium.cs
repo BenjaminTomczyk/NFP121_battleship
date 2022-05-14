@@ -10,10 +10,18 @@ namespace Battleship.Logic.Services
 {
     public class LevelStrategyMedium : ILevelStrategy
     {
-        public Position logicIA()
+
+        string nameStrategy = "Medium";
+
+        public Position LogicIA()
         {
             return new Position();
 
+        }
+
+        public string GetName()
+        {
+            return this.nameStrategy;
         }
 
     }
