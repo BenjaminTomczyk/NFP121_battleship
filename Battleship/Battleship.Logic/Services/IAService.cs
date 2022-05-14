@@ -11,30 +11,44 @@ namespace Battleship.Logic.Services
     public class IAService : IIAService
     {
         public int _Id { get; set; }
-        public string _Level { get; set; }
+        public ILevelStrategy _LevelStrategy { get; set; }
+        public List<Explosion> _Shootings;
 
         public Game _Game;
 
-        public IAService(int id, string level) 
+        public IAService(int id, ILevelStrategy levelStrategy) 
         {
             _Id = id;
-            _Level = level;
+            _LevelStrategy = levelStrategy;
+            _Game = GameService.GetInstanceGame();
+            _Shootings = new List<Explosion>();
         }
 
-        public void setCurrentGame(Game game)
+        public void SetLevelStrategy(ILevelStrategy strategy) => _LevelStrategy = strategy;
+
+        public Position ExecuteLevelStrategy()
         {
-            _Game = game;
+            return _LevelStrategy.logicIA();
         }
+        
 
+        public void gameStage()
+        { 
+
+        }
 
 
         public bool Shoot(Position position)
         {
             bool shootresult = false;
             
+<<<<<<< Updated upstream
             /*foreach(Ship userShip in _Game.ShipsPose)//TODO parcourir la liste des bateaux de l'utilisateur // Rajouter un string sur le ship pour savoir si c'est un bateau de l'IA ou de l'utilisateur
+=======
+            foreach(Ship userShip in _Game.ShipsPose)
+>>>>>>> Stashed changes
             {
-                if (userShip.NamePlayer == "User")
+                if (userShip.NamePlayer == "User")//TODO parcourir la liste des bateaux de l'utilisateur // Rajouter un string sur le ship pour savoir si c'est un bateau de l'IA ou de l'utilisateur
                 {
                     foreach (Position posUserShip in userShip.Positions)
                     {

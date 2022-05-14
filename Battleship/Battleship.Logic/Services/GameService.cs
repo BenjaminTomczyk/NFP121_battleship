@@ -15,7 +15,7 @@ namespace Battleship.Logic.Services
 		private readonly IGameRepository _gameRepository;
 		private readonly IUserService _userService;
 
-		public Game _Game;
+		public static Game _Game;
 
 		public GameService(IGameRepository gameRepository, IUserService userService)
 		{
@@ -43,12 +43,11 @@ namespace Battleship.Logic.Services
 			return _gameRepository.setNewGame(_Game);
 		}
 
-		public Game GetGame(int id)
-        {
-			return _gameRepository.getGame(id);
-		}
+        public Game GetGame(int id) => _gameRepository.getGame(id);
 
-		public List<PlayerStatisticsModel> GetUserHistory(string id)
+        public static Game GetInstanceGame() => _Game;
+
+        public List<PlayerStatisticsModel> GetUserHistory(string id)
         {
 			IQueryable<Game> res = _gameRepository.getHistory();
 
