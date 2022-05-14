@@ -8,7 +8,9 @@ namespace Battleship.Logic.Interfaces
 {
 	public interface IIAService
 	{
-		void setCurrentGame(Game game);
+		void SetLevelStrategy(ILevelStrategy strategy);
+		Position ExecuteLevelStrategy();
+		void gameStage();
 		bool Shoot(Position position);
 	}
 }
