@@ -21,6 +21,10 @@ namespace Battleship.Logic.Interfaces
 		Game UpdateGame(Game game);
 
 		Game SetGameIA(string level);
+
+		bool TryShoot(Position position);
+
+		Game AddPosToShootList(int playerOrIA, Position pos);
 	}
 }
 

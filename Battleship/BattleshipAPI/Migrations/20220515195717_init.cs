@@ -253,6 +253,36 @@ namespace BattleshipAPI.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Position",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Row = table.Column<int>(type: "int", nullable: false),
+                    Column = table.Column<int>(type: "int", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: true),
+                    GameId1 = table.Column<int>(type: "int", nullable: true),
+                    ShipId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Position", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Position_Game_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Game",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Position_Game_GameId1",
+                        column: x => x.GameId1,
+                        principalTable: "Game",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Ship",
                 columns: table => new
                 {
@@ -275,26 +305,16 @@ namespace BattleshipAPI.Migrations
                         principalTable: "Game",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Position",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Row = table.Column<int>(type: "int", nullable: false),
-                    Column = table.Column<int>(type: "int", nullable: false),
-                    ShipId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Position", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Position_Ship_ShipId",
-                        column: x => x.ShipId,
-                        principalTable: "Ship",
+                        name: "FK_Ship_Position_EndId",
+                        column: x => x.EndId,
+                        principalTable: "Position",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Ship_Position_StartId",
+                        column: x => x.StartId,
+                        principalTable: "Position",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 })
@@ -348,6 +368,16 @@ namespace BattleshipAPI.Migrations
                 column: "PlayerId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Position_GameId",
+                table: "Position",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Position_GameId1",
+                table: "Position",
+                column: "GameId1");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Position_ShipId",
                 table: "Position",
                 column: "ShipId");
@@ -368,18 +398,10 @@ namespace BattleshipAPI.Migrations
                 column: "StartId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Ship_Position_EndId",
-                table: "Ship",
-                column: "EndId",
-                principalTable: "Position",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Ship_Position_StartId",
-                table: "Ship",
-                column: "StartId",
-                principalTable: "Position",
+                name: "FK_Position_Ship_ShipId",
+                table: "Position",
+                column: "ShipId",
+                principalTable: "Ship",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -393,6 +415,18 @@ namespace BattleshipAPI.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Game_IA_IAId",
                 table: "Game");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Position_Game_GameId",
+                table: "Position");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Position_Game_GameId1",
+                table: "Position");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Ship_Game_GameId",
+                table: "Ship");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Position_Ship_ShipId",
@@ -423,10 +457,10 @@ namespace BattleshipAPI.Migrations
                 name: "IA");
 
             migrationBuilder.DropTable(
-                name: "Ship");
+                name: "Game");
 
             migrationBuilder.DropTable(
-                name: "Game");
+                name: "Ship");
 
             migrationBuilder.DropTable(
                 name: "Position");

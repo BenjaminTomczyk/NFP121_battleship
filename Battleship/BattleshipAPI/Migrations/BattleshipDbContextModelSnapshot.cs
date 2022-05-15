@@ -172,6 +172,12 @@ namespace BattleshipAPI.Migrations
                     b.Property<int>("Column")
                         .HasColumnType("int");
 
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GameId1")
+                        .HasColumnType("int");
+
                     b.Property<int>("Row")
                         .HasColumnType("int");
 
@@ -179,6 +185,10 @@ namespace BattleshipAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
+
+                    b.HasIndex("GameId1");
 
                     b.HasIndex("ShipId");
 
@@ -368,6 +378,14 @@ namespace BattleshipAPI.Migrations
 
             modelBuilder.Entity("Battleship.Model.Entities.Position", b =>
                 {
+                    b.HasOne("Battleship.Model.Entities.Game", null)
+                        .WithMany("IAShoots")
+                        .HasForeignKey("GameId");
+
+                    b.HasOne("Battleship.Model.Entities.Game", null)
+                        .WithMany("PlayerShoots")
+                        .HasForeignKey("GameId1");
+
                     b.HasOne("Battleship.Model.Entities.Ship", null)
                         .WithMany("Positions")
                         .HasForeignKey("ShipId");
@@ -454,6 +472,10 @@ namespace BattleshipAPI.Migrations
 
             modelBuilder.Entity("Battleship.Model.Entities.Game", b =>
                 {
+                    b.Navigation("IAShoots");
+
+                    b.Navigation("PlayerShoots");
+
                     b.Navigation("Ships");
                 });
 
