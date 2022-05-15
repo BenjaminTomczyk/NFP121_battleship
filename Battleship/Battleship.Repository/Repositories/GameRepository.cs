@@ -60,6 +60,14 @@ namespace Battleship.Repository.Repositories
         {
 			return _ctx.Game.Include(p => p.Player);
 		}
+
+        public Game UpdateGame(Game game)
+        {
+            Game g = _ctx.Game.First(s => s.Id == game.Id);
+            g = game;
+            _ctx.SaveChanges();
+            return g;
+        }
 	}
 }
 

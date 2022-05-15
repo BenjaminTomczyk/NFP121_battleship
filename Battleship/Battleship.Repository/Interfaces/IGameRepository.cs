@@ -14,6 +14,8 @@ namespace Battleship.Repository.Interfaces
         Game getGame(int id);
 
         IQueryable<Game> getHistory();
+
+        Game UpdateGame(Game game);
     }
 
 }

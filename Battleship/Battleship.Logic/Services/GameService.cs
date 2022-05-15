@@ -92,6 +92,11 @@ namespace Battleship.Logic.Services
 
 			return stats;
 		}
+
+		public Game UpdateGame(Game game)
+        {
+			return _gameRepository.UpdateGame(game);
+        }
 	}
 }
 

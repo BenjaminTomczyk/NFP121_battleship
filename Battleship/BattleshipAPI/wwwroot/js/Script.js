@@ -78,8 +78,15 @@ function tryShip(position){
     })
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
+            console.log(data);
         unauthorized(status);
-        placeShip(data);
+        if(data.isValid){
+            placeShip(data);
+        }
+        else{
+            window.alert("Placement invalide !");
+        }
+        
         })
         .catch(error => console.error('Error ', error));
 }
@@ -87,27 +94,18 @@ function tryShip(position){
 function placeShip(ship) {
     auth();
 
-    var game = JSON.parse(sessionStorage.game);
+    ship.positions.forEach(element => {
+        var cell = element.row.toString() + element.column.toString();
+        document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
+        document.getElementById(cell).setAttribute("class","hit");
 
-    if(ship.isValid){
-        var positions = ship.positions;
-
-        positions.forEach(element => {
-            var cell = element.row.toString() + element.column.toString();
-            document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
-            document.getElementById(cell).setAttribute("class","hit");
-
-            console.log(game);
-            document.getElementById('size2').innerHTML = game.ship2Number;
-            document.getElementById('size3').innerHTML = game.ship3Number;
-            document.getElementById('size4').innerHTML = game.ship4Number;
-            document.getElementById('size5').innerHTML = game.ship5Number;
+        document.getElementById('size2').innerHTML = ship.game.ship2Number;
+        document.getElementById('size3').innerHTML = ship.game.ship3Number;
+        document.getElementById('size4').innerHTML = ship.game.ship4Number;
+        document.getElementById('size5').innerHTML = ship.game.ship5Number;
             
-        });
-    }
-    else {
-        window.alert("Placement invalide !");
-    }
+    });
+    
 }
 
 function unauthorized(response) {

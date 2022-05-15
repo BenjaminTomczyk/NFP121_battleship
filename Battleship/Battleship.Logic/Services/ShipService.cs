@@ -29,6 +29,16 @@ namespace Battleship.Logic.Services
             _gameService = gameService;
         }
 
+        public ShipService(Position start, Position end, IShipRepository shipRepository, IGameService gameService)
+        {
+            _Id = 0;
+            _Start = start;
+            _End = end;
+            _Positions = new List<Position>();
+            _shipRepository = shipRepository;
+            _gameService = gameService;
+        }
+
         public Game setCurrentGame(int game)
         {
             return _Game = _gameService.GetGame(game);
@@ -82,7 +92,8 @@ namespace Battleship.Logic.Services
                     else
                     {
                         _Game.Ship2Number--;
-                        return true;
+                        _gameService.UpdateGame(_Game);
+                        return true;    
                     }
 
                 case 3:
@@ -90,6 +101,7 @@ namespace Battleship.Logic.Services
                     else
                     {
                         _Game.Ship3Number--;
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 
@@ -98,6 +110,7 @@ namespace Battleship.Logic.Services
                     else
                     {
                         _Game.Ship4Number--;
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 
@@ -106,6 +119,7 @@ namespace Battleship.Logic.Services
                     else
                     {
                         _Game.Ship5Number--;
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 
