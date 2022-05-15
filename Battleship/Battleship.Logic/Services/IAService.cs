@@ -33,12 +33,17 @@ namespace Battleship.Logic.Services
 
         public Position ExecuteLevelStrategy()
         {
-            return _LevelStrategy.logicIA();
+            return _LevelStrategy.LogicIA(_Shootings);
         }
         
 
         public void gameStage()
-        { 
+        {
+            Position positionSelected = ExecuteLevelStrategy();
+            bool shootResult = Shoot(positionSelected);
+            _Shootings.Add(new Explosion(positionSelected,shootResult));
+
+            if (shootResult) gameStage();
 
         }
 
@@ -51,6 +56,10 @@ namespace Battleship.Logic.Services
 
             {
                 if (userShip.Player == "User")
+            
+            foreach(Ship userShip in _Game.ShipsPose)
+            {
+                if (userShip.Player == null)//TODO parcourir la liste des bateaux de l'utilisateur// se mettre d'accord si pour une IA le Player est null ou pas
                 {
                     foreach (Position posUserShip in userShip.Positions)
                     {

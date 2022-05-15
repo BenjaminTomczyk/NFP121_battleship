@@ -10,13 +10,32 @@ namespace Battleship.Logic.Services
 {
     public class LevelStrategyEasy : ILevelStrategy
     {
-        
-        public Position logicIA()
+        string nameStrategy = "Easy";
+        public Position LogicIA(List<Explosion> shootings)
         {
+            Position positionSelected = new Position();
+            Random rdPos = new Random();
+            bool PositionInvalid = true;
 
+            while (PositionInvalid)
+            {
+                positionSelected.SetNewValue(rdPos.Next(0, GameService.GetInstanceGame().GridSize), rdPos.Next(0, GameService.GetInstanceGame().GridSize)); //TODO veriffier si on recperer la bonne valeur de l'instance
+                foreach(Explosion previousShoot in shootings)
+                {
+                    if (positionSelected.Equals(previousShoot.ExplosionLocation))
+                    {
+                        PositionInvalid = true;
+                        break;
+                    }
+                    PositionInvalid = false;
+                }       
+            }
+            return positionSelected;    
+        }
 
-
-            return new Position();    
+        public string GetName()
+        {
+            return this.nameStrategy;
         }
 
     }

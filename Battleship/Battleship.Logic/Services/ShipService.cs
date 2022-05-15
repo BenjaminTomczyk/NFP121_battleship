@@ -23,7 +23,8 @@ namespace Battleship.Logic.Services
         public ShipService() { }
         public ShipService(Position Start, Position End, IShipRepository shipRepository, IUserService userService)
         {
-            //TODO mettre un système d'id en place
+            //TODO mettre un système d'id en place pour l'instant c'est tout le temps 0
+
             _Id = 0;
             _Start = Start;
             _End = End;
