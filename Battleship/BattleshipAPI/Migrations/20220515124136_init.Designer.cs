@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BattleshipAPI.Migrations
 {
     [DbContext(typeof(BattleshipDbContext))]
-    [Migration("20220515112716_init")]
+    [Migration("20220515124136_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -204,6 +204,9 @@ namespace BattleshipAPI.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<int?>("StartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Taille")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

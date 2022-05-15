@@ -24,6 +24,8 @@ namespace Battleship.Logic.Interfaces
         void ListPositionDiagonale(List<Position> listPosition);
         void AddPosition(List<Position> listPosition, int direction);
         void OrderPosition();
-        
+        bool CheckShipSize();
+
+
     }
 }

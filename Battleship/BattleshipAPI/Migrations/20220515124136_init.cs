@@ -262,6 +262,7 @@ namespace BattleshipAPI.Migrations
                     GameId = table.Column<int>(type: "int", nullable: false),
                     Player = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    Taille = table.Column<int>(type: "int", nullable: false),
                     IsValid = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>

@@ -75,8 +75,10 @@ namespace Battleship.Logic.Services
 
                             if (!IsInjuxtapose())
                             {
-                                //Console.WriteLine("ok isInJuxtapose");
-                                isValid = true;
+                                if (CheckShipSize())
+                                {
+                                    isValid = true;
+                                }
                             }
                         }
                     }
@@ -85,15 +87,55 @@ namespace Battleship.Logic.Services
 
             if (isValid)
             {
-                
-                Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid);
-                // _shipRepository.AddShip(newShip);   //remettre cela en place TOMTOM explique moi cette parti
-                _Game.ShipsPose.Add(newShip); // j'ai mis a jour la liste des bateaux dans la game LAISSERRRRRRRR EN PLACE 
-                this.AddPositionInvalid(_Game); //TODO remplacer par un accesseur à la l'instance "game" //TODO mettre a jour la liste des coordonnées invalid sur lequelles on ne peut pas mettre de bateaux
+                Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid, _Positions.Count());
+                //_shipRepository.AddShip(newShip);
+                _Game.ShipsPose.Add(newShip); // j'ai mis a jour la liste des bateaux dans la game LAISSERRRRRRRR EN PLACE
+                this.AddPositionInvalid(_Game);
 
                 return newShip;
             }
-            else return new Ship(null, null, null, null, null, isValid);
+            else return new Ship(null, null, null, null, null, isValid, 0);
+        }
+
+        public bool CheckShipSize()
+        {
+            switch (_Positions.Count())
+            {
+                case 2:
+                    if (_Game.Ship2Number == 0) return false;
+                    else
+                    {
+                        _Game.Ship2Number--;
+                        return true;
+                    }
+
+                case 3:
+                    if (_Game.Ship3Number == 0) return false;
+                    else
+                    {
+                        _Game.Ship3Number--;
+                        return true;
+                    }
+
+                case 4:
+                    if (_Game.Ship4Number == 0) return false;
+                    else
+                    {
+                        _Game.Ship4Number--;
+                        return true;
+                    }
+
+                case 5:
+                    if (_Game.Ship5Number == 0) return false;
+                    else
+                    {
+                        _Game.Ship5Number--;
+                        return true;
+                    }
+
+                default:
+                    return false;
+            }
         }
 
         public bool IsSet() => _Start != null && _End != null;
@@ -126,7 +168,7 @@ namespace Battleship.Logic.Services
                 {
                     Console.WriteLine(posY.Row + ":" + posY.Column);
                     if (posI.Equals(posY)) return true;
-                }       
+                }
             }
             return false;
         }
@@ -162,7 +204,7 @@ namespace Battleship.Logic.Services
         }
 
         public bool IsCollisionWithListPlaceShip()
-        {        
+        {
             foreach(Ship placeShip in _Game.ShipsPose)//TODO : creer un attribut sur la game qui est une list qui contient tout les ship placer ou faire appele a la base de données
             {
                 if (this.IsCollision(placeShip)) return true;

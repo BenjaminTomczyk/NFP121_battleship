@@ -204,6 +204,9 @@ namespace BattleshipAPI.Migrations
                     b.Property<int?>("StartId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Taille")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EndId");
