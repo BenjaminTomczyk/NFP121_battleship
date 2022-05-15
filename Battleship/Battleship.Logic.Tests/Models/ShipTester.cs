@@ -9,11 +9,11 @@ namespace Battleship.Logic.Tests.Models
     [TestClass]
     public class ShipTester
     {
-        private Ship ship11 = new Ship(new Position(0, 0), new Position(2, 0), null, null, null, true);
+        private Ship ship11 = new Ship(new Position(0, 0), new Position(2, 0), null, null, null, true,0);
 
-        private Ship ship22 = new Ship(new Position(4, 4), new Position(4, 3), null, null, null, true);
+        private Ship ship22 = new Ship(new Position(4, 4), new Position(4, 3), null, null, null, true,0);
 
-        private Ship ship55 = new Ship(new Position(0, 0), new Position(2, 2), null, null, null, true);
+        private Ship ship55 = new Ship(new Position(0, 0), new Position(2, 2), null, null, null, true,0);
 
         private ShipService  ship1 = new ShipService(new Position(0,0),new Position(2,0),null,null);
 
@@ -36,12 +36,12 @@ namespace Battleship.Logic.Tests.Models
         private ShipService shipSize5DiagonaleRigthBot = new ShipService(new Position(1, 2),new Position(5, 6), null, null);
 
         private ShipService shipSize5DiagonaleLeftTop = new ShipService(new Position(5, 6), new Position(1, 2), null, null);
-        
+
         private ShipService shipSize5DiagonaleRigthTop = new ShipService(new Position(5, 2),new Position(1, 6), null, null);
 
         private ShipService shipSize5DiagonaleLeftBot = new ShipService(new Position(1, 6),new Position(5, 2), null, null);
 
-        
+
         private ShipService shipSize1 = new ShipService(new Position(1, 1),new Position(1, 1), null, null);
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace Battleship.Logic.Tests.Models
         }
 
         [TestMethod]
-        public void IsInGrid_WithShip2AndGridSize5_ThenTrue() 
+        public void IsInGrid_WithShip2AndGridSize5_ThenTrue()
         {
             Assert.IsTrue(ship2.IsInGrid(5));
         }
@@ -88,8 +88,8 @@ namespace Battleship.Logic.Tests.Models
         public void GenerationListPositions_WithShipSize5Vertical_ThenListHasGoodValue()
         {
             int i = 0;
-            List<Position> truePosShip5 = new List<Position>() 
-            { 
+            List<Position> truePosShip5 = new List<Position>()
+            {
                 new Position(1,2),
                 new Position(2,2),
                 new Position(3,2),
@@ -179,7 +179,7 @@ namespace Battleship.Logic.Tests.Models
             shipSize5DiagonaleRigthBot.GenerationListPositions();
             foreach (var iposition in shipSize5DiagonaleRigthBot._Positions)
             {
-                
+
                 Assert.IsTrue(iposition.Equals(truePosShip5[i]));
                 i++;
             }
@@ -211,7 +211,7 @@ namespace Battleship.Logic.Tests.Models
             int i = 0;
             List<Position> truePosShip5 = new List<Position>()
             {
-                new Position(5,2),    
+                new Position(5,2),
                 new Position(4,3),
                 new Position(3,4),
                 new Position(2,5),
@@ -290,7 +290,7 @@ namespace Battleship.Logic.Tests.Models
         public void VerifyShipValidity_with1shipDiagonale_thenValide()
         {
             Game game = new Game();
-            
+
             int[] start = new int[] { 1, 1 };
             int[] end = new int[] { 3, 3 };
             Position posS = new Position(1, 1);
@@ -301,8 +301,8 @@ namespace Battleship.Logic.Tests.Models
             shipservice.setCurrentGame(game);
 
             Ship newShip = shipservice.VerifyShipValidity(psm);
-            Ship resShip = new Ship(posS, posE,null,null,null,true);
-            
+            Ship resShip = new Ship(posS, posE,null,null,null,true,0);
+
             Assert.IsTrue(resShip.Start.Column == newShip.Start.Column || resShip.Start.Row == newShip.Start.Row);
             Assert.IsTrue(resShip.End.Column == newShip.End.Column|| resShip.End.Row == newShip.End.Row);
         }
@@ -322,7 +322,7 @@ namespace Battleship.Logic.Tests.Models
             shipservice.setCurrentGame(game);
 
             Ship newShip = shipservice.VerifyShipValidity(psm);
-            Ship resShip = new Ship(posS, posE, null, null, null, true, 0);
+            Ship resShip = new Ship(posS, posE, null, null, null, true,0);
             Console.WriteLine(newShip.Start.Column);
             Console.WriteLine(newShip.Start.Row);
             Assert.IsTrue(resShip.Start.Column == newShip.Start.Column || resShip.Start.Row == newShip.Start.Row);
@@ -354,8 +354,8 @@ namespace Battleship.Logic.Tests.Models
             Ship newShip = shipservice.VerifyShipValidity(psm);
             Ship newShip1 = shipservice.VerifyShipValidity(psm1);
 
-            Ship resShip = new Ship(posS, posE, null, null, null, true);
-            Ship resShip1 = new Ship(posS1, posE1, null, null, null, true);
+            Ship resShip = new Ship(posS, posE, null, null, null, true,0);
+            Ship resShip1 = new Ship(posS1, posE1, null, null, null, true,0);
 
             Console.WriteLine(newShip.Start.Row+":"+ newShip.Start.Column);
             Console.WriteLine(newShip1.Start.Row + ":" + newShip1.Start.Column);

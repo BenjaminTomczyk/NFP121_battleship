@@ -51,6 +51,10 @@ namespace Battleship.Model.Entities
         {
             PositionsInvalid = new List<Position>();
             ShipsPose = new List<Ship>();
+            Ship2Number = 1;
+            Ship3Number = 2;
+            Ship4Number = 2;
+            Ship5Number = 1;
         }
 
         public Game(IA ia, ApplicationUser player, string result, int playerShootNumber,
