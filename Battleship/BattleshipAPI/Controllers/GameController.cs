@@ -54,6 +54,12 @@ namespace BattleshipAPI.Controllers
         {
             return _gameService.GetFullHistory();
         }
+
+        [HttpPost("setIA")]
+        public Game SetGameIA(string level)
+        {
+            return _gameService.SetGameIA(level);
+        }
     }
 }
 

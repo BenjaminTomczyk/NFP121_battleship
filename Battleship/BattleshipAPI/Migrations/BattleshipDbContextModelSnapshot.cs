@@ -113,6 +113,9 @@ namespace BattleshipAPI.Migrations
                     b.Property<int>("IAShootsNumber")
                         .HasColumnType("int");
 
+                    b.Property<int>("PlacedShips")
+                        .HasColumnType("int");
+
                     b.Property<string>("PlayerId")
                         .IsRequired()
                         .HasColumnType("varchar(255)");

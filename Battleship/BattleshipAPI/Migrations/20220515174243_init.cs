@@ -227,6 +227,7 @@ namespace BattleshipAPI.Migrations
                     Duration = table.Column<TimeSpan>(type: "time(6)", nullable: false),
                     Finished = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Date = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    PlacedShips = table.Column<int>(type: "int", nullable: false),
                     GridSize = table.Column<int>(type: "int", nullable: false),
                     Ship2Number = table.Column<int>(type: "int", nullable: false),
                     Ship3Number = table.Column<int>(type: "int", nullable: false),

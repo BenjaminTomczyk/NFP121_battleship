@@ -14,16 +14,18 @@ namespace Battleship.Logic.Services
 	{
 		private readonly IGameRepository _gameRepository;
 		private readonly IUserService _userService;
+		private readonly IIAService _IIAService;
 
 		public static Game _Game;
 
 		public List<Ship> ShipsPose = new List<Ship>();
 
 
-		public GameService(IGameRepository gameRepository, IUserService userService)
+		public GameService(IGameRepository gameRepository, IUserService userService, IIAService iIAService)
 		{
 			_gameRepository = gameRepository;
 			_userService = userService;
+			_IIAService = iIAService;
 		}
 
 		public string SetIA()
@@ -47,6 +49,8 @@ namespace Battleship.Logic.Services
 			_Game.Ship5Number = 1;
 
 			_Game.Date = DateTime.Now;
+
+			_Game.PlacedShips = 0;
 
 			return _gameRepository.setNewGame(_Game);
 		}
@@ -95,7 +99,21 @@ namespace Battleship.Logic.Services
 
 		public Game UpdateGame(Game game)
         {
-			return _gameRepository.UpdateGame(game);
+			return _Game = _gameRepository.UpdateGame(game);
+        }
+
+		public Game SetGameIA(string level)
+        {
+			IA ia = new IA();
+
+			if(level == "facile") {
+				_IIAService.SetLevelStrategy(new LevelStrategyEasy());
+			}
+			else if (level == "moyen") {
+				_IIAService.SetLevelStrategy(new LevelStrategyMedium());
+			}
+
+			return _Game;
         }
 	}
 }

@@ -1,5 +1,5 @@
 ﻿function startGame(diff) {
-    getEnnemyCells();
+    getEnnemyCells(diff);
 }
 
 var count = 0;
@@ -11,15 +11,6 @@ function getCells() {
 		for (var i = 0; i < guessClick.length; i++) {
 			guessClick[i].onclick = answer;
 		}
-}
-
-function getEnnemyCells() {
-    sessionStorage.setItem("gameState", "started");
-    var guessClick = document.getElementsByClassName("enemy");
-
-    for (var i = 0; i < guessClick.length; i++) {
-        guessClick[i].onclick = shootAnswer;
-    }
 }
 
 function answer(eventObj) {
@@ -68,12 +59,6 @@ function answer(eventObj) {
     }
 }
 
-function shootAnswer(eventObj) {
-	var fire = eventObj.target;
-
-    window.alert("WORK IN PROGRESS - "+ fire.id);
-}
-
 function tryShip(position){
     auth();
     var user = JSON.parse(sessionStorage.user);
@@ -98,7 +83,6 @@ function tryShip(position){
     })
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
-            console.log(data);
         unauthorized(status);
         if(data.isValid){
             placeShip(data);
@@ -122,11 +106,76 @@ function placeShip(ship) {
         document.getElementById('size2').innerHTML = ship.game.ship2Number;
         document.getElementById('size3').innerHTML = ship.game.ship3Number;
         document.getElementById('size4').innerHTML = ship.game.ship4Number;
-        document.getElementById('size5').innerHTML = ship.game.ship5Number;
-            
+        document.getElementById('size5').innerHTML = ship.game.ship5Number;        
     });
-    
+    sessionStorage.setItem("game",JSON.stringify(ship.game));
 }
+
+
+function checkCompletePlacement() {
+    var game = JSON.parse(sessionStorage.game);
+
+    if(parseInt(game.placedShips) == 6){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function getEnnemyCells(diff) {
+    if(checkCompletePlacement()){
+        sessionStorage.setItem("gameState", "started");
+        var guessClick = document.getElementsByClassName("enemy");
+    
+        for (var i = 0; i < guessClick.length; i++) {
+            guessClick[i].onclick = shootAnswer;
+        }
+
+        setIA(diff);
+    }
+    else{
+        window.alert("Placez tous vos bateaux avant de démarrer la partie !");
+    }
+}
+
+function setIA(diff){
+    auth();
+    var user = JSON.parse(sessionStorage.user);
+
+    const item = {
+        isComplete: false,
+        IA: diff,
+    };
+
+    fetch('api/game/setIA', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + user.token
+        },
+        body: JSON.stringify(item)
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        console.log(data);
+        })
+        .catch(error => console.error('Error ', error));
+}
+
+function shootAnswer(eventObj) {
+	var fire = eventObj.target;
+    var slice = Number(String(fire.id).slice(0, 2));
+    var pos = [Math.floor(slice / 10), slice % 10].toString()
+    tryShoot(pos);
+}
+
+function tryShoot(position){
+    window.alert("WORK IN PROGRESS - " + position);
+}
+
 
 function unauthorized(response) {
     if(response.status == 401){
@@ -153,6 +202,25 @@ function disconnect() {
     window.location.assign("index.html");
     window.alert("Vous avez été déconnecté");
 }
+
+function refreshGame() {
+    auth();
+    res = JSON.parse(sessionStorage.user);
+
+    fetch('api/game/'+ res.id, {
+        headers: {
+            'Authorization': 'Bearer ' + res.token
+        }
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        sessionStorage.setItem("user",JSON.stringify(res));
+        sessionStorage.setItem("game",JSON.stringify(data));
+        })
+        .catch(error => console.error('Error ', error));
+}
+
 
 function loadProfile() {
     auth();
@@ -190,6 +258,7 @@ function getUser() {
     })
     .catch(error => console.error('Error ', error));
 }
+
 
 function game(res) {
     if (arguments.length == 0) {
@@ -281,6 +350,7 @@ function getGames() {
         .catch(error => console.error('Error ', error));
 }
 
+
 function token(mail, pwd) {
     var email;
     var password;
@@ -355,24 +425,6 @@ function register() {
             else if (response == "Inscription validée") {
                 token(item.Email,item.Password)
             }
-        })
-        .catch(error => console.error('Error ', error));
-}
-
-function refreshGame() {
-    auth();
-    res = JSON.parse(sessionStorage.user);
-
-    fetch('api/game/'+ res.id, {
-        headers: {
-            'Authorization': 'Bearer ' + res.token
-        }
-    })
-        .then(response => Promise.all([response, response.json()]))
-        .then(([status, data]) => {
-        unauthorized(status);
-        sessionStorage.setItem("user",JSON.stringify(res));
-        sessionStorage.setItem("game",JSON.stringify(data));
         })
         .catch(error => console.error('Error ', error));
 }

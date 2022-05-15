@@ -322,7 +322,7 @@ namespace Battleship.Logic.Tests.Models
             shipservice.setCurrentGame(game);
 
             Ship newShip = shipservice.VerifyShipValidity(psm);
-            Ship resShip = new Ship(posS, posE, null, null, null, true);
+            Ship resShip = new Ship(posS, posE, null, null, null, true, 0);
             Console.WriteLine(newShip.Start.Column);
             Console.WriteLine(newShip.Start.Row);
             Assert.IsTrue(resShip.Start.Column == newShip.Start.Column || resShip.Start.Row == newShip.Start.Row);
