@@ -59,7 +59,7 @@ namespace Battleship.Logic.Services
 
 
             if(IsSet()){
-                Console.WriteLine("ok isSET");
+                //Console.WriteLine("ok isSET");
                 if (IsPositionValidDiagonale() || IsPositionValidHorizontalOrVerticale())
                 {
                     //Console.WriteLine("ok isPosition");
@@ -90,7 +90,7 @@ namespace Battleship.Logic.Services
             if (isValid)
             {
                 Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid, _Positions.Count());
-                _shipRepository.AddShip(newShip);
+                //_shipRepository.AddShip(newShip); //TODO remettre en place
                 _Game.ShipsPose.Add(newShip);
                 this.AddPositionInvalid(_Game);
 
@@ -109,7 +109,7 @@ namespace Battleship.Logic.Services
                     {
                         _Game.Ship2Number--;
                         _Game.PlacedShips++;
-                        _gameService.UpdateGame(_Game);
+                        //_gameService.UpdateGame(_Game);//TODO remettre en place
                         return true;    
                     }
 
@@ -119,7 +119,7 @@ namespace Battleship.Logic.Services
                     {
                         _Game.Ship3Number--;
                         _Game.PlacedShips++;
-                        _gameService.UpdateGame(_Game);
+                        //_gameService.UpdateGame(_Game);//TODO remettre en place
                         return true;
                     }
 
@@ -129,7 +129,7 @@ namespace Battleship.Logic.Services
                     {
                         _Game.Ship4Number--;
                         _Game.PlacedShips++;
-                        _gameService.UpdateGame(_Game);
+                        //_gameService.UpdateGame(_Game);//TODO remettre en place
                         return true;
                     }
 
@@ -139,7 +139,7 @@ namespace Battleship.Logic.Services
                     {
                         _Game.Ship5Number--;
                         _Game.PlacedShips++;
-                        _gameService.UpdateGame(_Game);
+                        //_gameService.UpdateGame(_Game);//TODO remettre en place
                         return true;
                     }
 
@@ -173,10 +173,8 @@ namespace Battleship.Logic.Services
         {
             foreach (Position posI in _Positions)
             {
-                Console.WriteLine(posI.Row+":"+posI.Column);
                 foreach (Position posY in _Game.PositionsInvalid)
                 {
-                    Console.WriteLine(posY.Row + ":" + posY.Column);
                     if (posI.Equals(posY)) return true;
                 }
             }

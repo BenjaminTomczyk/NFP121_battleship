@@ -33,7 +33,7 @@ namespace Battleship.Logic.Services
 
         public Position ExecuteLevelStrategy()
         {
-            return _LevelStrategy.LogicIA(_Shootings);
+            return _LevelStrategy.LogicIA(_Shootings, _Game);
         }
         
 
