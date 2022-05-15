@@ -2,10 +2,6 @@
     window.alert("WORK IN PROGRESS");
 }
 
-function loadAdmin(){
-    window.alert("WORK IN PROGRESS");
-}
-
 var count = 0;
 
 function getCells() {
@@ -89,6 +85,10 @@ function tryShip(position){
 }
 
 function placeShip(ship) {
+    auth();
+
+    var game = JSON.parse(sessionStorage.game);
+
     if(ship.isValid){
         var positions = ship.positions;
 
@@ -96,6 +96,12 @@ function placeShip(ship) {
             var cell = element.row.toString() + element.column.toString();
             document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
             document.getElementById(cell).setAttribute("class","hit");
+
+            console.log(game);
+            document.getElementById('size2').innerHTML = game.ship2Number;
+            document.getElementById('size3').innerHTML = game.ship3Number;
+            document.getElementById('size4').innerHTML = game.ship4Number;
+            document.getElementById('size5').innerHTML = game.ship5Number;
             
         });
     }
@@ -249,7 +255,6 @@ function getGames() {
                 tabCell.innerHTML = data[i][col[j]];
             }
         }
-        console.log(data);
         var divContainer = document.getElementById("showData");
         divContainer.innerHTML = "";
         divContainer.appendChild(table);
@@ -331,6 +336,24 @@ function register() {
             else if (response == "Inscription validée") {
                 token(item.Email,item.Password)
             }
+        })
+        .catch(error => console.error('Error ', error));
+}
+
+function refreshGame() {
+    auth();
+    res = JSON.parse(sessionStorage.user);
+
+    fetch('api/game/'+ res.id, {
+        headers: {
+            'Authorization': 'Bearer ' + res.token
+        }
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        sessionStorage.setItem("user",JSON.stringify(res));
+        sessionStorage.setItem("game",JSON.stringify(data));
         })
         .catch(error => console.error('Error ', error));
 }

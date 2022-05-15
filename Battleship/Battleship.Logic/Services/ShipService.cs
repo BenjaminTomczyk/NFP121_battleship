@@ -39,7 +39,7 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
-            //Game game = _Game;
+
             GenerationListPositions();
 
             if (IsSet())
@@ -52,7 +52,10 @@ namespace Battleship.Logic.Services
                         {
                             if (!IsInjuxtapose(_Game))
                             {
-                                isValid = true;
+                                if (CheckShipSize())
+                                {
+                                    isValid = true;
+                                }
                             }
                         }
                     }
@@ -61,13 +64,54 @@ namespace Battleship.Logic.Services
 
             if (isValid)
             {
-                Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid);
+                Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid, _Positions.Count());
                 _shipRepository.AddShip(newShip);
                 this.AddPositionInvalid(_Game);
-                //_Game = game;
+
                 return newShip;
             }
-            else return new Ship(null, null, null, null, null, isValid);
+            else return new Ship(null, null, null, null, null, isValid, 0);
+        }
+
+        public bool CheckShipSize()
+        {
+            switch (_Positions.Count())
+            {
+                case 2:
+                    if (_Game.Ship2Number == 0) return false;
+                    else
+                    {
+                        _Game.Ship2Number--;
+                        return true;
+                    }
+
+                case 3:
+                    if (_Game.Ship3Number == 0) return false;
+                    else
+                    {
+                        _Game.Ship3Number--;
+                        return true;
+                    }
+
+                case 4:
+                    if (_Game.Ship4Number == 0) return false;
+                    else
+                    {
+                        _Game.Ship4Number--;
+                        return true;
+                    }
+
+                case 5:
+                    if (_Game.Ship5Number == 0) return false;
+                    else
+                    {
+                        _Game.Ship5Number--;
+                        return true;
+                    }
+
+                default:
+                    return false;
+            }
         }
 
         public bool IsSet() => _Start != null && _End != null;
