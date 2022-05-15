@@ -11,12 +11,13 @@ namespace Battleship.Logic.Interfaces
         Game setCurrentGame(int game);
         Ship VerifyShipValidity(PlaceShipModel positions);
         bool IsSet();
-        bool IsPosition();
+        bool IsPositionValidDiagonale();
+        bool IsPositionValidHorizontalOrVerticale();
         bool IsInGrid(int gridSize);
-        bool IsInjuxtapose(Game game);
+        bool IsInjuxtapose();
         void AddPositionInvalid(Game game);
         bool IsDiagonale();
-        bool IsCollision(ShipService ship1);
+        bool IsCollision(Ship ship1);
         void SetNewAttributPosition(int startCol, int startRow, int endCol, int endRow);
         void GenerationListPositions();
         void ListPositionStandard(List<Position> listPosition);

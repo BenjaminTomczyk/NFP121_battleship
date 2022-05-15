@@ -20,7 +20,6 @@ namespace Battleship.Repository.Repositories
 		public string SetIALevels()
         {
             //var ia = _ctx.IA.ToList();
-
             //if (!ia.Any())
             //{
             //    //_ctx.IA.Add(new IA(1, "Facile"));
@@ -38,6 +37,7 @@ namespace Battleship.Repository.Repositories
             //    ia2.Id = 2;
             //    ia2.Level = "Moyen";
             //    _ctx.SaveChanges();
+
 
                 return "Updated";
             //}

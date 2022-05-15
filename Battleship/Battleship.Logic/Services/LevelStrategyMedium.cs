@@ -39,6 +39,11 @@ namespace Battleship.Logic.Services
             return new Position();
         }
 
+        public List<Position> EliminateImpossiblePositions(List<Position> potentialShootingPosition)
+        {
+            return new List<Position>();
+        }
+
         public List<Position> GenerationPotentialShootingPosition(Position shootHit)
         {
             List<Position> potentialShootingPosition = new List<Position>();
