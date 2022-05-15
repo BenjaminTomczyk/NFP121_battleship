@@ -10,6 +10,8 @@ namespace Battleship.Model.Entities
 		public int[] End { get; set; }
 		[Required]
 		public string UserId { get; set; }
+		[Required]
+		public string gameId { get; set; }
 	}
 }
 

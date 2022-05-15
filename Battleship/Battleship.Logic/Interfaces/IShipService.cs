@@ -2,13 +2,14 @@
 using Battleship.Model.Entities;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Battleship.Logic.Interfaces
 {
     public interface IShipService
     {
-        void setCurrentGame(Game game);
-        void setCurrentUser(string userId);
+        Game setCurrentGame(Game game);
+        void setCurrentUser(ApplicationUser user);
         Ship VerifyShipValidity(PlaceShipModel positions);
         bool IsSet();
         bool IsPosition();

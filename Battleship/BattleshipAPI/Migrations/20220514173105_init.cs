@@ -259,8 +259,8 @@ namespace BattleshipAPI.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     StartId = table.Column<int>(type: "int", nullable: true),
                     EndId = table.Column<int>(type: "int", nullable: true),
-                    GameId = table.Column<int>(type: "int", nullable: true),
-                    PlayerId = table.Column<string>(type: "varchar(255)", nullable: true)
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    Player = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IsValid = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
@@ -268,17 +268,11 @@ namespace BattleshipAPI.Migrations
                 {
                     table.PrimaryKey("PK_Ship", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ship_AspNetUsers_PlayerId",
-                        column: x => x.PlayerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Ship_Game_GameId",
                         column: x => x.GameId,
                         principalTable: "Game",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -367,11 +361,6 @@ namespace BattleshipAPI.Migrations
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Ship_PlayerId",
-                table: "Ship",
-                column: "PlayerId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Ship_StartId",
                 table: "Ship",
                 column: "StartId");
@@ -398,10 +387,6 @@ namespace BattleshipAPI.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_Game_AspNetUsers_PlayerId",
                 table: "Game");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Ship_AspNetUsers_PlayerId",
-                table: "Ship");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Game_IA_IAId",

@@ -2,9 +2,10 @@
 using System.Threading.Tasks;
 using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
+using Battleship.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
 namespace BattleshipAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -12,17 +13,25 @@ namespace BattleshipAPI.Controllers
     public class ShipController : Controller
     {
         private readonly IShipService _shipService;
+        private readonly IUserService _userService;
+        private readonly IGameService _gameService;
 
-        public ShipController(IShipService shipService)
+        public ShipController(IShipService shipService, IUserService userService, IGameService gameService)
         {
             _shipService = shipService;
+            _userService = userService;
+            _gameService = gameService;
         }
 
         [Authorize]
         [HttpPost("placeship")]
-        public Ship TestShipPlacement(PlaceShipModel positions)
+        public async Task<Ship> TestShipPlacement(PlaceShipModel positions)
         {
-            _shipService.setCurrentUser(positions.UserId);
+            ApplicationUser user = await _userService.GetUserAsync(positions.UserId);
+            Game game = _gameService.GetGame(Int32.Parse(positions.gameId));
+
+            _shipService.setCurrentUser(user);
+            _shipService.setCurrentGame(game);
             var result = _shipService.VerifyShipValidity(positions);
             return result;
         }

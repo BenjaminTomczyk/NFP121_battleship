@@ -61,12 +61,14 @@ function answer(eventObj) {
 function tryShip(position){
     auth();
     var user = JSON.parse(sessionStorage.user);
+    var game = JSON.parse(sessionStorage.game);
 
     const item = {
         isComplete: false,
         Start: position[0],
         End: position[1],
-        UserId: user.id
+        UserId: user.id,
+        GameId: game.id, 
     };
 
     fetch('api/ship/placeship', {
@@ -81,6 +83,7 @@ function tryShip(position){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
+        console.log(data);
         placeShip(data);
         })
         .catch(error => console.error('Error ', error));
@@ -183,7 +186,6 @@ function game(res) {
         sessionStorage.setItem("user",JSON.stringify(res));
         sessionStorage.setItem("game",JSON.stringify(data));
         })
-
         .catch(error => console.error('Error ', error));
 }
 

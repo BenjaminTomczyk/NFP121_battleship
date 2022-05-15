@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BattleshipAPI.Migrations
 {
     [DbContext(typeof(BattleshipDbContext))]
-    [Migration("20220513205345_init")]
+    [Migration("20220514173105_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,14 +193,15 @@ namespace BattleshipAPI.Migrations
                     b.Property<int?>("EndId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GameId")
+                    b.Property<int>("GameId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsValid")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("PlayerId")
-                        .HasColumnType("varchar(255)");
+                    b.Property<string>("Player")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("StartId")
                         .HasColumnType("int");
@@ -210,8 +211,6 @@ namespace BattleshipAPI.Migrations
                     b.HasIndex("EndId");
 
                     b.HasIndex("GameId");
-
-                    b.HasIndex("PlayerId");
 
                     b.HasIndex("StartId");
 
@@ -377,12 +376,10 @@ namespace BattleshipAPI.Migrations
                         .HasForeignKey("EndId");
 
                     b.HasOne("Battleship.Model.Entities.Game", "Game")
-                        .WithMany()
-                        .HasForeignKey("GameId");
-
-                    b.HasOne("Battleship.Model.Entities.ApplicationUser", "Player")
-                        .WithMany()
-                        .HasForeignKey("PlayerId");
+                        .WithMany("Ships")
+                        .HasForeignKey("GameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Battleship.Model.Entities.Position", "Start")
                         .WithMany()
@@ -391,8 +388,6 @@ namespace BattleshipAPI.Migrations
                     b.Navigation("End");
 
                     b.Navigation("Game");
-
-                    b.Navigation("Player");
 
                     b.Navigation("Start");
                 });
@@ -451,6 +446,11 @@ namespace BattleshipAPI.Migrations
             modelBuilder.Entity("Battleship.Model.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("Games");
+                });
+
+            modelBuilder.Entity("Battleship.Model.Entities.Game", b =>
+                {
+                    b.Navigation("Ships");
                 });
 
             modelBuilder.Entity("Battleship.Model.Entities.Ship", b =>

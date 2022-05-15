@@ -32,14 +32,15 @@ namespace Battleship.Logic.Services
             _userService = userService;
         }
 
-        public void setCurrentGame(Game game)
+        public Game setCurrentGame(Game game)
         {
             _Game = game;
+            return _Game;
         }
 
-        public async void setCurrentUser(string userId)
+        public void setCurrentUser(ApplicationUser user)
         {
-            _User = await _userService.GetUserAsync(userId);
+            _User = user;
         }
 
         public Ship VerifyShipValidity(PlaceShipModel positions)
@@ -47,16 +48,18 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
-            //GenerationListPositions();
+            Game game = _Game;
+            GenerationListPositions();
 
-            if(IsSet()){
+            if (IsSet())
+            {
                 if (IsPosition())
                 {
-                    if (IsInGrid(8)) //osef de la gridsize dans le cdc c'est marqué 8x8
+                    if (IsInGrid(8))
                     {
                         if (!IsCollisionWithListPlaceShip())
                         {
-                            if (!IsInjuxtapose(_Game))
+                            if (!IsInjuxtapose(game))
                             {
                                 isValid = true;
                             }
@@ -67,14 +70,13 @@ namespace Battleship.Logic.Services
 
             if (isValid)
             {
-                
-                Ship newShip = new Ship(_Start, _End, _Positions, _Game, _User, isValid);
-                _shipRepository.AddShip(newShip);   
-                this.AddPositionInvalid(_Game); //TODO remplacer par un accesseur à la l'instance "game" //TODO mettre a jour la liste des coordonnées invalid sur lequelles on ne peut pas mettre de bateaux
+                Ship newShip = new Ship(_Start, _End, _Positions, game, "User", isValid);
+                _shipRepository.AddShip(newShip);
+                this.AddPositionInvalid(game);
+                _Game = game;
                 return newShip;
             }
-
-            else return new Ship(null, null, null, null, null,isValid);
+            else return new Ship(null, null, null, null, null, isValid);
         }
 
         public bool IsSet() => _Start != null && _End != null;

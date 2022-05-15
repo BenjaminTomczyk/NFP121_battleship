@@ -22,11 +22,13 @@ namespace BattleshipAPI.Controllers
     {
         private readonly IGameService _gameService;
         private readonly IShipService _shipService;
+        //private readonly IIAService _iaService;
 
-        public GameController(IGameService gameService, IShipService shipService)
+        public GameController(IGameService gameService, IShipService shipService/*, IIAService iAService*/)
         {
             _gameService = gameService;
             _shipService = shipService;
+            //_iaService = iAService;
         }
 
         [HttpGet("{id}")]
@@ -41,6 +43,7 @@ namespace BattleshipAPI.Controllers
         {
             Game game = _gameService.GetGame(id);
             _shipService.setCurrentGame(game);
+            //_iaService.setCurrentGame(game);
             return game;
         }
 

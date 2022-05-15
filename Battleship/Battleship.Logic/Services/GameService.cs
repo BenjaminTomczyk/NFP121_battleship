@@ -38,6 +38,11 @@ namespace Battleship.Logic.Services
 
 			_Game.GridSize = 8;
 
+			_Game.Ship2Number = 1;
+			_Game.Ship3Number = 2;
+			_Game.Ship4Number = 2;
+			_Game.Ship5Number = 1;
+
 			_Game.Date = DateTime.Now;
 
 			return _gameRepository.setNewGame(_Game);

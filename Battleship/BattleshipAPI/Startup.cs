@@ -37,10 +37,15 @@ namespace BattleshipAPI
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IShipService, ShipService>();
             services.AddScoped<IGameService, GameService>();
+            //services.AddScoped<IIAService, IAService>();
+
+            services.AddScoped<ILevelStrategy, LevelStrategyEasy>();
+            services.AddScoped<ILevelStrategy, LevelStrategyMedium>();
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IShipRepository, ShipRepository>();
             services.AddScoped<IGameRepository, GameRepository>();
+            //services.AddScoped<IIARepository, IARepository>();
 
             services.AddDbContextPool<BattleshipDbContext>(opt =>
             {
