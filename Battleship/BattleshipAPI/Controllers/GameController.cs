@@ -58,7 +58,14 @@ namespace BattleshipAPI.Controllers
         [HttpPost("setIA")]
         public Game SetGameIA(string level)
         {
+            //_gameService.setIAGrid();
             return _gameService.SetGameIA(level);
+        }
+
+        [HttpPost("tryShoot")]
+        public bool TryShoot(Position position)
+        {
+            return _gameService.TryShoot(position);
         }
     }
 }

@@ -145,7 +145,7 @@ function setIA(diff){
 
     const item = {
         isComplete: false,
-        IA: diff,
+        IA: diff
     };
 
     fetch('api/game/setIA', {
@@ -160,7 +160,6 @@ function setIA(diff){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-        console.log(data);
         })
         .catch(error => console.error('Error ', error));
 }
@@ -173,9 +172,49 @@ function shootAnswer(eventObj) {
 }
 
 function tryShoot(position){
-    window.alert("WORK IN PROGRESS - " + position);
+    auth();
+    var user = JSON.parse(sessionStorage.user);
+
+    const item = {
+        isComplete: false,
+        Position: position
+    };
+
+    fetch('api/game/tryShoot', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + user.token
+        },
+        body: JSON.stringify(item)
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        if(data == true){
+            shot(position);
+        }
+        else{
+            missed(position);
+        }
+        })
+        .catch(error => console.error('Error ', error));
 }
 
+function shot(pos){
+    var position = pos.replace(",","")+0;
+
+    document.getElementById(position).parentElement.style.backgroundColor = "#42aee3";
+    document.getElementById(position).setAttribute("class","hit");
+}
+
+function missed(pos){
+    var position = pos.replace(",","")+0;
+
+    document.getElementById(position).parentElement.style.backgroundColor = "#42aee3";
+    document.getElementById(position).setAttribute("class","miss");
+}
 
 function unauthorized(response) {
     if(response.status == 401){
