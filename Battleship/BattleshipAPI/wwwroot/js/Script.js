@@ -1,57 +1,77 @@
 ﻿function startGame(diff) {
-    window.alert("WORK IN PROGRESS");
+    getEnnemyCells();
 }
 
 var count = 0;
 
 function getCells() {
-	var guessClick = document.getElementsByTagName("td");
+    sessionStorage.setItem("gameState", "initialised");
+    var guessClick = document.getElementsByClassName("player");
+
 		for (var i = 0; i < guessClick.length; i++) {
 			guessClick[i].onclick = answer;
 		}
 }
 
+function getEnnemyCells() {
+    sessionStorage.setItem("gameState", "started");
+    var guessClick = document.getElementsByClassName("enemy");
+
+    for (var i = 0; i < guessClick.length; i++) {
+        guessClick[i].onclick = shootAnswer;
+    }
+}
+
 function answer(eventObj) {
     auth();
-	var fire = eventObj.target;
 
-    if(count == 0){
-        sessionStorage.setItem("ShipStartPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
-        document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
-        count++;
-    }
-    
-    else if (count == 1){
-        if(fire.id == sessionStorage.getItem("ShipStartPos")){
-            document.getElementById(fire.id).parentElement.style.backgroundColor = "";
-            sessionStorage.removeItem("ShipStartPos");
-            count = 0;
-        }
-        else{
-            sessionStorage.setItem("ShipEndPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
+    if(sessionStorage.getItem("gameState") != "started"){
+        var fire = eventObj.target;
+
+        if(count == 0){
+            sessionStorage.setItem("ShipStartPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
             document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
             count++;
         }
-    }
-
-    if(count == 2){
-
-        var cellStart = sessionStorage.getItem("ShipStartPos").replace(',','');
-        var cellEnd = sessionStorage.getItem("ShipEndPos").replace(',','');
-
-        document.getElementById(cellStart).parentElement.style.backgroundColor = "";
-        document.getElementById(cellEnd).parentElement.style.backgroundColor = "";
-
-        var start = sessionStorage.getItem("ShipStartPos").split(",").map(str => {return Number(str);});
-        var end = sessionStorage.getItem("ShipEndPos").split(",").map(str => { return Number(str);});
-        position = [start,end]
-        count++;
-        sessionStorage.removeItem("ShipStartPos");
-        sessionStorage.removeItem("ShipEndPos");
-        count = 0;
         
-        tryShip(position);
+        else if (count == 1){
+            if(fire.id == sessionStorage.getItem("ShipStartPos")){
+                document.getElementById(fire.id).parentElement.style.backgroundColor = "";
+                sessionStorage.removeItem("ShipStartPos");
+                count = 0;
+            }
+            else{
+                sessionStorage.setItem("ShipEndPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
+                document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
+                count++;
+            } 
+        }
+    
+        if(count == 2){
+    
+            var cellStart = sessionStorage.getItem("ShipStartPos").replace(',','');
+            var cellEnd = sessionStorage.getItem("ShipEndPos").replace(',','');
+    
+            document.getElementById(cellStart).parentElement.style.backgroundColor = "";
+            document.getElementById(cellEnd).parentElement.style.backgroundColor = "";
+    
+            var start = sessionStorage.getItem("ShipStartPos").split(",").map(str => {return Number(str);});
+            var end = sessionStorage.getItem("ShipEndPos").split(",").map(str => { return Number(str);});
+            position = [start,end]
+            count++;
+            sessionStorage.removeItem("ShipStartPos");
+            sessionStorage.removeItem("ShipEndPos");
+            count = 0;
+            
+            tryShip(position);
+        }
     }
+}
+
+function shootAnswer(eventObj) {
+	var fire = eventObj.target;
+
+    window.alert("WORK IN PROGRESS - "+ fire.id);
 }
 
 function tryShip(position){
@@ -188,6 +208,7 @@ function game(res) {
         window.location.assign("Game.html");
         sessionStorage.setItem("user",JSON.stringify(res));
         sessionStorage.setItem("game",JSON.stringify(data));
+        sessionStorage.setItem("gameState", "initialised");
         })
         .catch(error => console.error('Error ', error));
 }

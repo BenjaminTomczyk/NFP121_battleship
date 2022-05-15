@@ -45,16 +45,6 @@ namespace Battleship.Logic.Services
             _Game = game;
         }
 
-        public ShipService(Position start, Position end, IShipRepository shipRepository, IGameService gameService)
-        {
-            _Id = 0;
-            _Start = start;
-            _End = end;
-            _Positions = new List<Position>();
-            _shipRepository = shipRepository;
-            _gameService = gameService;
-        }
-
         public Game setCurrentGame(int game)
         {
             return _Game = _gameService.GetGame(game);
@@ -65,7 +55,7 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
-            //GenerationListPositions();
+            GenerationListPositions();
 
 
             if(IsSet()){
