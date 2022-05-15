@@ -119,7 +119,7 @@ namespace Battleship.Logic.Services
 
 		public bool TryShoot(Position position)
         {
-			return _IIAService.Shoot(position);
+			return _IIAService.Shoot(position); //TODO c'est gameStage() qu'il faut appeler pour tirer IA
         }
 
 		public Game AddPosToShootList(int playerOrIA, Position pos)
