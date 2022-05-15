@@ -62,23 +62,23 @@ namespace Battleship.Logic.Services
                 Console.WriteLine("ok isSET");
                 if (IsPositionValidDiagonale() || IsPositionValidHorizontalOrVerticale())
                 {
-                    Console.WriteLine("ok isPosition");
+                    //Console.WriteLine("ok isPosition");
 
                     if (IsInGrid(8)) //osef de la gridsize dans le cdc c'est marqué 8x8 //ok frr le boss j'avoue que c'est tout le temps 8X8 xD
 
                     {
-                        Console.WriteLine("ok isInGrid");
+                        //Console.WriteLine("ok isInGrid");
 
                         if (!IsCollisionWithListPlaceShip())
                         {
-                            Console.WriteLine("ok isCollisionwithPlace");
+                            //Console.WriteLine("ok isCollisionwithPlace");
 
                             if (!IsInjuxtapose())
                             {
-                                Console.WriteLine("ok JUXTAPOSER");
+                                //Console.WriteLine("ok JUXTAPOSER");
                                 if (CheckShipSize())
                                 {
-                                    Console.WriteLine("ok checksize");
+                                    //Console.WriteLine("ok checksize");
                                     isValid = true;
                                 }
                             }
@@ -96,12 +96,11 @@ namespace Battleship.Logic.Services
 
                 return newShip;
             }
-            else return new Ship(null, null, null, null, null, isValid, 0);
+            else return new Ship(null, null, null, null, null, isValid, 0);  
         }
 
         public bool CheckShipSize()
         {
-            Console.WriteLine(_Positions.Count());
             switch (_Positions.Count())
             {
                 case 2:

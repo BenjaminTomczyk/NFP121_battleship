@@ -102,8 +102,8 @@ namespace Battleship.Logic.Services
 			return _Game = _gameRepository.UpdateGame(game);
         }
 
-		public Game SetGameIA(string level)
-        {
+		public Game SetGameIA(string level) //todo faire que la game courante l'ia soit set en fonction de la difficulté
+		{
 			IA ia = new IA();
 
 			if(level == "facile") {

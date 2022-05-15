@@ -1,5 +1,8 @@
-﻿using Battleship.Logic.Services;
+﻿using Battleship.Logic.Interfaces;
+using Battleship.Logic.Services;
 using Battleship.Model.Entities;
+using Battleship.Repository.Interfaces;
+using Battleship.Repository.Repositories;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -296,6 +299,8 @@ namespace Battleship.Logic.Tests.Models
             Position posS = new Position(1, 1);
             Position posE = new Position(3, 3);
             PlaceShipModel psm = new PlaceShipModel(start, end, "") ;
+            IShipRepository shipRepository = new ShipRepository(null);
+            IGameService gameService = new GameService(null,null,null);
 
             ShipService shipservice = new ShipService(posS, posE, null,null);
             shipservice.setCurrentGame(game);
@@ -358,7 +363,6 @@ namespace Battleship.Logic.Tests.Models
             Ship resShip1 = new Ship(posS1, posE1, null, null, null, true,0);
 
             Console.WriteLine(newShip.Start.Row+":"+ newShip.Start.Column);
-            Console.WriteLine(newShip1.Start.Row + ":" + newShip1.Start.Column);
 
             Assert.IsTrue(resShip.Start.Column == newShip.Start.Column || resShip.Start.Row == newShip.Start.Row);
             Assert.IsTrue(resShip.End.Column == newShip.End.Column || resShip.End.Row == newShip.End.Row);

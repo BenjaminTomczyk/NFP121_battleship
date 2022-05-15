@@ -52,7 +52,7 @@ namespace Battleship.Logic.Services
         {
             bool shootresult = false;
 
-            foreach (Ship userShip in _Game.Ships)
+            foreach (Ship userShip in _Game.ShipsPose)
             {
                 if (userShip.Player == "User")
                     {
