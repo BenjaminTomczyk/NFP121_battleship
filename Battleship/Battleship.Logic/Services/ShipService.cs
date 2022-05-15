@@ -55,7 +55,7 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
-            //GenerationListPositions();
+            GenerationListPositions();
 
 
             if(IsSet()){
@@ -90,8 +90,8 @@ namespace Battleship.Logic.Services
             if (isValid)
             {
                 Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid, _Positions.Count());
-                //_shipRepository.AddShip(newShip);
-                _Game.ShipsPose.Add(newShip); // j'ai mis a jour la liste des bateaux dans la game LAISSERRRRRRRR EN PLACE
+                _shipRepository.AddShip(newShip);
+                _Game.ShipsPose.Add(newShip);
                 this.AddPositionInvalid(_Game);
 
                 return newShip;
@@ -109,7 +109,9 @@ namespace Battleship.Logic.Services
                     else
                     {
                         _Game.Ship2Number--;
-                        return true;
+                        _Game.PlacedShips++;
+                        _gameService.UpdateGame(_Game);
+                        return true;    
                     }
 
                 case 3:
@@ -117,6 +119,8 @@ namespace Battleship.Logic.Services
                     else
                     {
                         _Game.Ship3Number--;
+                        _Game.PlacedShips++;
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 
@@ -125,6 +129,8 @@ namespace Battleship.Logic.Services
                     else
                     {
                         _Game.Ship4Number--;
+                        _Game.PlacedShips++;
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 
@@ -133,6 +139,8 @@ namespace Battleship.Logic.Services
                     else
                     {
                         _Game.Ship5Number--;
+                        _Game.PlacedShips++;
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 

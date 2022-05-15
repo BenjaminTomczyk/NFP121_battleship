@@ -1,11 +1,13 @@
 ﻿function startGame(diff) {
-    window.alert("WORK IN PROGRESS");
+    getEnnemyCells(diff);
 }
 
 var count = 0;
 
 function getCells() {
-	var guessClick = document.getElementsByTagName("td");
+    sessionStorage.setItem("gameState", "initialised");
+    var guessClick = document.getElementsByClassName("player");
+
 		for (var i = 0; i < guessClick.length; i++) {
 			guessClick[i].onclick = answer;
 		}
@@ -13,44 +15,47 @@ function getCells() {
 
 function answer(eventObj) {
     auth();
-	var fire = eventObj.target;
 
-    if(count == 0){
-        sessionStorage.setItem("ShipStartPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
-        document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
-        count++;
-    }
-    
-    else if (count == 1){
-        if(fire.id == sessionStorage.getItem("ShipStartPos")){
-            document.getElementById(fire.id).parentElement.style.backgroundColor = "";
-            sessionStorage.removeItem("ShipStartPos");
-            count = 0;
-        }
-        else{
-            sessionStorage.setItem("ShipEndPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
+    if(sessionStorage.getItem("gameState") != "started"){
+        var fire = eventObj.target;
+
+        if(count == 0){
+            sessionStorage.setItem("ShipStartPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
             document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
             count++;
         }
-    }
-
-    if(count == 2){
-
-        var cellStart = sessionStorage.getItem("ShipStartPos").replace(',','');
-        var cellEnd = sessionStorage.getItem("ShipEndPos").replace(',','');
-
-        document.getElementById(cellStart).parentElement.style.backgroundColor = "";
-        document.getElementById(cellEnd).parentElement.style.backgroundColor = "";
-
-        var start = sessionStorage.getItem("ShipStartPos").split(",").map(str => {return Number(str);});
-        var end = sessionStorage.getItem("ShipEndPos").split(",").map(str => { return Number(str);});
-        position = [start,end]
-        count++;
-        sessionStorage.removeItem("ShipStartPos");
-        sessionStorage.removeItem("ShipEndPos");
-        count = 0;
         
-        tryShip(position);
+        else if (count == 1){
+            if(fire.id == sessionStorage.getItem("ShipStartPos")){
+                document.getElementById(fire.id).parentElement.style.backgroundColor = "";
+                sessionStorage.removeItem("ShipStartPos");
+                count = 0;
+            }
+            else{
+                sessionStorage.setItem("ShipEndPos",[Math.floor(fire.id / 10), fire.id % 10].toString());
+                document.getElementById(fire.id).parentElement.style.backgroundColor = "#f5d972";
+                count++;
+            } 
+        }
+    
+        if(count == 2){
+    
+            var cellStart = sessionStorage.getItem("ShipStartPos").replace(',','');
+            var cellEnd = sessionStorage.getItem("ShipEndPos").replace(',','');
+    
+            document.getElementById(cellStart).parentElement.style.backgroundColor = "";
+            document.getElementById(cellEnd).parentElement.style.backgroundColor = "";
+    
+            var start = sessionStorage.getItem("ShipStartPos").split(",").map(str => {return Number(str);});
+            var end = sessionStorage.getItem("ShipEndPos").split(",").map(str => { return Number(str);});
+            position = [start,end]
+            count++;
+            sessionStorage.removeItem("ShipStartPos");
+            sessionStorage.removeItem("ShipEndPos");
+            count = 0;
+            
+            tryShip(position);
+        }
     }
 }
 
@@ -79,7 +84,13 @@ function tryShip(position){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-        placeShip(data);
+        if(data.isValid){
+            placeShip(data);
+        }
+        else{
+            window.alert("Placement invalide !");
+        }
+        
         })
         .catch(error => console.error('Error ', error));
 }
@@ -87,28 +98,84 @@ function tryShip(position){
 function placeShip(ship) {
     auth();
 
+    ship.positions.forEach(element => {
+        var cell = element.row.toString() + element.column.toString();
+        document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
+        document.getElementById(cell).setAttribute("class","hit");
+
+        document.getElementById('size2').innerHTML = ship.game.ship2Number;
+        document.getElementById('size3').innerHTML = ship.game.ship3Number;
+        document.getElementById('size4').innerHTML = ship.game.ship4Number;
+        document.getElementById('size5').innerHTML = ship.game.ship5Number;        
+    });
+    sessionStorage.setItem("game",JSON.stringify(ship.game));
+}
+
+
+function checkCompletePlacement() {
     var game = JSON.parse(sessionStorage.game);
 
-    if(ship.isValid){
-        var positions = ship.positions;
-
-        positions.forEach(element => {
-            var cell = element.row.toString() + element.column.toString();
-            document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
-            document.getElementById(cell).setAttribute("class","hit");
-
-            console.log(game);
-            document.getElementById('size2').innerHTML = game.ship2Number;
-            document.getElementById('size3').innerHTML = game.ship3Number;
-            document.getElementById('size4').innerHTML = game.ship4Number;
-            document.getElementById('size5').innerHTML = game.ship5Number;
-            
-        });
+    if(parseInt(game.placedShips) == 6){
+        return true;
     }
-    else {
-        window.alert("Placement invalide !");
+    else{
+        return false;
     }
 }
+
+function getEnnemyCells(diff) {
+    if(checkCompletePlacement()){
+        sessionStorage.setItem("gameState", "started");
+        var guessClick = document.getElementsByClassName("enemy");
+    
+        for (var i = 0; i < guessClick.length; i++) {
+            guessClick[i].onclick = shootAnswer;
+        }
+
+        setIA(diff);
+    }
+    else{
+        window.alert("Placez tous vos bateaux avant de démarrer la partie !");
+    }
+}
+
+function setIA(diff){
+    auth();
+    var user = JSON.parse(sessionStorage.user);
+
+    const item = {
+        isComplete: false,
+        IA: diff,
+    };
+
+    fetch('api/game/setIA', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + user.token
+        },
+        body: JSON.stringify(item)
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        console.log(data);
+        })
+        .catch(error => console.error('Error ', error));
+}
+
+function shootAnswer(eventObj) {
+	var fire = eventObj.target;
+    var slice = Number(String(fire.id).slice(0, 2));
+    var pos = [Math.floor(slice / 10), slice % 10].toString()
+    tryShoot(pos);
+}
+
+function tryShoot(position){
+    window.alert("WORK IN PROGRESS - " + position);
+}
+
 
 function unauthorized(response) {
     if(response.status == 401){
@@ -135,6 +202,25 @@ function disconnect() {
     window.location.assign("index.html");
     window.alert("Vous avez été déconnecté");
 }
+
+function refreshGame() {
+    auth();
+    res = JSON.parse(sessionStorage.user);
+
+    fetch('api/game/'+ res.id, {
+        headers: {
+            'Authorization': 'Bearer ' + res.token
+        }
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        sessionStorage.setItem("user",JSON.stringify(res));
+        sessionStorage.setItem("game",JSON.stringify(data));
+        })
+        .catch(error => console.error('Error ', error));
+}
+
 
 function loadProfile() {
     auth();
@@ -173,6 +259,7 @@ function getUser() {
     .catch(error => console.error('Error ', error));
 }
 
+
 function game(res) {
     if (arguments.length == 0) {
         auth();
@@ -190,6 +277,7 @@ function game(res) {
         window.location.assign("Game.html");
         sessionStorage.setItem("user",JSON.stringify(res));
         sessionStorage.setItem("game",JSON.stringify(data));
+        sessionStorage.setItem("gameState", "initialised");
         })
         .catch(error => console.error('Error ', error));
 }
@@ -261,6 +349,7 @@ function getGames() {
         })
         .catch(error => console.error('Error ', error));
 }
+
 
 function token(mail, pwd) {
     var email;
@@ -336,24 +425,6 @@ function register() {
             else if (response == "Inscription validée") {
                 token(item.Email,item.Password)
             }
-        })
-        .catch(error => console.error('Error ', error));
-}
-
-function refreshGame() {
-    auth();
-    res = JSON.parse(sessionStorage.user);
-
-    fetch('api/game/'+ res.id, {
-        headers: {
-            'Authorization': 'Bearer ' + res.token
-        }
-    })
-        .then(response => Promise.all([response, response.json()]))
-        .then(([status, data]) => {
-        unauthorized(status);
-        sessionStorage.setItem("user",JSON.stringify(res));
-        sessionStorage.setItem("game",JSON.stringify(data));
         })
         .catch(error => console.error('Error ', error));
 }
