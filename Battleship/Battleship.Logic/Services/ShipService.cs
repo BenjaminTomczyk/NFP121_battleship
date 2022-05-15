@@ -27,6 +27,22 @@ namespace Battleship.Logic.Services
             _Positions = new List<Position>();
             _shipRepository = shipRepository;
             _gameService = gameService;
+            _Game = GameService.GetInstanceGame();
+        }
+
+        public ShipService(Position start, Position end, IShipRepository shipRepository, IGameService gameService)
+        {
+            _Id = 0;
+            _Start = start;
+            _End = end;
+            _Positions = new List<Position>();
+            _shipRepository = shipRepository;
+            _gameService = gameService;
+        }
+
+        public void setCurrentGame(Game game)
+        {
+            _Game = game;
         }
 
         public ShipService(Position start, Position end, IShipRepository shipRepository, IGameService gameService)
@@ -49,18 +65,25 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
+            //GenerationListPositions();
 
-            GenerationListPositions();
 
-            if (IsSet())
-            {
-                if (IsPosition())
+            if(IsSet()){
+                //Console.WriteLine("ok isSET");
+                if (IsPositionValidDiagonale() || IsPositionValidHorizontalOrVerticale())
                 {
-                    if (IsInGrid(8))
+                    //Console.WriteLine("ok isPosition");
+
+                    if (IsInGrid(8)) //osef de la gridsize dans le cdc c'est marqué 8x8 //ok frr le boss j'avoue que c'est tout le temps 8X8 xD
+
                     {
+                        //Console.WriteLine("ok isInGrid");
+
                         if (!IsCollisionWithListPlaceShip())
                         {
-                            if (!IsInjuxtapose(_Game))
+                            //Console.WriteLine("ok isCollisionwithPlace");
+
+                            if (!IsInjuxtapose())
                             {
                                 if (CheckShipSize())
                                 {
@@ -75,7 +98,8 @@ namespace Battleship.Logic.Services
             if (isValid)
             {
                 Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid, _Positions.Count());
-                _shipRepository.AddShip(newShip);
+                //_shipRepository.AddShip(newShip);
+                _Game.ShipsPose.Add(newShip); // j'ai mis a jour la liste des bateaux dans la game LAISSERRRRRRRR EN PLACE
                 this.AddPositionInvalid(_Game);
 
                 return newShip;
@@ -130,9 +154,15 @@ namespace Battleship.Logic.Services
 
         public bool IsSet() => _Start != null && _End != null;
 
-        public bool IsPosition()
+        public bool IsPositionValidDiagonale()
         {
             if (Math.Abs(_Start.Row - _End.Row) == Math.Abs(_Start.Column - _End.Column)) return true;
+            return false;
+        }
+
+        public bool IsPositionValidHorizontalOrVerticale()
+        {
+            if (_Start.Row == _End.Row || _Start.Column == _End.Column) return true;
             return false;
         }
 
@@ -143,12 +173,16 @@ namespace Battleship.Logic.Services
             return positions.TrueForAll(p => (0 <= p && p < gridSize));
         }
 
-        public bool IsInjuxtapose(Game game)
+        public bool IsInjuxtapose()
         {
             foreach (Position posI in _Positions)
             {
-                foreach (Position posY in game.PositionsInvalid)
+                Console.WriteLine(posI.Row+":"+posI.Column);
+                foreach (Position posY in _Game.PositionsInvalid)
+                {
+                    Console.WriteLine(posY.Row + ":" + posY.Column);
                     if (posI.Equals(posY)) return true;
+                }
             }
             return false;
         }
@@ -184,22 +218,23 @@ namespace Battleship.Logic.Services
         }
 
         public bool IsCollisionWithListPlaceShip()
-        {//TODO 
-            foreach(ShipService placeShip in new List<ShipService>()/*placeShips*/)//TODO : creer un attribut sur la game qui est une list qui contient tout les ship placer ou faire appele a la base de données
+        {
+            foreach(Ship placeShip in _Game.ShipsPose)//TODO : creer un attribut sur la game qui est une list qui contient tout les ship placer ou faire appele a la base de données
             {
                 if (this.IsCollision(placeShip)) return true;
             }
             return false;
         }
 
-        public bool IsCollision(ShipService ship1)
+        public bool IsCollision(Ship ship1)
         {
-            if (!ship1.IsSet()&&!this.IsSet()) return true;
+            if (ship1==null || (!this.IsSet())) return true;
             this.GenerationListPositions();
             //TODO : mettre la fonction lors de la pose du bateau apres les verifications de si il est valide
-            ship1.GenerationListPositions();
+            //ship1.GenerationListPositions();
 
-            return this._Positions.Any(ipositionThis => ship1._Positions.Any(ipostionShip1 => ipositionThis.Equals(ipostionShip1)));
+
+            return this._Positions.Any(ipositionThis => ship1.Positions.Any(ipostionShip1 => ipositionThis.Equals(ipostionShip1)));
         }
 
         public void SetNewAttributPosition(int startCol, int startRow, int endCol, int endRow)
