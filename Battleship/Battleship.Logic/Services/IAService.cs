@@ -52,15 +52,10 @@ namespace Battleship.Logic.Services
         {
             bool shootresult = false;
 
-            foreach(Ship userShip in _Game.Ships)
-
+            foreach (Ship userShip in _Game.Ships)
             {
                 if (userShip.Player == "User")
-            
-            foreach(Ship userShip in _Game.ShipsPose)
-            {
-                if (userShip.Player == null)//TODO parcourir la liste des bateaux de l'utilisateur// se mettre d'accord si pour une IA le Player est null ou pas
-                {
+                    {
                     foreach (Position posUserShip in userShip.Positions)
                     {
                         if (position.Equals(posUserShip)) return true;

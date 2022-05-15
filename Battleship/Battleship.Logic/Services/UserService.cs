@@ -11,6 +11,7 @@ using Battleship.Model.Entities.Auth;
 using Battleship.Repository.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -149,6 +150,28 @@ namespace Battleship.Logic.Services
                 return $"Rôle {model.Role} invalide.";
             }
             return $"Identifiants incorrects pour {user.Email}.";
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //initializing custom roles 
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string[] roleNames_OLD = { "Admin", "Manager", "Member" };
+
+            string[] roleNames = Enum.GetNames(typeof(Authorization.Roles));
+
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: Question 1
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
         }
     }
 }
