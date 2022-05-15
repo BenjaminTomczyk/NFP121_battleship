@@ -13,25 +13,17 @@ namespace BattleshipAPI.Controllers
     public class ShipController : Controller
     {
         private readonly IShipService _shipService;
-        private readonly IUserService _userService;
-        private readonly IGameService _gameService;
 
-        public ShipController(IShipService shipService, IUserService userService, IGameService gameService)
+        public ShipController(IShipService shipService)
         {
             _shipService = shipService;
-            _userService = userService;
-            _gameService = gameService;
         }
 
         [Authorize]
         [HttpPost("placeship")]
-        public async Task<Ship> TestShipPlacement(PlaceShipModel positions)
+        public Ship TestShipPlacement(PlaceShipModel positions)
         {
-            ApplicationUser user = await _userService.GetUserAsync(positions.UserId);
-            Game game = _gameService.GetGame(Int32.Parse(positions.gameId));
-
-            _shipService.setCurrentUser(user);
-            _shipService.setCurrentGame(game);
+            _shipService.setCurrentGame(int.Parse(positions.gameId));
             var result = _shipService.VerifyShipValidity(positions);
             return result;
         }

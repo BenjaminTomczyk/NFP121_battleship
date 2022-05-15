@@ -24,11 +24,10 @@ namespace BattleshipAPI.Controllers
         private readonly IShipService _shipService;
         //private readonly IIAService _iaService;
 
-        public GameController(IGameService gameService, IShipService shipService/*, IIAService iAService*/)
+        public GameController(IGameService gameService, IShipService shipService)
         {
             _gameService = gameService;
             _shipService = shipService;
-            //_iaService = iAService;
         }
 
         [HttpGet("{id}")]
@@ -41,10 +40,7 @@ namespace BattleshipAPI.Controllers
         [HttpGet("get/{id}")]
         public Game GetGame(int id)
         {
-            Game game = _gameService.GetGame(id);
-            _shipService.setCurrentGame(game);
-            //_iaService.setCurrentGame(game);
-            return game;
+            return _shipService.setCurrentGame(id);
         }
 
         [HttpGet("history/{id}")]

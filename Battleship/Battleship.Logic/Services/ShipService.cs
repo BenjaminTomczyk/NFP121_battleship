@@ -18,30 +18,20 @@ namespace Battleship.Logic.Services
         public ApplicationUser _User;
 
         private readonly IShipRepository _shipRepository;
-        private readonly IUserService _userService;
+        private readonly IGameService _gameService;
 
-        public ShipService() { }
-        public ShipService(Position Start, Position End, IShipRepository shipRepository, IUserService userService)
+
+        public ShipService(IShipRepository shipRepository, IGameService gameService)
         {
-            //TODO mettre un système d'id en place pour l'instant c'est tout le temps 0
-
             _Id = 0;
-            _Start = Start;
-            _End = End;
             _Positions = new List<Position>();
             _shipRepository = shipRepository;
-            _userService = userService;
+            _gameService = gameService;
         }
 
-        public Game setCurrentGame(Game game)
+        public Game setCurrentGame(int game)
         {
-            _Game = game;
-            return _Game;
-        }
-
-        public void setCurrentUser(ApplicationUser user)
-        {
-            _User = user;
+            return _Game = _gameService.GetGame(game);
         }
 
         public Ship VerifyShipValidity(PlaceShipModel positions)
@@ -49,7 +39,7 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
-            Game game = _Game;
+            //Game game = _Game;
             GenerationListPositions();
 
             if (IsSet())
@@ -60,7 +50,7 @@ namespace Battleship.Logic.Services
                     {
                         if (!IsCollisionWithListPlaceShip())
                         {
-                            if (!IsInjuxtapose(game))
+                            if (!IsInjuxtapose(_Game))
                             {
                                 isValid = true;
                             }
@@ -71,10 +61,10 @@ namespace Battleship.Logic.Services
 
             if (isValid)
             {
-                Ship newShip = new Ship(_Start, _End, _Positions, game, "User", isValid);
+                Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid);
                 _shipRepository.AddShip(newShip);
-                this.AddPositionInvalid(game);
-                _Game = game;
+                this.AddPositionInvalid(_Game);
+                //_Game = game;
                 return newShip;
             }
             else return new Ship(null, null, null, null, null, isValid);

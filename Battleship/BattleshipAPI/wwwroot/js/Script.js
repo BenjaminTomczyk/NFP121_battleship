@@ -83,7 +83,6 @@ function tryShip(position){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-        console.log(data);
         placeShip(data);
         })
         .catch(error => console.error('Error ', error));
