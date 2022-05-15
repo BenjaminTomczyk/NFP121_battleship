@@ -9,11 +9,11 @@ namespace Battleship.Logic.Tests.Models
     [TestClass]
     public class ShipTester
     {
-        private Ship ship11 = new Ship(new Position(0, 0), new Position(2, 0), null, null, null, true);
+        private Ship ship11 = new Ship(new Position(0, 0), new Position(2, 0), null, null, null, true,0);
 
-        private Ship ship22 = new Ship(new Position(4, 4), new Position(4, 3), null, null, null, true);
+        private Ship ship22 = new Ship(new Position(4, 4), new Position(4, 3), null, null, null, true,0);
 
-        private Ship ship55 = new Ship(new Position(0, 0), new Position(2, 2), null, null, null, true);
+        private Ship ship55 = new Ship(new Position(0, 0), new Position(2, 2), null, null, null, true,0);
 
         private ShipService  ship1 = new ShipService(new Position(0,0),new Position(2,0),null,null);
 
@@ -301,7 +301,7 @@ namespace Battleship.Logic.Tests.Models
             shipservice.setCurrentGame(game);
 
             Ship newShip = shipservice.VerifyShipValidity(psm);
-            Ship resShip = new Ship(posS, posE,null,null,null,true);
+            Ship resShip = new Ship(posS, posE,null,null,null,true,0);
             
             Assert.IsTrue(resShip.Start.Column == newShip.Start.Column || resShip.Start.Row == newShip.Start.Row);
             Assert.IsTrue(resShip.End.Column == newShip.End.Column|| resShip.End.Row == newShip.End.Row);
@@ -322,7 +322,7 @@ namespace Battleship.Logic.Tests.Models
             shipservice.setCurrentGame(game);
 
             Ship newShip = shipservice.VerifyShipValidity(psm);
-            Ship resShip = new Ship(posS, posE, null, null, null, true);
+            Ship resShip = new Ship(posS, posE, null, null, null, true,0);
             Console.WriteLine(newShip.Start.Column);
             Console.WriteLine(newShip.Start.Row);
             Assert.IsTrue(resShip.Start.Column == newShip.Start.Column || resShip.Start.Row == newShip.Start.Row);
@@ -354,8 +354,8 @@ namespace Battleship.Logic.Tests.Models
             Ship newShip = shipservice.VerifyShipValidity(psm);
             Ship newShip1 = shipservice.VerifyShipValidity(psm1);
 
-            Ship resShip = new Ship(posS, posE, null, null, null, true);
-            Ship resShip1 = new Ship(posS1, posE1, null, null, null, true);
+            Ship resShip = new Ship(posS, posE, null, null, null, true,0);
+            Ship resShip1 = new Ship(posS1, posE1, null, null, null, true,0);
 
             Console.WriteLine(newShip.Start.Row+":"+ newShip.Start.Column);
             Console.WriteLine(newShip1.Start.Row + ":" + newShip1.Start.Column);
