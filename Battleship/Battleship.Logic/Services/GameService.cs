@@ -192,11 +192,6 @@ namespace Battleship.Logic.Services
 			_Game.ShipsPose.Add(ship);
 			return _gameRepository.UpdateGame(_Game);
         }
-
-		public Game AddInvalidPos(Position pos)
-        {
-			return _Game;
-        }
 	}
 }
 

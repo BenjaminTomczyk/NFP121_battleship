@@ -1,6 +1,9 @@
 ﻿function startGame(diff) {
     window.alert("Difficulté " + diff + " sélectionnée, sélectionnez une case pour tirer");
+    document.getElementById('facile').style.visibility = 'hidden';
+    document.getElementById('moyen').style.visibility = 'hidden';
     getEnnemyCells(diff);
+    sessionStorage.setItem("round","player");
 }
 
 var count = 0;
@@ -95,8 +98,6 @@ function tryShip(position){
         
         })
         .catch(error => console.error('Error ', error));
-
-        getInstanceGame();
 }
 
 function placeShip(ship) {
@@ -164,7 +165,9 @@ function shootAnswer(eventObj) {
 	var fire = eventObj.target;
     var slice = Number(String(fire.id).slice(0, 2));
     var pos = [Math.floor(slice / 10), slice % 10].toString()
-    tryShoot(pos);
+    if(sessionStorage.round == "player"){
+        tryShoot(pos);
+    }
 }
 
 function tryShoot(position){
@@ -214,7 +217,8 @@ function shot(pos){
     document.getElementById(position).parentElement.style.backgroundColor = "#42aee3";
     document.getElementById(position).setAttribute("class","hit");
 
-    //window.alert("Touché ! Vous pouvez rejouer");
+    sessionStorage.setItem("round", "player");
+    window.alert("Touché ! Vous pouvez rejouer");
 }
 
 function missed(pos){
@@ -223,9 +227,12 @@ function missed(pos){
     document.getElementById(position).parentElement.style.backgroundColor = "#42aee3";
     document.getElementById(position).setAttribute("class","miss");
 
-    //window.alert("Râté ! Au tour de L'IA");
-    shootIA();
+    sessionStorage.setItem("round", "ia");
+    window.alert("Râté ! Au tour de L'IA");
 
+    setTimeout(() => {
+        shootIA();
+    }, 1000); 
 }
 
 function shootIA(){
@@ -257,8 +264,10 @@ function shotIA(position) {
 
     document.getElementById(pos).parentElement.style.backgroundColor = "#ff5c40";
 
-    //window.alert("Touché ! L'IA peut rejouer");
-    shootIA();
+    window.alert("Touché ! L'IA peut rejouer");
+    setTimeout(() => {
+        shootIA();
+    }, 1000); 
 }
 
 function missedIA(position) {
@@ -267,7 +276,8 @@ function missedIA(position) {
     document.getElementById(pos).parentElement.style.backgroundColor = "#42aee3";
     document.getElementById(pos).setAttribute("class","miss");
 
-    //window.alert("Râté ! À vous de jouer");
+    sessionStorage.setItem("round","player");
+    window.alert("Râté ! À vous de jouer");
 }
 
 
@@ -373,45 +383,6 @@ function game(res) {
         sessionStorage.setItem("game",JSON.stringify(data));
         sessionStorage.setItem("gameState", "initialised");
         })
-        .catch(error => console.error('Error ', error));
-}
-
-function getGame() {
-    auth();
-    var res = JSON.parse(sessionStorage.user);
-    var game = JSON.parse(sessionStorage.game);
-
-    fetch('api/game/get/' + game.id, {
-        headers: {
-            'Authorization': 'Bearer ' + res.token
-        }
-    })
-        .then(response => Promise.all([response, response.json()]))
-        .then(([status, data]) => {
-        unauthorized(status);
-        sessionStorage.setItem("user",JSON.stringify(res));
-        sessionStorage.setItem("game",JSON.stringify(data));
-        })
-
-        .catch(error => console.error('Error ', error));
-}
-
-function getInstanceGame() {
-    auth();
-    var res = JSON.parse(sessionStorage.user);
-
-    fetch('api/game/get', {
-        headers: {
-            'Authorization': 'Bearer ' + res.token
-        }
-    })
-        .then(response => Promise.all([response, response.json()]))
-        .then(([status, data]) => {
-        unauthorized(status);
-        sessionStorage.setItem("user",JSON.stringify(res));
-        sessionStorage.setItem("game",JSON.stringify(data));
-        })
-
         .catch(error => console.error('Error ', error));
 }
 

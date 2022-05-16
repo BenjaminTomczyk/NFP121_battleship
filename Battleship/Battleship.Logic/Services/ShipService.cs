@@ -177,21 +177,12 @@ namespace Battleship.Logic.Services
             return false;
         }
 
-        public void AddPositionInvalid()//fonction a appeler quand le bateau est creer définitivement
+        public void AddPositionInvalid()
         {
             if (_Positions != null && _Game != null)
             {
                 foreach (Position posI in _Positions)
                 {
-                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row, posI.Column + 1),_Game));
-                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row + 1, posI.Column + 1),_Game));
-                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row + 1, posI.Column), _Game));
-                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row + 1, posI.Column - 1), _Game));
-                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row, posI.Column - 1), _Game));
-                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row - 1, posI.Column - 1), _Game));
-                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row - 1, posI.Column), _Game));
-                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row - 1, posI.Column + 1), _Game));
-
                     _Game.PositionsInvalid.Add(new Position(posI.Row, posI.Column + 1));
                     _Game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column + 1));
                     _Game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column));

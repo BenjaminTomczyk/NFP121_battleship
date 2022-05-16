@@ -27,7 +27,7 @@ namespace Battleship.Repository.Repositories
 
 		public Game getGame(int id)
         {
-			return _ctx.Game.Include(p => p.Player).Include(i => i.ShipsPose).Include(i => i.PlayerShoots)//.Include(i => i.PositionsInvalid)
+			return _ctx.Game.Include(p => p.Player).Include(i => i.ShipsPose)//.Include(i => i.PlayerShoots)//.Include(i => i.PositionsInvalid)
 				.First(g => g.Id == id);
 		}
 
