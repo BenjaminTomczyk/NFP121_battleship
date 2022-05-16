@@ -10,7 +10,7 @@ namespace Battleship.Logic.Interfaces
 	{
 		void SetLevelStrategy(ILevelStrategy strategy);
 		Position ExecuteLevelStrategy();
-		void gameStage();
+		Explosion gameStage();
 		bool Shoot(Position position);
 		string GetNameLevel();
 		void setCurrentGame(Game game);

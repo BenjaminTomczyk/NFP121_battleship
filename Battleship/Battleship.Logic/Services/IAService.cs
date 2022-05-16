@@ -42,13 +42,14 @@ namespace Battleship.Logic.Services
         }
         
 
-        public void gameStage()
+        public Explosion gameStage()
         {
             Position positionSelected = ExecuteLevelStrategy();
             bool shootResult = Shoot(positionSelected);
-            _Shootings.Add(new Explosion(positionSelected,shootResult));
+            Explosion newIAExplosion = new Explosion(positionSelected, shootResult);
+            _Shootings.Add(newIAExplosion);
 
-            if (shootResult) gameStage();
+            return newIAExplosion;
 
         }
 

@@ -31,9 +31,9 @@ namespace Battleship.Model.Entities
         public List<Ship> ShipsPose { get; set; }
 
 
-        public List<Position> PlayerShoots { get; set; }
+        public List<Explosion> PlayerShoots { get; set; }
 
-        public List<Position> IAShoots { get; set; }
+        //public List<Position> IAShoots { get; set; }
 
 
         public int GridSize { get; set; }

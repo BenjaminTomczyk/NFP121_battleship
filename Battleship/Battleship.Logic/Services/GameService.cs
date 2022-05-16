@@ -116,9 +116,50 @@ namespace Battleship.Logic.Services
 			return _Game;
         }
 
-		public bool TryShoot(Position position)
+		public bool ShootIsValid(Position position)
         {
-			return _IIAService.Shoot(position); //TODO c'est gameStage() qu'il faut appeler pour tirer IA
+			foreach (Explosion oldExplo in _Game.PlayerShoots)
+			{
+				if (oldExplo.ExplosionLocation.Equals(position))
+				{
+					return false;
+				}
+			}
+			return true;
+		}
+
+		public Explosion UserShoot(Position position)
+        {	
+			bool shootResult = false;
+			if (ShootIsValid(position))
+			{
+				foreach (Ship IAShip in _Game.ShipsPose)
+				{
+					if (IAShip.Player == "IA")
+					{
+						foreach (Position posIAShip in IAShip.Positions)
+						{
+							if (position.Equals(posIAShip)) shootResult = true;
+						}
+					}
+				}
+
+				Explosion newUserExplosion= new Explosion(position, shootResult);
+				_Game.PlayerShoots.Add(newUserExplosion);
+				_Game.PlayerShootsNumber++;
+				return newUserExplosion;
+			}
+            else
+            {
+				Explosion newUserExplosion = new Explosion(null, shootResult);
+				return newUserExplosion;
+			}
+		}
+
+		public Explosion IAShoot()
+        {
+			_Game.IAShootsNumber++;
+			return _IIAService.gameStage();
         }
 
 		public Game AddPosToShootList(int playerOrIA, Position pos)
