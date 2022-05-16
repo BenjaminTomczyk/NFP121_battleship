@@ -40,11 +40,6 @@ namespace Battleship.Logic.Services
             _gameService = gameService;
         }
 
-        public void setCurrentGame(Game game)
-        {
-            _Game = game;
-        }
-
         public Game setCurrentGame(int game)
         {
             return _Game = _gameService.GetGame(game);
@@ -89,12 +84,21 @@ namespace Battleship.Logic.Services
 
             if (isValid)
             {
-                Ship newShip = new Ship(_Start, _End, _Positions, _Game, "User", isValid, _Positions.Count());
-                //_shipRepository.AddShip(newShip); //TODO remettre en place
+                Ship newShip = new Ship(_Start, _End, _Positions, null, "User", isValid, _Positions.Count());
                 _Game.ShipsPose.Add(newShip);
-                this.AddPositionInvalid(_Game);
 
-                return newShip;
+                this.AddPositionInvalid();
+
+                newShip.Game = _Game;
+                Ship s = _shipRepository.AddShip(newShip);
+                _gameService.UpdateGame(_Game);
+
+                foreach (Position p in _Game.PositionsInvalid)
+                {
+                    Console.WriteLine(p.Id);
+                }
+
+                return s;
             }
             else return new Ship(null, null, null, null, null, isValid, 0);  
         }
@@ -109,7 +113,7 @@ namespace Battleship.Logic.Services
                     {
                         _Game.Ship2Number--;
                         _Game.PlacedShips++;
-                        //_gameService.UpdateGame(_Game);//TODO remettre en place
+                        _gameService.UpdateGame(_Game);
                         return true;    
                     }
 
@@ -119,7 +123,7 @@ namespace Battleship.Logic.Services
                     {
                         _Game.Ship3Number--;
                         _Game.PlacedShips++;
-                        //_gameService.UpdateGame(_Game);//TODO remettre en place
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 
@@ -129,7 +133,7 @@ namespace Battleship.Logic.Services
                     {
                         _Game.Ship4Number--;
                         _Game.PlacedShips++;
-                        //_gameService.UpdateGame(_Game);//TODO remettre en place
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 
@@ -139,7 +143,7 @@ namespace Battleship.Logic.Services
                     {
                         _Game.Ship5Number--;
                         _Game.PlacedShips++;
-                        //_gameService.UpdateGame(_Game);//TODO remettre en place
+                        _gameService.UpdateGame(_Game);
                         return true;
                     }
 
@@ -181,28 +185,28 @@ namespace Battleship.Logic.Services
             return false;
         }
 
-        public void AddPositionInvalid(Game game)//fonction a appeler quand le bateau est creer définitivement
+        public void AddPositionInvalid()//fonction a appeler quand le bateau est creer définitivement
         {
-            if (this._Positions != null && game != null)
+            if (this._Positions != null && _Game != null)
             {
                 foreach (Position posI in _Positions)
                 {
-                    game.PositionsInvalid.Add(new Position(posI.Row, posI.Column + 1));
-                    game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column + 1));
-                    game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column));
-                    game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column - 1));
-                    game.PositionsInvalid.Add(new Position(posI.Row, posI.Column - 1));
-                    game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column - 1));
-                    game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column));
-                    game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column + 1));
+                    _Game.PositionsInvalid.Add(new Position(posI.Row, posI.Column + 1));
+                    _Game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column + 1));
+                    _Game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column));
+                    _Game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column - 1));
+                    _Game.PositionsInvalid.Add(new Position(posI.Row, posI.Column - 1));
+                    _Game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column - 1));
+                    _Game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column));
+                    _Game.PositionsInvalid.Add(new Position(posI.Row - 1, posI.Column + 1));
                 }
             }
 
-            game.PositionsInvalid = game.PositionsInvalid.Distinct().ToList();
+            _Game.PositionsInvalid = _Game.PositionsInvalid.Distinct().ToList();
 
             foreach (Position posI in _Positions)
             {
-                game.PositionsInvalid.Remove(posI);
+                _Game.PositionsInvalid.Remove(posI);
             }
         }
 
@@ -213,7 +217,7 @@ namespace Battleship.Logic.Services
 
         public bool IsCollisionWithListPlaceShip()
         {
-            foreach(Ship placeShip in _Game.ShipsPose)//TODO : creer un attribut sur la game qui est une list qui contient tout les ship placer ou faire appele a la base de données
+            foreach(Ship placeShip in _Game.ShipsPose)
             {
                 if (this.IsCollision(placeShip)) return true;
             }

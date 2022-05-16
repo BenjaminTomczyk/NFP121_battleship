@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Battleship.Logic.Interfaces;
 using Battleship.Model.Entities;
@@ -27,7 +28,6 @@ namespace BattleshipAPI.Controllers
             var result = _shipService.VerifyShipValidity(positions);
             return result;
         }
-
 
         // POST api/ship
         [HttpPost]

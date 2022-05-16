@@ -2,6 +2,7 @@
 using Battleship.Model.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Battleship.Logic.Interfaces
@@ -15,7 +16,7 @@ namespace Battleship.Logic.Interfaces
         bool IsPositionValidHorizontalOrVerticale();
         bool IsInGrid(int gridSize);
         bool IsInjuxtapose();
-        void AddPositionInvalid(Game game);
+        void AddPositionInvalid();
         bool IsDiagonale();
         bool IsCollision(Ship ship1);
         void SetNewAttributPosition(int startCol, int startRow, int endCol, int endRow);
@@ -25,7 +26,5 @@ namespace Battleship.Logic.Interfaces
         void AddPosition(List<Position> listPosition, int direction);
         void OrderPosition();
         bool CheckShipSize();
-
-
     }
 }

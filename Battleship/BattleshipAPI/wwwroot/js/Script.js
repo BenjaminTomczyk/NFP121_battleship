@@ -98,6 +98,10 @@ function tryShip(position){
 function placeShip(ship) {
     auth();
 
+    var game = JSON.parse(sessionStorage.game);
+    getGame(game.id);
+
+    console.log(ship);
     ship.positions.forEach(element => {
         var cell = element.row.toString() + element.column.toString();
         document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
@@ -106,7 +110,7 @@ function placeShip(ship) {
         document.getElementById('size2').innerHTML = ship.game.ship2Number;
         document.getElementById('size3').innerHTML = ship.game.ship3Number;
         document.getElementById('size4').innerHTML = ship.game.ship4Number;
-        document.getElementById('size5').innerHTML = ship.game.ship5Number;        
+        document.getElementById('size5').innerHTML = ship.game.ship5Number;       
     });
     sessionStorage.setItem("game",JSON.stringify(ship.game));
 }
@@ -336,6 +340,7 @@ function getGame(id) {
         unauthorized(status);
         sessionStorage.setItem("user",JSON.stringify(res));
         sessionStorage.setItem("game",JSON.stringify(data));
+        console.log(data);
         })
 
         .catch(error => console.error('Error ', error));
