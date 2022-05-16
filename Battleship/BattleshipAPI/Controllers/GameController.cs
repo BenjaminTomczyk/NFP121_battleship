@@ -30,7 +30,7 @@ namespace BattleshipAPI.Controllers
             _shipService = shipService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("start/{id}")]
         public async Task<Game> Game(string id)
         {
             return await _gameService.StartGame(id);
@@ -62,9 +62,15 @@ namespace BattleshipAPI.Controllers
         }
 
         [HttpPost("tryShoot")]
-        public bool TryShoot(Position position)
+        public Explosion TryShoot(Position position)
         {
-            return _gameService.TryShoot(position);
+            return _gameService.UserShoot(position);
+        }
+
+        [HttpGet("shootIA")]
+        public Explosion ShootIA()
+        {
+            return _gameService.IAShoot();
         }
     }
 }

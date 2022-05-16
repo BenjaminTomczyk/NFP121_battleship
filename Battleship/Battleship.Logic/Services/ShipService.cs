@@ -23,7 +23,6 @@ namespace Battleship.Logic.Services
 
         public ShipService(IShipRepository shipRepository, IGameService gameService)
         {
-            _Id = 0;
             _Positions = new List<Position>();
             _shipRepository = shipRepository;
             _gameService = gameService;
@@ -32,7 +31,6 @@ namespace Battleship.Logic.Services
 
         public ShipService(Position start, Position end, IShipRepository shipRepository, IGameService gameService)
         {
-            _Id = 0;
             _Start = start;
             _End = end;
             _Positions = new List<Position>();
@@ -50,30 +48,18 @@ namespace Battleship.Logic.Services
             bool isValid = false;
             _Start = new Position(positions.Start[0], positions.Start[1]);
             _End = new Position(positions.End[0], positions.End[1]);
-            GenerationListPositions();
 
-
-            if(IsSet()){
-                //Console.WriteLine("ok isSET");
+            if (IsSet()){
                 if (IsPositionValidDiagonale() || IsPositionValidHorizontalOrVerticale())
                 {
-                    //Console.WriteLine("ok isPosition");
-
-                    if (IsInGrid(8)) //osef de la gridsize dans le cdc c'est marqué 8x8 //ok frr le boss j'avoue que c'est tout le temps 8X8 xD
-
+                    if (IsInGrid(8))
                     {
-                        //Console.WriteLine("ok isInGrid");
-
                         if (!IsCollisionWithListPlaceShip())
                         {
-                            //Console.WriteLine("ok isCollisionwithPlace");
-
                             if (!IsInjuxtapose())
                             {
-                                //Console.WriteLine("ok JUXTAPOSER");
                                 if (CheckShipSize())
                                 {
-                                    //Console.WriteLine("ok checksize");
                                     isValid = true;
                                 }
                             }
@@ -82,21 +68,34 @@ namespace Battleship.Logic.Services
                 }
             }
 
+            return CreateShip(isValid);
+        }
+
+        public Ship CreateShip(bool isValid)
+        {
             if (isValid)
             {
                 Ship newShip = new Ship(_Start, _End, _Positions, null, "User", isValid, _Positions.Count());
-                _Game.ShipsPose.Add(newShip);
+                //_Game.ShipsPose.Add(newShip);
 
                 this.AddPositionInvalid();
 
                 newShip.Game = _Game;
                 Ship s = _shipRepository.AddShip(newShip);
+                AddShipToGame(newShip);
                 _gameService.UpdateGame(_Game);
 
                 return s;
             }
-            else return new Ship(null, null, null, null, null, isValid, 0);  
+
+            else return new Ship(null, null, null, null, null, isValid, 0);
         }
+
+        public Game AddShipToGame(Ship ship)
+        {
+            return _gameService.AddShip(ship);
+        }
+
 
         public bool CheckShipSize()
         {
@@ -212,7 +211,13 @@ namespace Battleship.Logic.Services
 
         public bool IsCollisionWithListPlaceShip()
         {
-            foreach(Ship placeShip in _Game.ShipsPose)
+            GenerationListPositions();
+
+            if (_Game.ShipsPose.Count() == 0)
+            {
+                return false;
+            }
+            foreach (Ship placeShip in _Game.ShipsPose)
             {
                 if (this.IsCollision(placeShip)) return true;
             }
@@ -221,11 +226,10 @@ namespace Battleship.Logic.Services
 
         public bool IsCollision(Ship ship1)
         {
-            if (ship1==null || (!this.IsSet())) return true;
-            this.GenerationListPositions();
-            //TODO : mettre la fonction lors de la pose du bateau apres les verifications de si il est valide
-            //ship1.GenerationListPositions();
-
+            if (ship1 == null || (!IsSet()))
+            {
+                return true;
+            }
 
             return this._Positions.Any(ipositionThis => ship1.Positions.Any(ipostionShip1 => ipositionThis.Equals(ipostionShip1)));
         }

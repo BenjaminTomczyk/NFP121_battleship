@@ -89,6 +89,30 @@ namespace BattleshipAPI.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Battleship.Model.Entities.Explosion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ExplosionLocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GameId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Hit")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExplosionLocationId");
+
+                    b.HasIndex("GameId");
+
+                    b.ToTable("Explosion");
+                });
+
             modelBuilder.Entity("Battleship.Model.Entities.Game", b =>
                 {
                     b.Property<int>("Id")
@@ -172,12 +196,6 @@ namespace BattleshipAPI.Migrations
                     b.Property<int>("Column")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GameId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("GameId1")
-                        .HasColumnType("int");
-
                     b.Property<int>("Row")
                         .HasColumnType("int");
 
@@ -185,10 +203,6 @@ namespace BattleshipAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("GameId1");
 
                     b.HasIndex("ShipId");
 
@@ -359,6 +373,19 @@ namespace BattleshipAPI.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("Battleship.Model.Entities.Explosion", b =>
+                {
+                    b.HasOne("Battleship.Model.Entities.Position", "ExplosionLocation")
+                        .WithMany()
+                        .HasForeignKey("ExplosionLocationId");
+
+                    b.HasOne("Battleship.Model.Entities.Game", null)
+                        .WithMany("PlayerShoots")
+                        .HasForeignKey("GameId");
+
+                    b.Navigation("ExplosionLocation");
+                });
+
             modelBuilder.Entity("Battleship.Model.Entities.Game", b =>
                 {
                     b.HasOne("Battleship.Model.Entities.IA", "IA")
@@ -378,14 +405,6 @@ namespace BattleshipAPI.Migrations
 
             modelBuilder.Entity("Battleship.Model.Entities.Position", b =>
                 {
-                    b.HasOne("Battleship.Model.Entities.Game", null)
-                        .WithMany("IAShoots")
-                        .HasForeignKey("GameId");
-
-                    b.HasOne("Battleship.Model.Entities.Game", null)
-                        .WithMany("PlayerShoots")
-                        .HasForeignKey("GameId1");
-
                     b.HasOne("Battleship.Model.Entities.Ship", null)
                         .WithMany("Positions")
                         .HasForeignKey("ShipId");
@@ -472,8 +491,6 @@ namespace BattleshipAPI.Migrations
 
             modelBuilder.Entity("Battleship.Model.Entities.Game", b =>
                 {
-                    b.Navigation("IAShoots");
-
                     b.Navigation("PlayerShoots");
 
                     b.Navigation("ShipsPose");

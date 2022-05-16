@@ -86,6 +86,7 @@ function tryShip(position){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
+
         if(data.isValid){
             placeShip(data);
         }
@@ -101,6 +102,8 @@ function placeShip(ship) {
     auth();
     getGame();
 
+    console.log(ship);
+    
     ship.positions.forEach(element => {
         var cell = element.row.toString() + element.column.toString();
         document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
@@ -155,7 +158,6 @@ function setIA(diff){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-        console.log(data);
         })
         .catch(error => console.error('Error ', error));
 }
@@ -171,11 +173,15 @@ function tryShoot(position){
     auth();
     var user = JSON.parse(sessionStorage.user);
 
-    const item = {
-        isComplete: false,
-        Position: position
-    };
+    const pos = Array.from(position.split(",")).map(str => {
+        return Number(str);
+      });
 
+    const item = {
+        Row: pos[0],
+        Column: pos[1]
+    };
+    console.log(item);
     fetch('api/game/tryShoot', {
         method: 'POST',
         headers: {
@@ -188,7 +194,7 @@ function tryShoot(position){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-        if(data == true){
+        if(data.hit == true){
             shot(position);
         }
         else{
@@ -203,6 +209,8 @@ function shot(pos){
 
     document.getElementById(position).parentElement.style.backgroundColor = "#42aee3";
     document.getElementById(position).setAttribute("class","hit");
+
+    //window.alert("Touché ! Vous pouvez rejouer");
 }
 
 function missed(pos){
@@ -210,7 +218,54 @@ function missed(pos){
 
     document.getElementById(position).parentElement.style.backgroundColor = "#42aee3";
     document.getElementById(position).setAttribute("class","miss");
+
+    //window.alert("Râté ! Au tour de L'IA");
+    shootIA();
 }
+
+function shootIA(){
+    auth();
+    var user = JSON.parse(sessionStorage.user);
+
+    fetch('api/game/shootIA', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + user.token
+        }
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        
+        if(data.hit == true){
+            shotIA(data.explosionLocation);
+        }
+        else{
+            missedIA(data.explosionLocation);
+        }
+        })
+        .catch(error => console.error('Error ', error));
+}
+
+function shotIA(position) {
+    var pos = position.row.toString()+position.column.toString();
+
+    document.getElementById(pos).parentElement.style.backgroundColor = "#ff5c40";
+
+    //window.alert("Touché ! L'IA peut rejouer");
+    shootIA();
+}
+
+function missedIA(position) {
+    var pos = position.row.toString()+position.column.toString();
+
+    document.getElementById(pos).parentElement.style.backgroundColor = "#42aee3";
+    document.getElementById(pos).setAttribute("class","miss");
+
+    //window.alert("Râté ! À vous de jouer");
+}
+
 
 function unauthorized(response) {
     if(response.status == 401){
@@ -242,7 +297,7 @@ function refreshGame() {
     auth();
     res = JSON.parse(sessionStorage.user);
 
-    fetch('api/game/'+ res.id, {
+    fetch('api/game/start/'+ res.id, {
         headers: {
             'Authorization': 'Bearer ' + res.token
         }
@@ -301,7 +356,7 @@ function game(res) {
         res = JSON.parse(sessionStorage.user);
     }
 
-    fetch('api/game/'+ res.id, {
+    fetch('api/game/start/'+ res.id, {
         headers: {
             'Authorization': 'Bearer ' + res.token
         }
@@ -332,7 +387,6 @@ function getGame() {
         unauthorized(status);
         sessionStorage.setItem("user",JSON.stringify(res));
         sessionStorage.setItem("game",JSON.stringify(data));
-        //console.log(data);
         })
 
         .catch(error => console.error('Error ', error));

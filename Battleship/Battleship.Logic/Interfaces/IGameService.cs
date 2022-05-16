@@ -21,8 +21,12 @@ namespace Battleship.Logic.Interfaces
 		Game SetGameIA(string level);
 
 		Explosion UserShoot(Position position);
+
 		Explosion IAShoot();
+
 		Game AddPosToShootList(string name, Explosion exp);
+
+		Game AddShip(Ship ship);
 	}
 }
 

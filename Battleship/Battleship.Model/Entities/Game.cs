@@ -29,8 +29,7 @@ namespace Battleship.Model.Entities
         public int PlacedShips { get; set; }
         [Required]
         public List<Ship> ShipsPose { get; set; }
-
-
+        [Required]
         public List<Explosion> PlayerShoots { get; set; }
 
         //public List<Position> IAShoots { get; set; }
@@ -50,6 +49,7 @@ namespace Battleship.Model.Entities
         {
             PositionsInvalid = new List<Position>();
             ShipsPose = new List<Ship>();
+            PlayerShoots = new List<Explosion>();
             PlacedShips = 0;
             Ship2Number = 1;
             Ship3Number = 2;
@@ -59,7 +59,7 @@ namespace Battleship.Model.Entities
 
         public Game(IA ia, ApplicationUser player, string result, int playerShootNumber,
             int iaShootNumber, TimeSpan duration, List<Position> positionsInvalid, bool finished,
-            DateTime date, List<Ship> shipsPose, int placedShips) {
+            DateTime date, List<Ship> shipsPose, int placedShips, List<Explosion> playerShoots) {
 
             IA = ia;
             Player = player;
@@ -72,6 +72,7 @@ namespace Battleship.Model.Entities
             Date = date;
             PlacedShips = placedShips;
             ShipsPose = shipsPose;
+            PlayerShoots = playerShoots;
             Ship2Number = 1;
             Ship3Number = 2;
             Ship4Number = 2;

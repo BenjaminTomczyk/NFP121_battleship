@@ -26,5 +26,7 @@ namespace Battleship.Logic.Interfaces
         void AddPosition(List<Position> listPosition, int direction);
         void OrderPosition();
         bool CheckShipSize();
+        Ship CreateShip(bool isValid);
+        Game AddShipToGame(Ship ship);
     }
 }

@@ -47,6 +47,10 @@ namespace Battleship.Logic.Services
 
 			_Game.PlacedShips = 0;
 
+			_Game.ShipsPose = new List<Ship>();
+
+			_Game.PlayerShoots = new List<Explosion> { new Explosion(new Position(3, 4), false) };
+
 			return _gameRepository.setNewGame(_Game);
 		}
 
@@ -118,13 +122,16 @@ namespace Battleship.Logic.Services
 
 		public bool ShootIsValid(Position position)
         {
-			foreach (Explosion oldExplo in _Game.PlayerShoots)
-			{
-				if (oldExplo.ExplosionLocation.Equals(position))
+			Console.WriteLine(_Game.PlayerShoots);
+			//if(_Game.PlayerShoots.Count() != 0) {
+				foreach (Explosion oldExplo in _Game.PlayerShoots)
 				{
-					return false;
+					if (oldExplo.ExplosionLocation.Equals(position))
+					{
+						return false;
+					}
 				}
-			}
+			//}
 			return true;
 		}
 
@@ -175,6 +182,12 @@ namespace Battleship.Logic.Services
 				return _gameRepository.UpdateGame(_Game);
             }
 
+        }
+
+		public Game AddShip(Ship ship)
+        {
+			_Game.ShipsPose.Add(ship);
+			return _gameRepository.UpdateGame(_Game);
         }
 	}
 }
