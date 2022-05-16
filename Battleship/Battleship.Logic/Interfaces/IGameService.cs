@@ -27,8 +27,6 @@ namespace Battleship.Logic.Interfaces
 		Game AddPosToShootList(string name, Explosion exp);
 
 		Game AddShip(Ship ship);
-
-		Game AddInvalidPos(Position pos);
 	}
 }
 

@@ -37,18 +37,6 @@ namespace BattleshipAPI.Controllers
             return await _gameService.StartGame(id);
         }
 
-        [HttpGet("get/{id}")]
-        public void GetGame(int id)
-        {
-            //return _shipService.setCurrentGame(id);
-        }
-
-        [HttpGet("get")]
-        public Game Get()
-        {
-            return GameService.GetInstanceGame();
-        }
-
         [HttpGet("history/{id}")]
         public List<PlayerStatisticsModel> GetHistory(string id)
         {

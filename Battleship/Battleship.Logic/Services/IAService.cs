@@ -45,7 +45,7 @@ namespace Battleship.Logic.Services
         }
         
 
-        public Explosion gameStage(List<Explosion> explosions)
+        public Explosion gameStage()
         {
             Position positionSelected = ExecuteLevelStrategy();
             bool shootResult = Shoot(positionSelected);

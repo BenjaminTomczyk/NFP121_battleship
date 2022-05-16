@@ -22,18 +22,10 @@ namespace Battleship.Logic.Services
             { 
                 if (shootings.Count == 0 || shootings[shootings.Count - 1].Hit == false)
                 {
-                    //if(shootings.Count != 0)
-                    //{
-                    //    Console.WriteLine(shootings[shootings.Count - 1].ExplosionLocation.Row);
-                    //    Console.WriteLine(shootings[shootings.Count - 1].ExplosionLocation.Column);
-                    //    Console.WriteLine(shootings[shootings.Count - 1].Hit);
-                    //}
-
                     positionSelected.SetNewValue(rdPos.Next(0, game.GridSize), rdPos.Next(0, game.GridSize));
                 }
                 else
                 {
-                    Console.WriteLine("ok true");
                     Position lastShootPosition = shootings[shootings.Count - 1].ExplosionLocation;
                     List<Position> potentialShootingPosition = GenerationPotentialShootingPosition(lastShootPosition);
                     potentialShootingPosition = EliminateImpossiblePositions(potentialShootingPosition,game);
