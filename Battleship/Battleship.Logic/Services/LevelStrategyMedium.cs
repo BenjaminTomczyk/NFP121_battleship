@@ -16,9 +16,9 @@ namespace Battleship.Logic.Services
         public Position LogicIA(List<Explosion> shootings, Game game)
         {
             Position positionSelected = new Position();
-            bool PositionInvalid = true;
+            bool positionInvalid = true;
             Random rdPos = new Random();
-            while (PositionInvalid)
+            while (positionInvalid)
             { 
                 if (shootings.Count == 0 || shootings[shootings.Count - 1].Hit == false)
                 {
@@ -49,14 +49,24 @@ namespace Battleship.Logic.Services
                 {
                     if (positionSelected.Equals(previousShoot.ExplosionLocation))
                     {
-                        PositionInvalid = true;
+                        positionInvalid = true;
                         break;
                     }
-                    PositionInvalid = false;
+                    positionInvalid = false;
                 }
+                positionInvalid = PositionIsInvalid(shootings, positionSelected);
             }
 
             return positionSelected;
+        }
+
+        public bool PositionIsInvalid(List<Explosion> shootings, Position positionSelected)
+        {
+            foreach (Explosion previousShoot in shootings)
+            {
+                if (positionSelected.Equals(previousShoot.ExplosionLocation)) return true;
+            }
+            return false;
         }
 
         public List<Position> EliminateImpossiblePositions(List<Position> potentialShootingPosition,Game game)

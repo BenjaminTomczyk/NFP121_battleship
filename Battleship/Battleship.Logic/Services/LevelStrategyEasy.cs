@@ -15,22 +15,23 @@ namespace Battleship.Logic.Services
         {
             Position positionSelected = new Position();
             Random rdPos = new Random();
-            bool PositionInvalid = true;
+            bool positionInvalid = true;
 
-            while (PositionInvalid)
+            while (positionInvalid)
             {
                 positionSelected.SetNewValue(rdPos.Next(0, game.GridSize), rdPos.Next(0, game.GridSize)); //TODO veriffier si on recperer la bonne valeur de l'instance
-                foreach(Explosion previousShoot in shootings)
-                {
-                    if (positionSelected.Equals(previousShoot.ExplosionLocation))
-                    {
-                        PositionInvalid = true;
-                        break;
-                    }
-                    PositionInvalid = false;
-                }       
+                positionInvalid = PositionIsInvalid(shootings, positionSelected);
             }
             return positionSelected;    
+        }
+
+        public bool PositionIsInvalid(List<Explosion> shootings, Position positionSelected)
+        {
+            foreach (Explosion previousShoot in shootings)
+            {
+                if (positionSelected.Equals(previousShoot.ExplosionLocation)) return true;
+            }
+            return false;
         }
 
         public string GetName()

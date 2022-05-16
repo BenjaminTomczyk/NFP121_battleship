@@ -20,10 +20,9 @@ namespace Battleship.Logic.Interfaces
 
 		Game SetGameIA(string level);
 
-		bool UserShoot(Position position);
+		Explosion UserShoot(Position position);
 		Explosion IAShoot();
-
-		Game AddPosToShootList(int playerOrIA, Position pos);
+		Game AddPosToShootList(string name, Explosion exp);
 	}
 }
 

@@ -145,8 +145,7 @@ namespace Battleship.Logic.Services
 				}
 
 				Explosion newUserExplosion= new Explosion(position, shootResult);
-				_Game.PlayerShoots.Add(newUserExplosion);
-				_Game.PlayerShootsNumber++;
+				AddPosToShootList("User", newUserExplosion);
 				return newUserExplosion;
 			}
             else
@@ -158,21 +157,20 @@ namespace Battleship.Logic.Services
 
 		public Explosion IAShoot()
         {
-			_Game.IAShootsNumber++;
+			AddPosToShootList("IA", null);
 			return _IIAService.gameStage();
         }
 
-		public Game AddPosToShootList(int playerOrIA, Position pos)
+		public Game AddPosToShootList(string name, Explosion exp)
         {
-			if(playerOrIA == 1)
+			if(name == "User")
             {
-				_Game.PlayerShoots.Add(pos);
+				_Game.PlayerShoots.Add(exp);
 				_Game.PlayerShootsNumber++;
 				return _gameRepository.UpdateGame(_Game);
             }
             else
             {
-				_Game.IAShoots.Add(pos);
 				_Game.IAShootsNumber++;
 				return _gameRepository.UpdateGame(_Game);
             }
