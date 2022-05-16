@@ -163,10 +163,12 @@ namespace Battleship.Logic.Services
 		}
 
 		public Explosion IAShoot()
-        {
-			AddPosToShootList("IA", null);
-			return _IIAService.gameStage();
-        }
+        {	
+			Explosion newIAExplosion = _IIAService.gameStage(_Game);
+			AddPosToShootList("IA", newIAExplosion);
+			return newIAExplosion;
+
+		}
 
 		public Game AddPosToShootList(string name, Explosion exp)
         {
@@ -178,7 +180,8 @@ namespace Battleship.Logic.Services
             }
             else
             {
-				_Game.IAShootsNumber++;
+				_Game.IAShoots.Add(exp);
+				_Game.IAShootsNumber++;			
 				return _gameRepository.UpdateGame(_Game);
             }
 

@@ -12,7 +12,7 @@ namespace Battleship.Logic.Services
     {
         public int _Id { get; set; }
         public ILevelStrategy _LevelStrategy { get; set; }
-        public List<Explosion> _Shootings;
+        //public List<Explosion> _Shootings;
 
         public Game _Game;
 
@@ -20,13 +20,8 @@ namespace Battleship.Logic.Services
         {
             //_Id = id;
             _LevelStrategy = levelStrategy;
-            _Game = GameService.GetInstanceGame();
-            _Shootings = new List<Explosion>();
-        }
-
-        public void setCurrentGame(Game game)
-        {
-            _Game = game;
+            //_Game = GameService.GetInstanceGame();
+            //_Shootings = new List<Explosion>();
         }
 
         public void SetLevelStrategy(ILevelStrategy strategy)
@@ -34,9 +29,9 @@ namespace Battleship.Logic.Services
             _LevelStrategy = strategy;
         }
 
-        public Position ExecuteLevelStrategy()
+        public Position ExecuteLevelStrategy(Game game)
         {
-            return _LevelStrategy.LogicIA(_Shootings, _Game);
+            return _LevelStrategy.LogicIA(game);
         }
 
         public string GetNameLevel()
@@ -45,23 +40,23 @@ namespace Battleship.Logic.Services
         }
         
 
-        public Explosion gameStage()
+        public Explosion gameStage(Game game)
         {
-            Position positionSelected = ExecuteLevelStrategy();
-            bool shootResult = Shoot(positionSelected);
+            Position positionSelected = ExecuteLevelStrategy(game);
+            bool shootResult = Shoot(positionSelected, game);
             Explosion newIAExplosion = new Explosion(positionSelected, shootResult);
-            _Shootings.Add(newIAExplosion);
+            //_Shootings.Add(newIAExplosion);
 
             return newIAExplosion;
 
         }
 
 
-        public bool Shoot(Position position)
+        public bool Shoot(Position position, Game game)
         {
             bool shootresult = false;
 
-            foreach (Ship userShip in _Game.ShipsPose)
+            foreach (Ship userShip in game.ShipsPose)
             {
                 if (userShip.Player == "User")
                     {
