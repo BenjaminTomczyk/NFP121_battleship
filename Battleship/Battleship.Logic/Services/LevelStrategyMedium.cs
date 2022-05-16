@@ -81,6 +81,11 @@ namespace Battleship.Logic.Services
                     {
                         if (invalidPosition.Equals(shootPosition)) resultEliminatePositions.Remove(invalidPosition);
                     }
+
+                    foreach (Explosion oldExplositionIA in game.IAShoots)
+                    {
+                        if (oldExplositionIA.ExplosionLocation.Equals(shootPosition)) resultEliminatePositions.Remove(oldExplositionIA.ExplosionLocation);
+                    }
                 }
             }
 
