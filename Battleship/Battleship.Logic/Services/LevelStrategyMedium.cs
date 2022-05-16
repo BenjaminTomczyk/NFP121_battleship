@@ -13,14 +13,15 @@ namespace Battleship.Logic.Services
 
         string nameStrategy = "Medium";
 
-        public Position LogicIA(List<Explosion> shootings, Game game)
+        public Position LogicIA(Game game)
         {
             Position positionSelected = new Position();
             bool positionInvalid = true;
+            List<Explosion> shootsIA = game.IAShoots;
             Random rdPos = new Random();
             while (positionInvalid)
             { 
-                if (shootings.Count == 0 || shootings[shootings.Count - 1].Hit == false)
+                if (shootsIA.Count == 0 || shootsIA[shootsIA.Count - 1].Hit == false)
                 {
                     //if(shootings.Count != 0)
                     //{
@@ -34,16 +35,16 @@ namespace Battleship.Logic.Services
                 else
                 {
                     Console.WriteLine("ok true");
-                    Position lastShootPosition = shootings[shootings.Count - 1].ExplosionLocation;
+                    Position lastShootPosition = shootsIA[shootsIA.Count - 1].ExplosionLocation;
                     List<Position> potentialShootingPosition = GenerationPotentialShootingPosition(lastShootPosition);
                     potentialShootingPosition = EliminateImpossiblePositions(potentialShootingPosition,game);
 
                     if (potentialShootingPosition.Count == 0) //possible potentiellement quand on détruit un bateau 
 
                     {
-                        Explosion lastShoot = shootings[shootings.Count - 1];
+                        Explosion lastShoot = shootsIA[shootsIA.Count - 1];
                         lastShoot.Hit = false;
-                        shootings.Add(lastShoot);
+                        shootsIA.Add(lastShoot);
                         positionSelected.SetNewValue(lastShoot.ExplosionLocation.Column, lastShoot.ExplosionLocation.Row);
                     }
                     else
@@ -53,7 +54,7 @@ namespace Battleship.Logic.Services
                     }
                     
                 }
-                foreach (Explosion previousShoot in shootings)
+                foreach (Explosion previousShoot in shootsIA)
                 {
                     if (positionSelected.Equals(previousShoot.ExplosionLocation))
                     {
@@ -62,7 +63,7 @@ namespace Battleship.Logic.Services
                     }
                     positionInvalid = false;
                 }
-                positionInvalid = PositionIsInvalid(shootings, positionSelected);
+                positionInvalid = PositionIsInvalid(shootsIA, positionSelected);
             }
 
             return positionSelected;

@@ -9,11 +9,10 @@ namespace Battleship.Logic.Interfaces
 	public interface IIAService
 	{
 		void SetLevelStrategy(ILevelStrategy strategy);
-		Position ExecuteLevelStrategy();
-		Explosion gameStage();
-		bool Shoot(Position position);
+		Position ExecuteLevelStrategy(Game game);
+		Explosion gameStage(Game game);
+		bool Shoot(Position position,Game game);
 		string GetNameLevel();
-		void setCurrentGame(Game game);
 	}
 }
 
