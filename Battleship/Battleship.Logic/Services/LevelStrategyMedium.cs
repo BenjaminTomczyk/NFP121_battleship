@@ -80,7 +80,7 @@ namespace Battleship.Logic.Services
 
         public List<Position> EliminateImpossiblePositions(List<Position> potentialShootingPosition,Game game)
         {
-            List<Position> resultEliminatePositions = potentialShootingPosition;
+            List<Position> resultEliminatePositions = new List<Position>(potentialShootingPosition);
             foreach (Position shootPosition in potentialShootingPosition)
             {
                 if(shootPosition.Column < 0 || shootPosition.Column > 7 || shootPosition.Row < 0 || shootPosition.Row > 7)
