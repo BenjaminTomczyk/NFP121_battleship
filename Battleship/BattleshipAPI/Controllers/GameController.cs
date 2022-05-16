@@ -33,7 +33,6 @@ namespace BattleshipAPI.Controllers
         [HttpGet("{id}")]
         public async Task<Game> Game(string id)
         {
-            _gameService.SetIA();
             return await _gameService.StartGame(id);
         }
 
@@ -55,7 +54,7 @@ namespace BattleshipAPI.Controllers
             return _gameService.GetFullHistory();
         }
 
-        [HttpPost("setIA")]
+        [HttpGet("setIA/{level}")]
         public Game SetGameIA(string level)
         {
             //_gameService.setIAGrid();

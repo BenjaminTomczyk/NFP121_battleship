@@ -93,11 +93,6 @@ namespace Battleship.Logic.Services
                 Ship s = _shipRepository.AddShip(newShip);
                 _gameService.UpdateGame(_Game);
 
-                foreach (Position p in _Game.PositionsInvalid)
-                {
-                    Console.WriteLine(p.Id);
-                }
-
                 return s;
             }
             else return new Ship(null, null, null, null, null, isValid, 0);  

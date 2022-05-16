@@ -1,4 +1,6 @@
 ﻿function startGame(diff) {
+    getGame();
+
     getEnnemyCells(diff);
 }
 
@@ -97,11 +99,8 @@ function tryShip(position){
 
 function placeShip(ship) {
     auth();
+    getGame();
 
-    var game = JSON.parse(sessionStorage.game);
-    getGame(game.id);
-
-    console.log(ship);
     ship.positions.forEach(element => {
         var cell = element.row.toString() + element.column.toString();
         document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
@@ -135,7 +134,6 @@ function getEnnemyCells(diff) {
         for (var i = 0; i < guessClick.length; i++) {
             guessClick[i].onclick = shootAnswer;
         }
-
         setIA(diff);
     }
     else{
@@ -147,23 +145,17 @@ function setIA(diff){
     auth();
     var user = JSON.parse(sessionStorage.user);
 
-    const item = {
-        isComplete: false,
-        IA: diff
-    };
-
-    fetch('api/game/setIA', {
-        method: 'POST',
+    fetch('api/game/setIA/' + diff, {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + user.token
         },
-        body: JSON.stringify(item)
     })
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
+        console.log(data);
         })
         .catch(error => console.error('Error ', error));
 }
@@ -325,7 +317,7 @@ function game(res) {
         .catch(error => console.error('Error ', error));
 }
 
-function getGame(id) {
+function getGame() {
     auth();
     var res = JSON.parse(sessionStorage.user);
     var game = JSON.parse(sessionStorage.game);
@@ -340,7 +332,7 @@ function getGame(id) {
         unauthorized(status);
         sessionStorage.setItem("user",JSON.stringify(res));
         sessionStorage.setItem("game",JSON.stringify(data));
-        console.log(data);
+        //console.log(data);
         })
 
         .catch(error => console.error('Error ', error));

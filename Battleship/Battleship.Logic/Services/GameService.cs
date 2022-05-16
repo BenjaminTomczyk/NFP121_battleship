@@ -28,11 +28,6 @@ namespace Battleship.Logic.Services
 			_IIAService = iIAService;
 		}
 
-		public string SetIA()
-        {
-			return _gameRepository.SetIALevels();
-        }
-
 		public async Task<Game> StartGame(string id)
         {
 			_Game = new Game();

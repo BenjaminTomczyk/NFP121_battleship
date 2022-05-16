@@ -398,7 +398,7 @@ namespace BattleshipAPI.Migrations
                         .HasForeignKey("EndId");
 
                     b.HasOne("Battleship.Model.Entities.Game", "Game")
-                        .WithMany("Ships")
+                        .WithMany("ShipsPose")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -476,7 +476,7 @@ namespace BattleshipAPI.Migrations
 
                     b.Navigation("PlayerShoots");
 
-                    b.Navigation("Ships");
+                    b.Navigation("ShipsPose");
                 });
 
             modelBuilder.Entity("Battleship.Model.Entities.Ship", b =>

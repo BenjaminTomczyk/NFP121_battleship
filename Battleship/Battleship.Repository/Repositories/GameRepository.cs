@@ -17,32 +17,6 @@ namespace Battleship.Repository.Repositories
 			_ctx = ctx;
 		}
 
-		public string SetIALevels()
-        {
-            //var ia = _ctx.IA.ToList();
-            //if (!ia.Any())
-            //{
-            //    //_ctx.IA.Add(new IA(1, "Facile"));
-            //    //_ctx.IA.Add(new IA(2, "Moyen"));
-            //    //_ctx.SaveChanges();
-
-            //    return "Created";
-            //}
-            //else
-            //{
-            //    var ia1 = _ctx.IA.First(c => c.Id == 1);
-            //    var ia2 = _ctx.IA.First(c => c.Id == 2);
-            //    ia1.Id = 1;
-            //    ia1.Level = "Facile";
-            //    ia2.Id = 2;
-            //    ia2.Level = "Moyen";
-            //    _ctx.SaveChanges();
-
-
-                return "Updated";
-            //}
-        }
-
         public Game setNewGame(Game game)
         {
 			_ctx.Game.Add(game);

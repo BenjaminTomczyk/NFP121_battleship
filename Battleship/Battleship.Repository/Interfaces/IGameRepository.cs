@@ -7,8 +7,6 @@ namespace Battleship.Repository.Interfaces
 {
     public interface IGameRepository
     {
-        string SetIALevels();
-
         Game setNewGame(Game game);
 
         Game getGame(int id);

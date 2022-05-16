@@ -8,8 +8,6 @@ namespace Battleship.Logic.Interfaces
 {
 	public interface IGameService
 	{
-		string SetIA();
-
 		Task<Game> StartGame(string id);
 
 		Game GetGame(int id);
