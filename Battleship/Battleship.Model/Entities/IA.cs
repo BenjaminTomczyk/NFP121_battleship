@@ -12,7 +12,9 @@ namespace Battleship.Model.Entities
 		//public Game Game { get; set; }
 		public string Level { get; set; } //En attendant la mise en place de la strategy
 
-		public IA() { }
+		public IA() {
+			Level = "";
+		}
 
 		public IA(ILevelStrategy levelStrategy)
         {
