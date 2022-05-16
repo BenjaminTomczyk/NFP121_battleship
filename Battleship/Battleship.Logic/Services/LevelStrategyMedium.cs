@@ -23,29 +23,17 @@ namespace Battleship.Logic.Services
             { 
                 if (shootsIA.Count == 0 || shootsIA[shootsIA.Count - 1].Hit == false)
                 {
-                    //if(shootings.Count != 0)
-                    //{
-                    //    Console.WriteLine(shootings[shootings.Count - 1].ExplosionLocation.Row);
-                    //    Console.WriteLine(shootings[shootings.Count - 1].ExplosionLocation.Column);
-                    //    Console.WriteLine(shootings[shootings.Count - 1].Hit);
-                    //}
-
                     positionSelected.SetNewValue(rdPos.Next(0, game.GridSize), rdPos.Next(0, game.GridSize));
                 }
                 else
                 {
-                    Console.WriteLine("ok true");
                     Position lastShootPosition = shootsIA[shootsIA.Count - 1].ExplosionLocation;
                     List<Position> potentialShootingPosition = GenerationPotentialShootingPosition(lastShootPosition);
                     potentialShootingPosition = EliminateImpossiblePositions(potentialShootingPosition,game);
 
-                    if (potentialShootingPosition.Count == 0) //possible potentiellement quand on détruit un bateau 
-
+                    if (potentialShootingPosition.Count == 0)  
                     {
-                        Explosion lastShoot = shootsIA[shootsIA.Count - 1];
-                        lastShoot.Hit = false;
-                        shootsIA.Add(lastShoot);
-                        positionSelected.SetNewValue(lastShoot.ExplosionLocation.Column, lastShoot.ExplosionLocation.Row);
+                        positionSelected.SetNewValue(rdPos.Next(0, game.GridSize), rdPos.Next(0, game.GridSize));
                     }
                     else
                     {
