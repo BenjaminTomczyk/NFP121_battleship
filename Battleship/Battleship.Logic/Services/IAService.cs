@@ -29,7 +29,10 @@ namespace Battleship.Logic.Services
             _Game = game;
         }
 
-        public void SetLevelStrategy(ILevelStrategy strategy) => _LevelStrategy = strategy;
+        public void SetLevelStrategy(ILevelStrategy strategy)
+        {
+            _LevelStrategy = strategy;
+        }
 
         public Position ExecuteLevelStrategy()
         {
@@ -42,7 +45,7 @@ namespace Battleship.Logic.Services
         }
         
 
-        public Explosion gameStage()
+        public Explosion gameStage(List<Explosion> explosions)
         {
             Position positionSelected = ExecuteLevelStrategy();
             bool shootResult = Shoot(positionSelected);

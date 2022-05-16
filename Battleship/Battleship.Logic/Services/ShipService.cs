@@ -76,26 +76,24 @@ namespace Battleship.Logic.Services
             if (isValid)
             {
                 Ship newShip = new Ship(_Start, _End, _Positions, null, "User", isValid, _Positions.Count());
-                //_Game.ShipsPose.Add(newShip);
 
-                this.AddPositionInvalid();
+                _Game.ShipsPose.Add(newShip);
+
+                AddPositionInvalid();
 
                 newShip.Game = _Game;
-                Ship s = _shipRepository.AddShip(newShip);
-                AddShipToGame(newShip);
-                _gameService.UpdateGame(_Game);
 
-                return s;
+                return newShip;
             }
 
             else return new Ship(null, null, null, null, null, isValid, 0);
         }
 
+
         public Game AddShipToGame(Ship ship)
         {
             return _gameService.AddShip(ship);
         }
-
 
         public bool CheckShipSize()
         {
@@ -181,10 +179,19 @@ namespace Battleship.Logic.Services
 
         public void AddPositionInvalid()//fonction a appeler quand le bateau est creer définitivement
         {
-            if (this._Positions != null && _Game != null)
+            if (_Positions != null && _Game != null)
             {
                 foreach (Position posI in _Positions)
                 {
+                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row, posI.Column + 1),_Game));
+                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row + 1, posI.Column + 1),_Game));
+                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row + 1, posI.Column), _Game));
+                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row + 1, posI.Column - 1), _Game));
+                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row, posI.Column - 1), _Game));
+                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row - 1, posI.Column - 1), _Game));
+                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row - 1, posI.Column), _Game));
+                    //_gameService.AddInvalidPos(new InvalidPosition(new Position(posI.Row - 1, posI.Column + 1), _Game));
+
                     _Game.PositionsInvalid.Add(new Position(posI.Row, posI.Column + 1));
                     _Game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column + 1));
                     _Game.PositionsInvalid.Add(new Position(posI.Row + 1, posI.Column));

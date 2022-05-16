@@ -12,6 +12,7 @@ using Battleship.Logic.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Battleship.Repository.DBContext;
 using Microsoft.EntityFrameworkCore;
+using Battleship.Logic.Services;
 
 namespace BattleshipAPI.Controllers
 {
@@ -37,9 +38,15 @@ namespace BattleshipAPI.Controllers
         }
 
         [HttpGet("get/{id}")]
-        public Game GetGame(int id)
+        public void GetGame(int id)
         {
-            return _shipService.setCurrentGame(id);
+            //return _shipService.setCurrentGame(id);
+        }
+
+        [HttpGet("get")]
+        public Game Get()
+        {
+            return GameService.GetInstanceGame();
         }
 
         [HttpGet("history/{id}")]

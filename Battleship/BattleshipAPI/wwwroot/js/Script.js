@@ -1,6 +1,5 @@
 ﻿function startGame(diff) {
-    getGame();
-
+    window.alert("Difficulté " + diff + " sélectionnée, sélectionnez une case pour tirer");
     getEnnemyCells(diff);
 }
 
@@ -96,14 +95,13 @@ function tryShip(position){
         
         })
         .catch(error => console.error('Error ', error));
+
+        getInstanceGame();
 }
 
 function placeShip(ship) {
     auth();
-    getGame();
 
-    console.log(ship);
-    
     ship.positions.forEach(element => {
         var cell = element.row.toString() + element.column.toString();
         document.getElementById(cell).parentElement.style.backgroundColor = "#42aee3";
@@ -181,7 +179,6 @@ function tryShoot(position){
         Row: pos[0],
         Column: pos[1]
     };
-    console.log(item);
     fetch('api/game/tryShoot', {
         method: 'POST',
         headers: {
@@ -194,12 +191,19 @@ function tryShoot(position){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-        if(data.hit == true){
-            shot(position);
+
+        if(data.explosionLocation != null){
+            if(data.hit == true){
+                shot(position);
+            }
+            else{
+                missed(position, data);
+            }
         }
         else{
-            missed(position);
+            window.alert("Case déjà tentée");
         }
+
         })
         .catch(error => console.error('Error ', error));
 }
@@ -221,6 +225,7 @@ function missed(pos){
 
     //window.alert("Râté ! Au tour de L'IA");
     shootIA();
+
 }
 
 function shootIA(){
@@ -237,7 +242,6 @@ function shootIA(){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-        
         if(data.hit == true){
             shotIA(data.explosionLocation);
         }
@@ -378,6 +382,25 @@ function getGame() {
     var game = JSON.parse(sessionStorage.game);
 
     fetch('api/game/get/' + game.id, {
+        headers: {
+            'Authorization': 'Bearer ' + res.token
+        }
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+        unauthorized(status);
+        sessionStorage.setItem("user",JSON.stringify(res));
+        sessionStorage.setItem("game",JSON.stringify(data));
+        })
+
+        .catch(error => console.error('Error ', error));
+}
+
+function getInstanceGame() {
+    auth();
+    var res = JSON.parse(sessionStorage.user);
+
+    fetch('api/game/get', {
         headers: {
             'Authorization': 'Bearer ' + res.token
         }

@@ -24,7 +24,7 @@ namespace BattleshipAPI.Controllers
         [HttpPost("placeship")]
         public Ship TestShipPlacement(PlaceShipModel positions)
         {
-            _shipService.setCurrentGame(int.Parse(positions.gameId));
+            //_shipService.setCurrentGame(int.Parse(positions.gameId));
             var result = _shipService.VerifyShipValidity(positions);
             return result;
         }
