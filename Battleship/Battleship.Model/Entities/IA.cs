@@ -14,10 +14,10 @@ namespace Battleship.Model.Entities
 
 		public IA() { }
 
-		public IA(int id, ILevelStrategy levelStrategy)
+		public IA(ILevelStrategy levelStrategy)
         {
-			Id = id;
 			LevelStrategy = levelStrategy;
+			Level = levelStrategy.GetName();
         }
 	}
 }

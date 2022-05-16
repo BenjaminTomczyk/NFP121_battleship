@@ -12,6 +12,7 @@ namespace Battleship.Logic.Interfaces
 		Position ExecuteLevelStrategy();
 		void gameStage();
 		bool Shoot(Position position);
+		string GetNameLevel();
 		void setCurrentGame(Game game);
 	}
 }

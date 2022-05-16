@@ -35,6 +35,11 @@ namespace Battleship.Logic.Services
         {
             return _LevelStrategy.LogicIA(_Shootings, _Game);
         }
+
+        public string GetNameLevel()
+        {
+            return _LevelStrategy.GetName();
+        }
         
 
         public void gameStage()

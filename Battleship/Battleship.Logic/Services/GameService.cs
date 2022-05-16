@@ -104,14 +104,18 @@ namespace Battleship.Logic.Services
 
 		public Game SetGameIA(string level) //todo faire que la game courante l'ia soit set en fonction de la difficulté
 		{
-			IA ia = new IA();
-			_Game.IA = ia;
 
 			if (level == "facile") {
-				_IIAService.SetLevelStrategy(new LevelStrategyEasy());
+				LevelStrategyEasy easy = new LevelStrategyEasy();
+				IA ia = new IA(easy);
+				_IIAService.SetLevelStrategy(easy);
+				_Game.IA = ia;
 			}
 			else if (level == "moyen") {
-				_IIAService.SetLevelStrategy(new LevelStrategyMedium());
+				LevelStrategyMedium medium = new LevelStrategyMedium();
+				IA ia = new IA(medium);
+				_IIAService.SetLevelStrategy(medium);
+				_Game.IA = ia;
 			}
 
 			return _Game;
