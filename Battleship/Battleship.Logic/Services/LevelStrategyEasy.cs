@@ -16,13 +16,15 @@ namespace Battleship.Logic.Services
             Position positionSelected = new Position();
             List<Explosion> shootsIA = game.IAShoots;
             Random rdPos = new Random();
-            bool positionInvalid = true;
+            //bool positionInvalid = true;
 
-            while (positionInvalid)
-            {
-                positionSelected.SetNewValue(rdPos.Next(0, game.GridSize), rdPos.Next(0, game.GridSize));
-                positionInvalid = PositionIsInvalid(shootsIA, positionSelected);
-            }
+
+            positionSelected.SetNewValue(rdPos.Next(0, game.GridSize), rdPos.Next(0, game.GridSize));
+            //while (positionInvalid)
+            //{
+            //    positionSelected.SetNewValue(rdPos.Next(0, game.GridSize), rdPos.Next(0, game.GridSize));
+            //    positionInvalid = PositionIsInvalid(shootsIA, positionSelected);
+            //}
             return positionSelected;    
         }
 
