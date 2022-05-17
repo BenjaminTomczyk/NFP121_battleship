@@ -174,6 +174,18 @@ namespace Battleship.Logic.Services
 			}
 		}
 
+		public void SetIAGrid()
+        {
+			_Game.ShipsPose.Add(new Ship(new Position(0, 0), new Position(1, 0),new List<Position>(), _Game, "IA", true,2));
+			_Game.ShipsPose.Add(new Ship(new Position(0, 2), new Position(2, 2),new List<Position>(), _Game, "IA", true,3));
+			_Game.ShipsPose.Add(new Ship(new Position(0, 4), new Position(2, 4), new List<Position>(), _Game, "IA", true,3));
+			_Game.ShipsPose.Add(new Ship(new Position(0, 6), new Position(3, 6), new List<Position>(), _Game, "IA", true,4));
+			_Game.ShipsPose.Add(new Ship(new Position(4, 4), new Position(7, 7), new List<Position>(), _Game, "IA", true, 4));
+			_Game.ShipsPose.Add(new Ship(new Position(3, 0), new Position(7, 4), new List<Position>(), _Game, "IA", true,5));
+
+			return _gameRepository.UpdateGame(_Game);
+		}
+
 		public Explosion IAShoot()
         {	
 			Explosion newIAExplosion = _IIAService.gameStage(_Game);
