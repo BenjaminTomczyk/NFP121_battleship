@@ -165,17 +165,22 @@ namespace Battleship.Logic.Services
 		}
 
 		public Explosion UserShoot(Position position)
-        {	
+        {
 			bool shootResult = false;
 			if (ShootIsValid(position))
 			{
+				Console.WriteLine("valide");
 				foreach (Ship IAShip in _Game.ShipsPose)
 				{
 					if (IAShip.Player == "IA")
 					{
 						foreach (Position posIAShip in IAShip.Positions)
 						{
-							if (position.Equals(posIAShip)) shootResult = true;
+							if (position.Equals(posIAShip))
+							{
+								shootResult = true;
+								break;
+							}
 						}
 					}
 				}
