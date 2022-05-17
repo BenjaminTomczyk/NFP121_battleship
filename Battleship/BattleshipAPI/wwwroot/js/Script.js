@@ -116,6 +116,7 @@ function placeShip(ship) {
     sessionStorage.setItem("game",JSON.stringify(ship.game));
 }
 
+
 function verifEnd(){
     auth();
     var user = JSON.parse(sessionStorage.user);

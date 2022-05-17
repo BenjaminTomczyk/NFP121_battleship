@@ -29,6 +29,8 @@ namespace Battleship.Logic.Interfaces
 		Game AddShip(Ship ship);
 
 		Game VerifEndGame();
+
+		Game SetIAGrid();
 	}
 }
 

@@ -183,7 +183,7 @@ namespace Battleship.Logic.Services
 			}
 		}
 
-		public void SetIAGrid()
+		public Game SetIAGrid()
         {
 			_Game.ShipsPose.Add(new Ship(new Position(0, 0), new Position(1, 0),new List<Position>(), _Game, "IA", true,2));
 			_Game.ShipsPose.Add(new Ship(new Position(0, 2), new Position(2, 2),new List<Position>(), _Game, "IA", true,3));

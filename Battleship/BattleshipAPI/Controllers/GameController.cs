@@ -52,7 +52,7 @@ namespace BattleshipAPI.Controllers
         [HttpGet("setIA/{level}")]
         public Game SetGameIA(string level)
         {
-            //_gameService.setIAGrid();
+            _gameService.SetIAGrid();
             return _gameService.SetGameIA(level);
         }
 
