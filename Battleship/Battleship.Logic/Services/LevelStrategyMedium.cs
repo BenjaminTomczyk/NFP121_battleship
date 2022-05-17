@@ -31,9 +31,6 @@ namespace Battleship.Logic.Services
                     List<Position> potentialShootingPosition = GenerationPotentialShootingPosition(lastShootPosition);
                     potentialShootingPosition = EliminateImpossiblePositions(potentialShootingPosition,game);
 
-                    Console.WriteLine(potentialShootingPosition.First().Row);
-                    Console.WriteLine(potentialShootingPosition.First().Column);
-
                     if (potentialShootingPosition.Count == 0)  
                     {
                         positionSelected.SetNewValue(rdPos.Next(0, game.GridSize), rdPos.Next(0, game.GridSize));

@@ -76,12 +76,13 @@ namespace Battleship.Logic.Services
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach(Game g in res)
             {
+				Console.WriteLine(g.IA);
 				PlayerStatisticsModel p = new PlayerStatisticsModel();
 				p.Player = g.Player.UserName;
 				p.Result = g.Result;
 				p.PlayerShootsNumber = g.PlayerShootsNumber;
 				p.IAShootsNumber = g.IAShootsNumber;
-				p.IA = g.IA.Level;
+				p.IA = "Facile";//g.IA.Level;
 				p.Duration = g.Duration;
 
 				stats.Add(p);
@@ -102,7 +103,7 @@ namespace Battleship.Logic.Services
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach (Game g in res)
 			{
-				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.LevelStrategy.GetName(), g.Duration));
+				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.Level, g.Duration));
 			}
 
 			return stats;
@@ -118,17 +119,23 @@ namespace Battleship.Logic.Services
 
 			if (level == "facile") {
 				LevelStrategyEasy easy = new LevelStrategyEasy();
-				IA ia = new IA(easy);
+
+				_Game.IA.LevelStrategy = easy;
+				_Game.IA.Level = "facile";
+
 				_IIAService.SetLevelStrategy(easy);
-				_Game.IA = ia;
+
+				_IIAService.UpdateIA(_Game.IA);
 				UpdateGame(_Game);
+				
 			}
 			else if (level == "moyen") {
 				LevelStrategyMedium medium = new LevelStrategyMedium();
-				IA ia = new IA(medium);
+				IA ia = new IA(medium, "medium");
 				_IIAService.SetLevelStrategy(medium);
 				_Game.IA = ia;
 				UpdateGame(_Game);
+				//_IIAService.UpdateIA(ia);
 			}
 
 			return _Game;
