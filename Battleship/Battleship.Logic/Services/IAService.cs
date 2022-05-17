@@ -30,6 +30,7 @@ namespace Battleship.Logic.Services
         public void SetLevelStrategy(ILevelStrategy strategy)
         {
             _LevelStrategy = strategy;
+            Console.WriteLine(strategy.GetName());
         }
 
         public Position ExecuteLevelStrategy(Game game)

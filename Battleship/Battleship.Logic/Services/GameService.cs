@@ -76,7 +76,6 @@ namespace Battleship.Logic.Services
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach(Game g in res)
             {
-				Console.WriteLine(g.IA);
 				PlayerStatisticsModel p = new PlayerStatisticsModel();
 				p.Player = g.Player.UserName;
 				p.Result = g.Result;
@@ -103,7 +102,6 @@ namespace Battleship.Logic.Services
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach (Game g in res)
 			{
-				Console.WriteLine(g.IA);
 				PlayerStatisticsModel p = new PlayerStatisticsModel();
 				p.Player = g.Player.UserName;
 				p.Result = g.Result;
@@ -169,7 +167,6 @@ namespace Battleship.Logic.Services
 			bool shootResult = false;
 			if (ShootIsValid(position))
 			{
-				Console.WriteLine("valide");
 				foreach (Ship IAShip in _Game.ShipsPose)
 				{
 					if (IAShip.Player == "IA")
@@ -209,7 +206,7 @@ namespace Battleship.Logic.Services
 		}
 
 		public Explosion IAShoot()
-        {	
+        {
 			Explosion newIAExplosion = _IIAService.gameStage(_Game);
 			AddPosToShootList("IA", newIAExplosion);
 			return newIAExplosion;
