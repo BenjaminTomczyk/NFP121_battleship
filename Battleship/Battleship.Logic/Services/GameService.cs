@@ -103,9 +103,17 @@ namespace Battleship.Logic.Services
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach (Game g in res)
 			{
-				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.Level, g.Duration));
-			}
+				Console.WriteLine(g.IA);
+				PlayerStatisticsModel p = new PlayerStatisticsModel();
+				p.Player = g.Player.UserName;
+				p.Result = g.Result;
+				p.PlayerShootsNumber = g.PlayerShootsNumber;
+				p.IAShootsNumber = g.IAShootsNumber;
+				p.IA = "Facile";//g.IA.Level;
+				p.Duration = g.Duration;
 
+				stats.Add(p);
+			}
 			return stats;
 		}
 
