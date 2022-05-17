@@ -13,6 +13,7 @@ namespace Battleship.Logic.Interfaces
 		Explosion gameStage(Game game);
 		bool Shoot(Position position,Game game);
 		string GetNameLevel();
+		IA UpdateIA(IA ia);
 	}
 }
 

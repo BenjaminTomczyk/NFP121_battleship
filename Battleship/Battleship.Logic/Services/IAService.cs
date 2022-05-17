@@ -14,12 +14,15 @@ namespace Battleship.Logic.Services
         public ILevelStrategy _LevelStrategy { get; set; }
         //public List<Explosion> _Shootings;
 
+        private readonly IIARepository _iaRepository;
+
         public Game _Game;
 
-        public IAService(ILevelStrategy levelStrategy) 
+        public IAService(ILevelStrategy levelStrategy, IIARepository iARepository) 
         {
             //_Id = id;
             _LevelStrategy = levelStrategy;
+            _iaRepository = iARepository;
             //_Game = GameService.GetInstanceGame();
             //_Shootings = new List<Explosion>();
         }
@@ -68,8 +71,10 @@ namespace Battleship.Logic.Services
             }
             return shootresult;
         }
-        
-            
 
+        public IA UpdateIA(IA ia)
+        {
+            return _iaRepository.UpdateIA(ia);
+        }
     }
 }
