@@ -170,6 +170,18 @@ namespace Battleship.Logic.Services
 
 		}
 
+		public void VerifEndGame(List<Explosion> explositions)
+        {
+			int compt = 0;
+			foreach(Explosion exp in explositions)
+            {
+				if (exp.Hit) compt++;
+            }
+			if(compt == 21) _Game.Finished = true;
+
+			//return _gameRepository.UpdateGame(_Game);
+		}
+
 		public Game AddPosToShootList(string name, Explosion exp)
         {
 			if(name == "User")
