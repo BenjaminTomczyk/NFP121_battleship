@@ -59,7 +59,9 @@ namespace BattleshipAPI.Controllers
         [HttpPost("tryShoot")]
         public Explosion TryShoot(Position position)
         {
-            return _gameService.UserShoot(position);
+            Explosion e = _gameService.UserShoot(position);
+            Console.WriteLine(e.Hit);
+            return e;
         }
 
         [HttpGet("shootIA")]

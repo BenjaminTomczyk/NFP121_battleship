@@ -131,14 +131,17 @@ function verifEnd(){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
             unauthorized(status);
-            console.log(data);
-        // if(data.finished == true){
-        //     window.alert("Partie terminée - Vous avez "+data.result);
-        //     return true;
-        // }
-        // else{
-        //     return false;
-        // }
+
+            console.log(data.finished);
+            if(data.finished == true){
+                sessionStorage.setItem("finished","true");
+                window.alert("Partie terminée - Vous avez "+data.result);
+                return true;
+            }
+            else{
+                sessionStorage.setItem("finished","false");
+                return false;
+            }
         })
         .catch(error => console.error('Error ', error));
 }
@@ -220,7 +223,7 @@ function tryShoot(position){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-
+            console.log(data);
         
             if(data.explosionLocation != null){
                 if(data.hit == true){
