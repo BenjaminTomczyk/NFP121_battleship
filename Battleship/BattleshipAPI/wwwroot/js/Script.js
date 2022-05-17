@@ -116,6 +116,31 @@ function placeShip(ship) {
     sessionStorage.setItem("game",JSON.stringify(ship.game));
 }
 
+function verifEnd(){
+    auth();
+    var user = JSON.parse(sessionStorage.user);
+
+    fetch('api/game/endGame', {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + user.token
+        },
+    })
+        .then(response => Promise.all([response, response.json()]))
+        .then(([status, data]) => {
+            unauthorized(status);
+            console.log(data);
+        // if(data.finished == true){
+        //     window.alert("Partie terminée - Vous avez "+data.result);
+        //     return true;
+        // }
+        // else{
+        //     return false;
+        // }
+        })
+        .catch(error => console.error('Error ', error));
+}
 
 function checkCompletePlacement() {
     var game = JSON.parse(sessionStorage.game);
@@ -195,17 +220,19 @@ function tryShoot(position){
         .then(([status, data]) => {
         unauthorized(status);
 
-        if(data.explosionLocation != null){
-            if(data.hit == true){
-                shot(position);
+        
+            if(data.explosionLocation != null){
+                if(data.hit == true){
+                    shot(position);
+                }
+                else{
+                    missed(position, data);
+                }
             }
             else{
-                missed(position, data);
+                window.alert("Case déjà tentée");
             }
-        }
-        else{
-            window.alert("Case déjà tentée");
-        }
+        
 
         })
         .catch(error => console.error('Error ', error));
@@ -249,12 +276,13 @@ function shootIA(){
         .then(response => Promise.all([response, response.json()]))
         .then(([status, data]) => {
         unauthorized(status);
-        if(data.hit == true){
-            shotIA(data.explosionLocation);
-        }
-        else{
-            missedIA(data.explosionLocation);
-        }
+
+            if(data.hit == true){
+                shotIA(data.explosionLocation);
+            }
+            else{
+                missedIA(data.explosionLocation);
+            }
         })
         .catch(error => console.error('Error ', error));
 }

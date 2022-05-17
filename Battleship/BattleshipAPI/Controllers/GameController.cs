@@ -67,6 +67,12 @@ namespace BattleshipAPI.Controllers
         {
             return _gameService.IAShoot();
         }
+
+        [HttpGet("endGame")]
+        public Game VerifEndGame()
+        {
+            return _gameService.VerifEndGame();
+        }
     }
 }
 

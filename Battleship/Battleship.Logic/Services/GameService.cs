@@ -131,11 +131,13 @@ namespace Battleship.Logic.Services
 			}
 			else if (level == "moyen") {
 				LevelStrategyMedium medium = new LevelStrategyMedium();
-				IA ia = new IA(medium, "medium");
+				_Game.IA.LevelStrategy = medium;
+				_Game.IA.Level = "facile";
+
 				_IIAService.SetLevelStrategy(medium);
-				_Game.IA = ia;
+
+				_IIAService.UpdateIA(_Game.IA);
 				UpdateGame(_Game);
-				//_IIAService.UpdateIA(ia);
 			}
 
 			return _Game;
@@ -189,16 +191,33 @@ namespace Battleship.Logic.Services
 
 		}
 
-		public void VerifEndGame(List<Explosion> explositions)
+		public Game VerifEndGame()
         {
-			int compt = 0;
-			foreach(Explosion exp in explositions)
-            {
-				if (exp.Hit) compt++;
-            }
-			if(compt == 21) _Game.Finished = true;
+			int comptPlayer = 0;
+			int comptIA = 0;
 
-			//return _gameRepository.UpdateGame(_Game);
+			foreach(Explosion exp in _Game.PlayerShoots)
+            {
+				if (exp.Hit) comptPlayer++;
+            }
+
+			foreach (Explosion exp in _Game.IAShoots)
+			{
+				if (exp.Hit) comptIA++;
+			}
+
+			if (comptPlayer == 21)
+            {
+				_Game.Finished = true;
+				_Game.Result = "Gagné";
+			}
+			else if (comptIA == 21)
+            {
+				_Game.Finished = true;
+				_Game.Result = "Perdu";
+			}
+
+			return _gameRepository.UpdateGame(_Game);
 		}
 
 		public Game AddPosToShootList(string name, Explosion exp)
