@@ -133,18 +133,18 @@ namespace Battleship.Logic.Services
 
 				_IIAService.SetLevelStrategy(easy);
 
-				_IIAService.UpdateIA(_Game.IA);
+				//_IIAService.UpdateIA(_Game.IA);
 				UpdateGame(_Game);
 				
 			}
 			else if (level == "moyen") {
 				LevelStrategyMedium medium = new LevelStrategyMedium();
 				_Game.IA.LevelStrategy = medium;
-				_Game.IA.Level = "facile";
+				_Game.IA.Level = "medium";
 
 				_IIAService.SetLevelStrategy(medium);
 
-				_IIAService.UpdateIA(_Game.IA);
+				//_IIAService.UpdateIA(_Game.IA);
 				UpdateGame(_Game);
 			}
 
