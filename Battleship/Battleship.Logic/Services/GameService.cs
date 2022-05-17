@@ -46,6 +46,8 @@ namespace Battleship.Logic.Services
 			_Game.Date = DateTime.Now;
 
 			_Game.PlacedShips = 0;
+
+			_Game.IA = new IA();
 			
 			_Game.ShipsPose = new List<Ship>();
 
@@ -74,7 +76,15 @@ namespace Battleship.Logic.Services
 			List<PlayerStatisticsModel> stats = new List<PlayerStatisticsModel>();
 			foreach(Game g in res)
             {
-				stats.Add(new PlayerStatisticsModel(g.Player.UserName, g.Result, g.PlayerShootsNumber, g.IAShootsNumber, g.IA.LevelStrategy.GetName(), g.Duration));
+				PlayerStatisticsModel p = new PlayerStatisticsModel();
+				p.Player = g.Player.UserName;
+				p.Result = g.Result;
+				p.PlayerShootsNumber = g.PlayerShootsNumber;
+				p.IAShootsNumber = g.IAShootsNumber;
+				p.IA = g.IA.Level;
+				p.Duration = g.Duration;
+
+				stats.Add(p);
 			}
 			return stats;
         }
@@ -111,12 +121,14 @@ namespace Battleship.Logic.Services
 				IA ia = new IA(easy);
 				_IIAService.SetLevelStrategy(easy);
 				_Game.IA = ia;
+				UpdateGame(_Game);
 			}
 			else if (level == "moyen") {
 				LevelStrategyMedium medium = new LevelStrategyMedium();
 				IA ia = new IA(medium);
 				_IIAService.SetLevelStrategy(medium);
 				_Game.IA = ia;
+				UpdateGame(_Game);
 			}
 
 			return _Game;
